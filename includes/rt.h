@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:09:49 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:43:50 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/02 16:52:03 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct		s_cam
 typedef struct		s_item
 {
 	int				item_type;
+	int				isNega;
 	t_vec			center;
 	t_vec			dir;
 	t_vec			sizes;
@@ -128,9 +129,12 @@ typedef struct		s_env
 	void			*win;
 	void			*img;
 	unsigned char	*pixel_img;
+	int				(*hit[10])(t_ray, t_item, double *);
+	int				hit_negative;
 	int				bpp;
 	int				s_line;
 	int				ed;
+	int				ncurr;
 	int				nbs[4];
 	int				key[300];
 	t_color			backgroundcolor;
@@ -162,8 +166,8 @@ int					hitdisk(t_ray r, t_item p, double *t);
 int					hitsphere(t_ray r, t_item s, double *t);
 int					hitcylinder(t_ray r, t_item c, double *t);
 int					hitcone(t_ray r, t_item c, double *t);
-int         hitfcylinder(t_ray r, t_item cy, double *t);
-int         hitfcone(t_ray r, t_item cy, double *t);
+int					hitfcylinder(t_ray r, t_item cy, double *t);
+int					hitfcone(t_ray r, t_item cy, double *t);
 int					calc_discr(double a, double b, double c, double *t);
 
 t_vec				calc_h1(t_ray r, t_vec dir);
@@ -182,8 +186,8 @@ double				blinnphuong(t_ray lightray, t_ray *r, t_vec n,
 					t_mat currm);
 int					in_shadow(t_ray lightray, t_env *e, double t);
 
-int					find_closest_item(t_ray r, t_env *e, t_vec *newstart,
-					int *curr);
+int					find_closest_item(t_ray r, t_env *e, t_vec *newstart, int *curr);
+int					find_post_nega(t_ray r, t_env *e, t_vec *newstart, int *curr);
 
 t_vec				find_normal_vec_if_not_plane(int itemtype, int curr,
 					t_vec newstart, t_env *e);
@@ -212,13 +216,15 @@ t_vec				rotate(t_vec u, double anglex, double angley,
 					double anglez);
 
 t_color				newcolor(double r, double g, double b);
-t_item				newsph(t_vec center, double radius, int mat);
-t_item				newplane(t_vec dir, double d, int mat);
-t_item				newcyl(t_vec dir, t_vec center, double radius, int mat);
-t_item				newdisk(t_vec dir, t_vec center, double radius, int mat);
-t_item				newcone(t_vec dir, t_vec center, double angle, int mat);
-t_item        newfcyl(t_vec dir, t_vec center, double radius, int mat, double height);
-t_item        newfcone(t_vec dir, t_vec center, double radius, int mat, double height);
+t_item				newsph(t_vec center, double radius, int mat, int isNega);
+t_item				newplane(t_vec dir, double d, int mat, int isNega);
+t_item				newcyl(t_vec dir, t_vec center, double radius, int mat, int isNega);
+t_item				newdisk(t_vec dir, t_vec center, double radius, int mat, int isNega);
+t_item				newcone(t_vec dir, t_vec center, double angle, int mat, int isNega);
+t_item				newfcyl(t_vec dir, t_vec center, double radius, int mat, double height,
+				int isNega);
+t_item				newfcone(t_vec dir, t_vec center, double radius, int mat, double height,
+				int isNega);
 
 t_ray				refracted_ray(t_vec i, t_vec nm, double n, t_vec newstart);
 t_ray				reflected_ray(t_vec i, t_vec n, t_vec newstart);

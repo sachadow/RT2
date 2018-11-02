@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:42:27 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/02 17:48:39 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int			in_shadow(t_ray lightray, t_env *e, double t)
 	hit[F_CONE] = &hitfcone;
 	k = -1;
 	while (++k < e->nbs[3])
-		if (hit[e->item[k].item_type](lightray, e->item[k], &t) && t > 0.001)
+		if (hit[e->item[k].item_type](lightray, e->item[k], &t) && t > 0.001 &&
+				e->item[k].isNega == 0)
 			return (1);
 	return (0);
 }

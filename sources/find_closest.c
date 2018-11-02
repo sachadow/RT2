@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:47:25 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/02 17:48:42 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,16 @@ int			find_closest_item(t_ray r, t_env *e, t_vec *newstart, int *curr)
 {
 	double	t;
 	double	before;
-	int		(*hit[10])(t_ray, t_item, double *);
 	int		i;
 
 	t = -1;
+	e->hit_negative = 0;
 	before = -1;
-	hit[SPHERE] = &hitsphere;
-	hit[PLANE] = &hitplane;
-	hit[I_CYL] = &hitcylinder;
-	hit[I_CONE] = &hitcone;
-	hit[DISK] = &hitdisk;
-  hit[F_CYL] = &hitfcylinder;
-	hit[F_CONE] = &hitfcone;
 	*curr = -1;
 	i = -1;
 	while (++i < e->nbs[3])
 	{
-		if (hit[e->item[i].item_type](r, e->item[i], &t))
+		if (e->hit[e->item[i].item_type](r, e->item[i], &t))
 			if (before == -1 || (t < before && t >= 0))
 			{
 				before = t;
@@ -46,7 +39,54 @@ int			find_closest_item(t_ray r, t_env *e, t_vec *newstart, int *curr)
 	}
 	if (*curr < 0)
 		return (-1);
-	hit[e->item[*curr].item_type](r, e->item[*curr], &t);
+	e->hit[e->item[*curr].item_type](r, e->item[*curr], &t);
 	*newstart = add(scale(t, r.dir), r.start);
-	return (e->item[*curr].item_type);
+	if (!e->item[*curr].isNega)
+		return (e->item[*curr].item_type);
+	e->hit_negative = 1;
+	return (-1);
+//	return (find_post_nega(r, e, newstart, curr));
+}
+
+int			find_post_nega(t_ray r, t_env *e, t_vec *newstart, int *curr)
+{
+	double	t;
+	double	before;
+	int		i;
+	int		ncurr;
+	t_ray	to_use;
+
+	return (-1);
+	*curr += 0;
+	t = -1;
+	before = -1;
+	ncurr = -1;
+	i = -1;
+	to_use.dir = r.dir;
+	to_use.start = *newstart;
+	while (++i < e->nbs[3])
+	{
+		if (e->hit[e->item[i].item_type](to_use, e->item[i], &t))
+			if (before == -1 || (t < before && t >= 0))
+			{
+				before = t;
+				ncurr = i;
+			}
+	}
+	if (ncurr < 0)
+		return (-1);
+	e->ncurr = ncurr;
+	e->hit[e->item[ncurr].item_type](to_use, e->item[ncurr], &t);
+	*newstart = add(add(scale(t, r.dir), *newstart), scale(0.001, r.dir));
+	if (e->item[ncurr].isNega && e->hit_negative == 1)
+		return (find_closest_item(r, e, newstart, curr));
+	else if (!e->item[ncurr].isNega && e->item[*curr].isNega)
+	{
+		e->hit_negative += 1;
+		*curr = ncurr;
+		find_post_nega(r, e, newstart, curr);
+	}
+	else if (e->item[ncurr].isNega && !e->item[ncurr].isNega)
+		return (e->item[ncurr].item_type);
+	return (-1);
 }

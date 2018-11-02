@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:42:55 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/02 17:28:29 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,29 +58,29 @@ void	parsing_item(char **s, t_env *e, int *k)
 	if (!(ft_strcmp(s[0], "CONE")))
 		co = newcone(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
 			newvec(ft_atoi(s[6] + 1), ft_atoi(s[7]), ft_atoi(s[8])),
-			ft_atoi(s[10]), ft_atoi(s[12]));
+			ft_atoi(s[10]), ft_atoi(s[12]), 0);
 	else if (!(ft_strcmp(s[0], "CYLINDER")))
 		co = newcyl(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
 			newvec(ft_atoi(s[6] + 1), ft_atoi(s[7]), ft_atoi(s[8])),
-			ft_atoi(s[10]), ft_atoi(s[12]));
+			ft_atoi(s[10]), ft_atoi(s[12]), 0);
 	else if (!(ft_strcmp(s[0], "SPHERE")))
 		co = newsph(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
-			ft_atoi(s[6]), ft_atoi(s[8]));
+			ft_atoi(s[6]), ft_atoi(s[8]), 0);
 	else if (!(ft_strcmp(s[0], "PLANE")))
 		co = newplane(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
-			ft_atoi(s[6]), ft_atoi(s[8]));
+			ft_atoi(s[6]), ft_atoi(s[8]), 0);
 	else if (!(ft_strcmp(s[0], "DISK")))
 		co = newdisk(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
 			newvec(ft_atoi(s[6] + 1), ft_atoi(s[7]), ft_atoi(s[8])),
-			ft_atoi(s[10]), ft_atoi(s[12]));
+			ft_atoi(s[10]), ft_atoi(s[12]), 0);
   else if (!(ft_strcmp(s[0], "F_CYLINDER")))
     co = newfcyl(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
         newvec(ft_atoi(s[6] + 1), ft_atoi(s[7]), ft_atoi(s[8])),
-        ft_atoi(s[10]), ft_atoi(s[12]), ft_atoi(s[14]));
+        ft_atoi(s[10]), ft_atoi(s[12]), ft_atoi(s[14]), 0);
   else if (!(ft_strcmp(s[0], "F_CONE")))
     co = newfcone(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
         newvec(ft_atoi(s[6] + 1), ft_atoi(s[7]), ft_atoi(s[8])),
-        ft_atoi(s[10]), ft_atoi(s[12]), ft_atoi(s[14]));
+        ft_atoi(s[10]), ft_atoi(s[12]), ft_atoi(s[14]), ft_atoi(s[15]));
 	if (ft_strcmp(s[0], "SPHERE"))
 		co.dir = normalize(co.dir);
 	e->item[*k] = co;

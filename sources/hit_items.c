@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:42:16 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/02 15:02:15 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,11 +148,10 @@ int		hitfcylinder(t_ray r, t_item cy, double *t)
 	sign = dotproduct(cy.dir, sub(intersection, cy.center)) /
 		magnitude2(cy.dir);
 	if (sign < 0)
-		return (hitdisk(r, newdisk(cy.dir, add(cy.center,
-						newvec(0.01, 0.01, 0.01)), cy.radius, cy.mat), t));
+		return (hitdisk(r, newdisk(cy.dir, cy.center, cy.radius, cy.mat, 0), t));
 	else if (sign > cy.height)
-		return (hitdisk(r, newdisk(cy.dir, add(cy.center, add(scale(cy.height,
-						cy.dir), newvec(0.01, 0.01, 0.01))), cy.radius, cy.mat), t));
+		return (hitdisk(r, newdisk(cy.dir, add(cy.center, scale(cy.height,
+						cy.dir)), cy.radius, cy.mat, 0), t));
 	else
 	{
 		*t = hit;
@@ -175,9 +174,9 @@ int		hitfcone(t_ray r, t_item cy, double *t)
 	if (sign > cy.height)
   {
     tmp = find_h(cy.dir, cy.center, intersection);
-		return (hitdisk(r, newdisk(cy.dir, add(cy.center, add(scale(cy.height,
-						cy.dir), newvec(0.01, 0.01, 0.01))), sqrt(magnitude2(sub(tmp,
-            intersection))), cy.mat), t));
+		return (hitdisk(r, newdisk(cy.dir, add(cy.center, scale(cy.height,
+						cy.dir)), sqrt(magnitude2(sub(tmp,
+						intersection))), cy.mat, 0), t));
   }
   else if (sign <= 0)
     return (0);

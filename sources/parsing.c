@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:42:45 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/02 14:14:14 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ int		read_file2(char *av, t_env *e)
 		fill_struct(e, line, index);
 		free(line);
 	}
+	e->hit[SPHERE] = &hitsphere;
+	e->hit[PLANE] = &hitplane;
+	e->hit[I_CYL] = &hitcylinder;
+	e->hit[I_CONE] = &hitcone;
+	e->hit[DISK] = &hitdisk;
+	e->hit[F_CYL] = &hitfcylinder;
+	e->hit[F_CONE] = &hitfcone;
 	free(line);
 	close(fd);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:44:53 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/02 16:56:10 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_vec			find_normal_vec(t_ray r, int itemtype, int curr, t_env *e)
 	t_vec	n;
 	double	finite;
 
+	if (e->hit_negative > 0)
+		curr = e->ncurr;
 	n = newvec(0, 0, 0);
 	if (itemtype == EMPTY)
 		return (n);
@@ -59,12 +61,14 @@ t_vec			find_normal_vec(t_ray r, int itemtype, int curr, t_env *e)
 	finite = dotproduct(e->item[curr].dir, sub(newstart, e->item[curr].center))
 		/ magnitude2(e->item[curr].dir);
 	if (itemtype == PLANE || itemtype == DISK || (itemtype == F_CYL
-				&& (finite <= 0 || finite >= e->item[curr].height)) ||
-        (itemtype == F_CONE && (finite <= 0 || finite >= e->item[curr].height)))
+				&& (finite <= 0.001 || finite >= e->item[curr].height - 0.001)) ||
+        (itemtype == F_CONE && (finite >= e->item[curr].height - 0.001)))
 		n = (dotproduct(r.dir, e->item[curr].dir) < 0 ? e->item[curr].dir
 				: opposite(e->item[curr].dir));
 	else
 		n = find_normal_vec_if_not_plane(itemtype, curr, newstart, e);
+	if (e->hit_negative > 0)
+		n = sub(newvec(0, 0, 0), n);
 	if (!magnitude2(n))
 		return (newvec(0, 0, 0));
 	return (normalize(n));
