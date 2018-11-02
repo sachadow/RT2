@@ -159,3 +159,31 @@ int		hitfcylinder(t_ray r, t_item cy, double *t)
 		return (1);
 	}
 }
+
+int		hitfcone(t_ray r, t_item cy, double *t)
+{
+	double	hit;
+	double	sign;
+	t_vec	intersection;
+  t_vec tmp;
+
+	if (!hitcone(r, cy, &hit))
+		return (0);
+	intersection = add(r.start, scale(hit, r.dir));
+	sign = dotproduct(cy.dir, sub(intersection, cy.center)) /
+		magnitude2(cy.dir);
+	if (sign > cy.height)
+  {
+    tmp = find_h(cy.dir, cy.center, intersection);
+		return (hitdisk(r, newdisk(cy.dir, add(cy.center, add(scale(cy.height,
+						cy.dir), newvec(0.01, 0.01, 0.01))), sqrt(magnitude2(sub(tmp,
+            intersection))), cy.mat), t));
+  }
+  else if (sign <= 0)
+    return (0);
+	else
+	{
+		*t = hit;
+		return (1);
+	}
+}

@@ -38,6 +38,7 @@
 # define I_CYL		4
 # define DISK		5
 # define F_CYL		6
+# define F_CONE		7
 
 # define KPRESSMASK			1L << 0
 # define KRELEASEMASK		1L << 1
@@ -112,44 +113,6 @@ typedef struct		s_item
 	int				mat;
 }					t_item;
 
-typedef struct		s_sph
-{
-	t_vec			center;
-	double			radius;
-	int				mat;
-}					t_sph;
-
-typedef struct		s_plane
-{
-	t_vec			dir;
-	double			d;
-	int				mat;
-}					t_plane;
-
-typedef struct		s_disk
-{
-	t_vec			center;
-	t_vec			dir;
-	double			radius;
-	int				mat;
-}					t_disk;
-
-typedef struct		s_cone
-{
-	t_vec			dir;
-	t_vec			center;
-	double			angle;
-	int				mat;
-}					t_cone;
-
-typedef struct		s_cyl
-{
-	t_vec			dir;
-	t_vec			center;
-	double			radius;
-	int				mat;
-}					t_cyl;
-
 typedef struct		s_work
 {
 	t_ray			r;
@@ -200,6 +163,7 @@ int					hitsphere(t_ray r, t_item s, double *t);
 int					hitcylinder(t_ray r, t_item c, double *t);
 int					hitcone(t_ray r, t_item c, double *t);
 int         hitfcylinder(t_ray r, t_item cy, double *t);
+int         hitfcone(t_ray r, t_item cy, double *t);
 int					calc_discr(double a, double b, double c, double *t);
 
 t_vec				calc_h1(t_ray r, t_vec dir);
@@ -254,6 +218,7 @@ t_item				newcyl(t_vec dir, t_vec center, double radius, int mat);
 t_item				newdisk(t_vec dir, t_vec center, double radius, int mat);
 t_item				newcone(t_vec dir, t_vec center, double angle, int mat);
 t_item        newfcyl(t_vec dir, t_vec center, double radius, int mat, double height);
+t_item        newfcone(t_vec dir, t_vec center, double radius, int mat, double height);
 
 t_ray				refracted_ray(t_vec i, t_vec nm, double n, t_vec newstart);
 t_ray				reflected_ray(t_vec i, t_vec n, t_vec newstart);

@@ -32,6 +32,7 @@ int			find_closest_item(t_ray r, t_env *e, t_vec *newstart, int *curr)
 	hit[I_CONE] = &hitcone;
 	hit[DISK] = &hitdisk;
   hit[F_CYL] = &hitfcylinder;
+	hit[F_CONE] = &hitfcone;
 	*curr = -1;
 	i = -1;
 	while (++i < e->nbs[3])

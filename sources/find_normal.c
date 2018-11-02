@@ -28,7 +28,7 @@ t_vec		find_normal_vec_if_not_plane(int itemtype, int curr,
 		n = sub(newstart, e->item[curr].center);
 	else if (itemtype == I_CYL || itemtype == F_CYL)
 		n = find_cylinder_normal(newstart, e->item[curr]);
-	else if (itemtype == I_CONE)
+	else if (itemtype == I_CONE || itemtype == F_CONE)
 		n = find_cone_normal(newstart, e->item[curr]);
 	return (n);
 }

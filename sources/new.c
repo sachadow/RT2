@@ -143,3 +143,20 @@ t_item	newfcyl(t_vec dir, t_vec center, double radius, int mat, double height)
 	cy.angle = 0;
 	return (cy);
 }
+
+t_item	newfcone(t_vec dir, t_vec center, double angle, int mat, double height)
+{
+	t_item	co;
+
+	if (angle <= 0 || angle >= 70 || mat < 0)
+		ft_printerror("Wrong value for cone");
+	co.item_type = F_CONE;
+	co.dir = dir;
+	co.center = center;
+	co.radius = 0;
+	co.mat = mat;
+	co.height = height;
+	co.d = 0;
+	co.angle = angle;
+	return (co);
+}

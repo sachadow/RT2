@@ -119,6 +119,8 @@ void	count_param(int nbs[6], char **s, int l)
 		nbs[3]++;
 	else if (!ft_strcmp(s[0], "F_CYLINDER"))
 		nbs[3]++;
+	else if (!ft_strcmp(s[0], "F_CONE"))
+		nbs[3]++;
 	else
 		ft_printerror("Invalid file");
 }

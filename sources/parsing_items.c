@@ -52,7 +52,7 @@ void	parsing_item(char **s, t_env *e, int *k)
 
 	if (ft_strcmp(s[0], "CONE") && ft_strcmp(s[0], "CYLINDER") && ft_strcmp(s[0],
 				"SPHERE") && ft_strcmp(s[0], "PLANE") && ft_strcmp(s[0], "DISK") &&
-        ft_strcmp(s[0], "F_CYLINDER"))
+        ft_strcmp(s[0], "F_CYLINDER") && ft_strcmp(s[0], "F_CONE"))
 		return ;
 	co = e->item[*k];
 	if (!(ft_strcmp(s[0], "CONE")))
@@ -75,6 +75,10 @@ void	parsing_item(char **s, t_env *e, int *k)
 			ft_atoi(s[10]), ft_atoi(s[12]));
   else if (!(ft_strcmp(s[0], "F_CYLINDER")))
     co = newfcyl(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
+        newvec(ft_atoi(s[6] + 1), ft_atoi(s[7]), ft_atoi(s[8])),
+        ft_atoi(s[10]), ft_atoi(s[12]), ft_atoi(s[14]));
+  else if (!(ft_strcmp(s[0], "F_CONE")))
+    co = newfcone(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
         newvec(ft_atoi(s[6] + 1), ft_atoi(s[7]), ft_atoi(s[8])),
         ft_atoi(s[10]), ft_atoi(s[12]), ft_atoi(s[14]));
 	if (ft_strcmp(s[0], "SPHERE"))

@@ -59,7 +59,8 @@ t_vec			find_normal_vec(t_ray r, int itemtype, int curr, t_env *e)
 	finite = dotproduct(e->item[curr].dir, sub(newstart, e->item[curr].center))
 		/ magnitude2(e->item[curr].dir);
 	if (itemtype == PLANE || itemtype == DISK || (itemtype == F_CYL
-				&& (finite <= 0 || finite >= e->item[curr].height)))
+				&& (finite <= 0 || finite >= e->item[curr].height)) ||
+        (itemtype == F_CONE && (finite <= 0 || finite >= e->item[curr].height)))
 		n = (dotproduct(r.dir, e->item[curr].dir) < 0 ? e->item[curr].dir
 				: opposite(e->item[curr].dir));
 	else
