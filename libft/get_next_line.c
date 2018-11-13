@@ -3,87 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sderet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/28 19:44:57 by squiquem          #+#    #+#             */
-/*   Updated: 2017/12/05 23:34:19 by squiquem         ###   ########.fr       */
+/*   Created: 2018/06/28 16:55:34 by sderet            #+#    #+#             */
+/*   Updated: 2018/06/28 16:55:39 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		cmp_fd(t_gnl *a, int *b)
+static int		ft_i(char *str)
 {
-	return (a->fd - *b);
+	int i;
+
+	i = 0;
+	while (str[i] != '\n' && str[i] != '\0')
+		i++;
+	return (i);
 }
 
-static void		free_gnl(void *a, size_t size)
+static void		ft_if_one(char **str, char **line, int i)
 {
-	(void)size;
-	ft_strdel(&((t_gnl *)a)->str);
-	free(a);
+	*line = ft_strsub(*str, 0, i);
+	*str = ft_strsubf(*str, i + 1, ((ft_strlen(*str) - i)) - 1);
 }
 
-static t_list	*newfd(t_list **head, int fd)
+static void		ft_if_two(char **str, char **line)
 {
-	t_gnl		new;
-
-	new.fd = fd;
-	new.str = ft_memalloc((BUFF_SIZE > 0 ? BUFF_SIZE : 0) + 1);
-	ft_lstadd(head, ft_lstnew(&new, sizeof(t_gnl)));
-	return (*head);
-}
-
-static int		read_loop(int fd, char **line, char *gnl)
-{
-	char	buf[BUFF_SIZE + 1];
-	char	*pos;
-	char	*tmp;
-	int		ret;
-
-	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
-	{
-		buf[ret] = '\0';
-		tmp = *line;
-		if ((pos = ft_strchr(buf, '\n')))
-		{
-			ft_strcpy(gnl, pos + 1);
-			*pos = 0;
-		}
-		if (!(*line = ft_strjoin(*line, buf)))
-			return (-1);
-		ft_strdel(&tmp);
-		if (pos)
-			return (1);
-	}
-	if (ret < 0)
-		return (-1);
-	return (**line ? 1 : 0);
+	*line = ft_strdup(*str);
+	ft_strdel(str);
 }
 
 int				get_next_line(const int fd, char **line)
 {
-	static t_list	*head;
-	t_list			*tmp;
-	char			*pos;
-	char			*gnl;
-	int				ret;
+	int			ret;
+	char		buf[BUFF_SIZE + 1];
+	static char	*str;
 
-	if (fd < 0 || !line)
+	ret = 0;
+	if (fd < 0 || read(fd, buf, 0) < 0 || line == NULL)
 		return (-1);
-	if (!(tmp = ft_lstfind(head, (void *)&fd, &cmp_fd)))
-		tmp = newfd(&head, fd);
-	gnl = ((t_gnl *)tmp->content)->str;
-	if (!(*line = ft_strdup(gnl)))
-		return (-1);
-	ft_bzero(gnl, BUFF_SIZE + 1);
-	if ((pos = ft_strchr(*line, '\n')))
+	if (str == NULL || ft_strchr(str, '\n') == NULL)
 	{
-		ft_strcpy(gnl, pos + 1);
-		*pos = 0;
-		return (1);
+		str = (!str) ? ft_strnew(0) : str;
+		while ((ret = read(fd, buf, BUFF_SIZE)))
+		{
+			buf[ret] = '\0';
+			str = ft_strjoinfree(str, buf, 1);
+			if (ft_strchr(str, '\n') != NULL)
+				break ;
+		}
+		if (ret < BUFF_SIZE && str[0] == '\0')
+			return (0);
 	}
-	if (!(ret = read_loop(fd, line, gnl)))
-		ft_lstdelif(&head, (int *)&fd, cmp_fd, &free_gnl);
-	return (ret);
+	if (str && ft_strchr(str, '\n') != NULL)
+		ft_if_one(&str, line, ft_i(str));
+	else if (str && ft_strchr(str, '\n') == NULL)
+		ft_if_two(&str, line);
+	return (1);
 }

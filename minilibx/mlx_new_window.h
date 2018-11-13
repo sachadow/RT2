@@ -14,6 +14,7 @@
   func_t	event_funct[MAX_EVENT];
   void		*(event_param[MAX_EVENT]);
   int		keyrepeat;
+  int		mouserelative;
   int		keyflag;
   int		size_x;
   int		size_y;
@@ -21,6 +22,7 @@
 - (NSWindowEvent *) initWithContentRect:(NSRect)rect styleMask:(NSUInteger)winstyle backing:(NSBackingStoreType)bck defer:(BOOL) dfr;
 - (void) setEvent:(int)event andFunc:(func_t)func andParam:(void *)param;
 - (void) setKeyRepeat:(int)mode;
+- (void) setMouseRelative:(int)mode;
 - (void) exposeNotification:(NSNotification *)note;
 - (void) closeNotification:(NSNotification *)note;
 @end
@@ -52,5 +54,7 @@
 - (NSOpenGLContext *) ctx;
 - (void) setEvent:(int)event andFunc:(func_t)func andParam:(void *)param;
 - (void) setKeyRepeat:(int)mode;
+- (void) setMouseRelative:(int)mode;
+- (void) centerTopWin;
 - (void) ctxNeedsUpdate;
 @end

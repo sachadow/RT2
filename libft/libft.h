@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 10:26:24 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/09 15:13:11 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/09 11:31:17 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,7 @@ double				ft_min(double a, double b);
 double				ft_max(double a, double b);
 double				ft_abs(double x);
 double				ft_clamp(double min, double max, double x);
+char				*ft_strjoinfree(char *s1, char *s2, int n);
+char				*ft_strsubf(char const *s, unsigned int start, size_t len);
 
 #endif

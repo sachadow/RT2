@@ -6,14 +6,13 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:41:19 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/13 17:59:57 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include <string.h>
 #include <errno.h>
-#include <stdio.h>
 
 /*
 **	DRAW_POINT function:
@@ -72,8 +71,9 @@ int			reload(t_env *e)
 	int	i;
 	int	rc;
 
-	if (!(e->img = mlx_new_image(e->mlx, IMG_W, IMG_H)) ||
-		!(e->pixel_img = (unsigned char*)mlx_get_data_addr(e->img, &e->bpp,
+	key_hook(e);
+	if (!(e->img = mlx_new_image(e->mlx, IMG_W, IMG_H))
+		|| !(e->pixel_img = (unsigned char*)mlx_get_data_addr(e->img, &e->bpp,
 			&e->s_line, &e->ed)))
 		ft_printerror("Error mlx");
 	i = -1;
@@ -84,6 +84,33 @@ int			reload(t_env *e)
 	while (++i < NB_THR)
 		if (pthread_join(e->thr[i], NULL))
 			ft_putendl_fd(strerror(errno), 2);
+	mlx_put_image_to_window(e->mlx, e->win, e->img, 0, 0);
+	mlx_destroy_image(e->mlx, e->img);
+	return (0);
+}
+
+int			debug(t_env *e)
+{
+	int				x;
+	int				y;
+	t_color			c;
+
+	key_hook(e);
+	if (!(e->img = mlx_new_image(e->mlx, IMG_W, IMG_H))
+		|| !(e->pixel_img = (unsigned char*)mlx_get_data_addr(e->img, &e->bpp,
+			&e->s_line, &e->ed)))
+		ft_printerror("Error mlx");
+	y = IMG_H;
+	while (--y > -1)
+	{
+		x = -1;
+		while (++x < IMG_W)
+		{
+			e->debug = (x == 450 && y == 330) ? 1 : 0;
+			c = color_calc(x, y, e);
+			draw_point(e, x, y, c);
+		}
+	}
 	mlx_put_image_to_window(e->mlx, e->win, e->img, 0, 0);
 	mlx_destroy_image(e->mlx, e->img);
 	return (0);

@@ -71,6 +71,7 @@ int get_mouse_button(NSEventType eventtype)
 	  event_param[i] = NULL;
 	}
       keyrepeat = 0;
+      mouserelative = 0;
       keyflag = 0;
       size_x = rect.size.width;
       size_y = rect.size.height;
@@ -96,6 +97,11 @@ int get_mouse_button(NSEventType eventtype)
 - (void) setKeyRepeat:(int)mode
 {
   keyrepeat = mode;
+}
+
+- (void) setMouseRelative:(int)mode
+{
+  mouserelative = mode;
 }
 
 - (BOOL) acceptsFirstResponder
@@ -245,11 +251,31 @@ int get_mouse_button(NSEventType eventtype)
 - (void) mouseMoved:(NSEvent *)theEvent
 {
   NSPoint thepoint;
+  static bool first = true;
 
-  thepoint = [theEvent locationInWindow];
+  if (mouserelative)
+  {
+    int32_t deltaX;
+    int32_t deltaY;
+    CGGetLastMouseDelta(&deltaX, &deltaY);
+    if (first)
+    {
+      first = false;
+      return ;
+    }
+    thepoint.x = deltaX;
+    thepoint.y = deltaY;
+    if (event_funct[6] != NULL)
+      event_funct[6]((int)(thepoint.x), (int)(thepoint.y), event_param[6]);
+  }
+  else
+  {
+    first = true;
+    thepoint = [theEvent locationInWindow];
+    if (event_funct[6] != NULL)
+      event_funct[6]((int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[6]);
+  }
   //  printf("Mouse moved  pos: %f, %f\n", thepoint.x, thepoint.y);
-  if (event_funct[6] != NULL)
-    event_funct[6]((int)(thepoint.x), size_y - 1 - (int)(thepoint.y), event_param[6]);
 }
 
 
@@ -531,6 +557,31 @@ int get_mouse_button(NSEventType eventtype)
   [win setKeyRepeat:mode];
 }
 
+- (void) setMouseRelative:(int)mode
+{
+  [win setMouseRelative:mode];
+  if (mode)
+  {
+    CGPoint mouse_pos;
+    NSRect rect = [win frame];
+    mouse_pos.x = rect.origin.x + rect.size.width / 2;
+    mouse_pos.y = win.screen.frame.size.height - rect.origin.y - rect.size.height / 2;
+    CGDisplayMoveCursorToPoint(CGMainDisplayID(), mouse_pos);
+    CGAssociateMouseAndMouseCursorPosition(false);
+    CGDisplayHideCursor(CGMainDisplayID());
+  }
+  else
+  {
+    CGAssociateMouseAndMouseCursorPosition(true);
+    CGDisplayShowCursor(CGMainDisplayID());
+  }
+}
+
+- (void) centerTopWin
+{
+  [win center];
+}
+
 - (void) clearWin
 {
   glClearColor(0, 0, 0, 0);
@@ -716,6 +767,24 @@ int     mlx_do_key_autorepeaton(mlx_ptr_t *mlx_ptr)
       [(id)(win->winid) setKeyRepeat:1];
       win = win->next;
     }
+  return (0);
+}
+
+int	mlx_do_mouse_relativeoff(mlx_win_list_t *win_ptr)
+{
+  [(id)(win_ptr->winid) setMouseRelative:0];
+  return (0);
+}
+
+int	mlx_do_mouse_relativeon(mlx_win_list_t *win_ptr)
+{
+  [(id)(win_ptr->winid) setMouseRelative:1];
+  return (0);
+}
+
+int     mlx_centertop_window(mlx_win_list_t *win_ptr)
+{
+  [(id)(win_ptr->winid) centerTopWin];
   return (0);
 }
 

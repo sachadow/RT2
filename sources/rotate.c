@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:43:05 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/07 10:00:42 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,30 @@ t_vec	rotate(t_vec u, double anglex, double angley, double anglez)
 	w = rotate_y(v, angley);
 	x = rotate_z(w, anglez);
 	return (x);
+}
+
+/*
+**  ROTATE_AXIS function:
+**  Rotation in space according to the axis in parameter
+*/
+
+t_vec	rotate_axis(t_vec u, t_vec r, double angle)
+{
+	t_vec	res;
+	double	c;
+	double	s;
+
+	angle = angle * M_PI / 180;
+	c = cos(angle);
+	s = sin(angle);
+	res.x = (r.x * r.x * (1 - c) + c) * u.x
+			+ (r.x * r.y * (1 - c) - r.z * s) * u.y
+			+ (r.x * r.z * (1 - c) + r.y * s) * u.z;
+	res.y = (r.x * r.y * (1 - c) + r.z * s) * u.x
+			+ (r.y * r.y * (1 - c) + c) * u.y
+			+ (r.y * r.z * (1 - c) - r.x * s) * u.z;
+	res.z = (r.x * r.z * (1 - c) - r.y * s) * u.x
+			+ (r.y * r.z * (1 - c) + r.x * s) * u.y
+			+ (r.z * r.z * (1 - c) + c) * u.z;
+	return (res);
 }

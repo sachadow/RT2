@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/02 17:28:29 by sderet           ###   ########.fr       */
+/*   Updated: 2018/11/13 15:42:06 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ void	parsing_item(char **s, t_env *e, int *k)
 			ft_atoi(s[6]), ft_atoi(s[8]), ft_atoi(s[9]));
 	else if (!(ft_strcmp(s[0], "PLANE")))
 		co = newplane(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
-			ft_atoi(s[6]), ft_atoi(s[8]), 0);
+			ft_atoi(s[6]), ft_atoi(s[8]));
 	else if (!(ft_strcmp(s[0], "DISK")))
 		co = newdisk(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
 			newvec(ft_atoi(s[6] + 1), ft_atoi(s[7]), ft_atoi(s[8])),
-			ft_atoi(s[10]), ft_atoi(s[12]), 0);
+			ft_atoi(s[10]), ft_atoi(s[12]));
   else if (!(ft_strcmp(s[0], "F_CYLINDER")))
     co = newfcyl(newvec(ft_atoi(s[2] + 1), ft_atoi(s[3]), ft_atoi(s[4])),
         newvec(ft_atoi(s[6] + 1), ft_atoi(s[7]), ft_atoi(s[8])),

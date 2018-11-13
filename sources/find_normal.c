@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:41:38 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/13 16:31:23 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,19 @@
 **	(only if the item != plane)
 */
 
-t_vec		find_normal_vec_if_not_plane(int itemtype, int curr,
-			t_vec newstart, t_env *e)
+t_vec		find_normal_vec_if_not_plane(int id, t_vec newstart, t_env *e)
 {
 	t_vec	n;
+	int		type;
 
+	type = itemtype(id, e);
 	n = newvec(0, 0, 0);
-	if (itemtype == SPHERE)
-		n = sub(newstart, e->item[curr].center);
-	else if (itemtype == I_CYL || itemtype == F_CYL)
-		n = find_cylinder_normal(newstart, e->item[curr]);
-	else if (itemtype == I_CONE || itemtype == F_CONE)
-		n = find_cone_normal(newstart, e->item[curr]);
+	if (type == SPHERE)
+		n = sub(newstart, e->item[id].center);
+	else if (type == I_CYL || type == F_CYL)
+		n = find_cylinder_normal(newstart, e->item[id]);
+	else if (type == I_CONE)
+		n = find_cone_normal(newstart, e->item[id]);
 	return (n);
 }
 
@@ -94,24 +95,50 @@ t_vec		find_h(t_vec cd, t_vec cc, t_vec n)
 }
 
 /*
-**	FIND_MATERIAL function:
-**	Finds material of the hit item thanks to the index stored in the structure
+**	FIND_NORMAL_VEC function:
+**	Finds the normal vector to an item according to the incoming ray
 */
 
-t_mat		find_material(int itemtype, int curr, t_vec newstart, t_env *e)
+t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 {
-	t_mat	m;
+	t_vec	newstart;
+	t_vec	n;
+	double	finite;
+	int		type;
 
-	m.diffuse = newcolor(0, 0, 0);
-	m.reflection = 0;
-	m.specvalue = 0;
-	m.specpower = 0;
-	if (itemtype == PLANE && e->item[curr].mat < e->nbs[MAT]
-		&& ((int)(floor(newstart.x / 100) + floor(newstart.z / 100)) % 2))
-		m = e->mat[e->item[curr].mat];
-	else if (itemtype == PLANE && e->item[curr].mat < e->nbs[MAT]
-		&& !((int)(floor(newstart.x / 100) + floor(newstart.z / 100)) % 2))
-		m = e->mat[(e->item[curr].mat + 1) % e->nbs[MAT]];
-	m = e->mat[e->item[curr].mat];
-	return (m);
+	n = newvec(0, 0, 0);
+	if (id == EMPTY)
+		return (n);
+	type = itemtype(id, e);
+	newstart = find_newstart(e, r);
+	finite = dotproduct(e->item[id].dir, sub(newstart, e->item[id].center))
+			/ magnitude2(e->item[id].dir);
+	if (type == PLANE || type == DISK || (type == F_CYL
+				&& (finite <= 0.001 || finite >= e->item[id].height - 0.001)) ||
+				(type == F_CONE && (finite >= e->item[id].height - 0.001)))
+		n = (dotproduct(r.dir, e->item[id].dir) < 0 ? e->item[id].dir
+			: opposite(e->item[id].dir));
+	else if (type == BOX)
+	{
+		if ((newstart.x > e->item[id].center.x - 0.001 && newstart.x <
+					e->item[id].center.x + 0.001) || (newstart.x >
+					e->item[id].end.x - 0.001 && newstart.x <
+					e->item[id].end.x + 0.001))
+			n = (newstart.x > e->item[id].center.x + 0.001 ? newvec(1, 0, 0)
+					: opposite(newvec(1, 0, 0)));
+		if ((newstart.y > e->item[id].center.y - 0.001 && newstart.y <
+					e->item[id].center.y + 0.001) || (newstart.y >
+					e->item[id].end.y - 0.001 && newstart.y <
+					e->item[id].end.y + 0.001))
+			n = (newstart.y > e->item[id].center.y + 0.001 ? newvec(0, 1, 0)
+					: opposite(newvec(0, 1, 0)));
+		else
+			n = (newstart.z > e->item[id].center.z + 0.001 ? newvec(0, 0, 1)
+					: opposite(newvec(0, 0, 1)));
+	}
+	else
+		n = find_normal_vec_if_not_plane(id, newstart, e);
+	if (!magnitude2(n))
+		return (newvec(0, 0, 0));
+	return (normalize(n));
 }

@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:40:45 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/09 15:59:47 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,17 @@
 
 t_color		color_calc(int x, int y, t_env *e)
 {
-	int		itemtype;
-	int		curr;
-	t_vec	newstart;
 	t_work	w;
+	int		i;
 
 	w.c = e->backgroundcolor;
 	w.coef = 1.0;
 	w.r.start = e->cam->pos;
 	w.r.dir = set_ray_dir(x, y, e);
-	w.n = 1.0;
-	itemtype = find_closest_item(w.r, e, &newstart, &curr);
-	if (itemtype == EMPTY)
-		return (e->backgroundcolor);
-	w.n_vec = find_normal_vec(w.r, itemtype, curr, e);
+	w.n = 1.000;
+	i = -1;
+	while (++i < REFRINCL)
+		w.id[i] = -1;
 	return (ft_resolve(e, w, 0));
 }
 
@@ -42,32 +39,33 @@ t_color		color_calc(int x, int y, t_env *e)
 **	(Lambert diffusion & Blinn-Phuong reflection)
 */
 
-t_color		get_light_value(t_work w, t_vec newstart, t_mat currmat,
-			t_env *e)
+t_color		get_light_value(t_work w, t_vec newstart, t_mat mat, t_env *e)
 {
 	int		j;
-	t_light	currlight;
 	t_vec	dist;
 	t_ray	lightray;
 	t_color	c;
+	int		inshdw;
 
 	c = e->backgroundcolor;
 	j = -1;
 	while (++j < e->nbs[LIGHT])
 	{
-		currlight = e->light[j];
-		dist = sub(currlight.pos, newstart);
+		dist = sub(e->light[j].pos, newstart);
 		if (dotproduct(w.n_vec, dist) <= 0.0f
 			|| sqrt(magnitude2(dist)) <= 0.0f)
 			continue;
 		lightray.start = newstart;
 		lightray.dir = normalize(dist);
-		if (!in_shadow(lightray, e, sqrt(magnitude2(dist))))
+		inshdw = in_shadow(lightray, e, sqrt(magnitude2(dist)));
+		if (inshdw == EMPTY || e->mat[e->item[inshdw].mat].n)
 		{
-			color_lambert(&c, lambert(lightray, w.n_vec), currlight, currmat);
+			color_lambert(&c, lambert(lightray, w.n_vec), e->light[j], mat);
 			color_blinnphuong(&c, blinnphuong(lightray, &w.r, w.n_vec,
-						currmat), currlight);
+						mat), e->light[j]);
 		}
+		if (inshdw != -1 && e->mat[e->item[inshdw].mat].n)
+			c = multiply_color(c, e->mat[e->item[inshdw].mat].transparency);
 	}
 	return (c);
 }
@@ -85,10 +83,8 @@ t_vec		set_ray_dir(int x, int y, t_env *e)
 	t_vec	l;
 
 	k = e->cam->dir;
-	if (k.x == 0.0f && k.y == 1.0f && k.z == 0.0f)
-		l = newvec(0.0, 0.0, 1.0);
-	else
-		l = newvec(0.0, 1.0, 0.0);
+	l = (k.x == 0.0f && k.y == 1.0f && k.z == 0.0f) ?
+		newvec(0.0, 0.0, 1.0) : newvec(0.0, 1.0, 0.0);
 	i = crossproduct(k, l);
 	j = crossproduct(i, k);
 	l.x = (IMG_W - (double)x * 2.0) / IMG_W * i.x
