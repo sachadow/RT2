@@ -73,6 +73,7 @@ int		read_file2(char *av, t_env *e)
 	e->hit[DISK] = &hitdisk;
 	e->hit[F_CYL] = &hitfcylinder;
 	e->hit[F_CONE] = &hitfcone;
+	e->hit[BOX] = &hitbox;
 	free(line);
 	close(fd);
 	return (1);
@@ -127,6 +128,8 @@ void	count_param(int nbs[6], char **s, int l)
 	else if (!ft_strcmp(s[0], "F_CYLINDER"))
 		nbs[3]++;
 	else if (!ft_strcmp(s[0], "F_CONE"))
+		nbs[3]++;
+	else if (!ft_strcmp(s[0], "BOX"))
 		nbs[3]++;
 	else
 		ft_printerror("Invalid file");

@@ -36,9 +36,10 @@
 # define PLANE		2
 # define I_CONE		3
 # define I_CYL		4
-# define DISK		5
+# define DISK	  	5
 # define F_CYL		6
 # define F_CONE		7
+# define BOX		  8
 
 # define KPRESSMASK			1L << 0
 # define KRELEASEMASK		1L << 1
@@ -105,8 +106,9 @@ typedef struct		s_item
 	int				item_type;
 	int				isNega;
 	t_vec			center;
+  t_vec     end;
 	t_vec			dir;
-	t_vec			sizes;
+	t_vec			signs;
 	double			d;
 	double			height;
 	double			radius;
@@ -168,6 +170,7 @@ int					hitcylinder(t_ray r, t_item c, double *t);
 int					hitcone(t_ray r, t_item c, double *t);
 int					hitfcylinder(t_ray r, t_item cy, double *t);
 int					hitfcone(t_ray r, t_item cy, double *t);
+int         hitbox(t_ray r, t_item bo, double *t);
 int					calc_discr(double a, double b, double c, double *t);
 
 t_vec				calc_h1(t_ray r, t_vec dir);
@@ -225,6 +228,7 @@ t_item				newfcyl(t_vec dir, t_vec center, double radius, int mat, double height
 				int isNega);
 t_item				newfcone(t_vec dir, t_vec center, double radius, int mat, double height,
 				int isNega);
+t_item        newbox(t_vec center, t_vec end, int mat);
 
 t_ray				refracted_ray(t_vec i, t_vec nm, double n, t_vec newstart);
 t_ray				reflected_ray(t_vec i, t_vec n, t_vec newstart);

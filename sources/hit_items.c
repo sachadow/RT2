@@ -186,3 +186,49 @@ int		hitfcone(t_ray r, t_item cy, double *t)
 		return (1);
 	}
 }
+
+int   hitbox(t_ray r, t_item bo, double *t)
+{
+  t_vec   min;
+  t_vec   max;
+  double  tmp;
+
+  min.x = (bo.center.x - r.start.x) / r.dir.x;
+  max.x = (bo.end.x - r.start.x) / r.dir.x;
+  if (min.x > max.x)
+  {
+    tmp = min.x;
+    min.x = max.x;
+    max.x = tmp;
+  }
+  min.y = (bo.center.y - r.start.y) / r.dir.y;
+  max.y = (bo.end.y - r.start.y) / r.dir.y;
+  if (min.y > max.y)
+  {
+    tmp = min.y;
+    min.y = max.y;
+    max.y = tmp;
+  }
+  if (min.x > max.y || min.y > max.x)
+    return (0);
+  min.x = (min.y > min.x ? min.y : min.x);
+  max.x = (max.y < max.x ? max.y : max.x);
+  min.z = (bo.center.z - r.start.z) / r.dir.z;
+  max.z = (bo.end.z - r.start.z) / r.dir.z;
+  if (min.z > max.z)
+  {
+    tmp = min.z;
+    min.z = max.z;
+    max.z = tmp;
+  }
+  if (min.x > max.z || min.z > max.x)
+    return (0);
+  min.x = (min.z > min.x ? min.z : min.x);
+  max.x = (max.z < max.x ? max.z : max.x);
+  if (min.x < 0 && max.x < 0)
+    return (0);
+  else if (min.x < 0)
+    return ((*t = max.x) > 0 ? 1 : 0);
+  else
+    return ((*t = min.x) > 0 ? 1 : 0);
+}

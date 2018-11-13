@@ -58,7 +58,7 @@ MLX				=	-L minilibx/ -lmlx -framework OpenGL -framework AppKit
 
 CC				=	gcc
 
-CFLAGS			=	-Wall -Wextra -Werror -g
+CFLAGS		=	-Wall -Wextra -Werror -g
 
 opti			:
 	@make -j8 all

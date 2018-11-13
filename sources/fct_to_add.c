@@ -65,6 +65,24 @@ t_vec			find_normal_vec(t_ray r, int itemtype, int curr, t_env *e)
         (itemtype == F_CONE && (finite >= e->item[curr].height - 0.001)))
 		n = (dotproduct(r.dir, e->item[curr].dir) < 0 ? e->item[curr].dir
 				: opposite(e->item[curr].dir));
+  else if (itemtype == BOX)
+  {
+    if ((newstart.x > e->item[curr].center.x - 0.001 && newstart.x <
+          e->item[curr].center.x + 0.001) || (newstart.x >
+          e->item[curr].end.x - 0.001 && newstart.x <
+          e->item[curr].end.x + 0.001))
+		  n = (dotproduct(r.dir, newvec(1, 0, 0)) < 0 ? newvec(1, 0, 0)
+			  	: opposite(newvec(1, 0, 0)));
+    else if ((newstart.y > e->item[curr].center.y - 0.001 && newstart.y <
+          e->item[curr].center.y + 0.001) || (newstart.y >
+          e->item[curr].end.y - 0.001 && newstart.y <
+          e->item[curr].end.y + 0.001))
+		  n = (dotproduct(r.dir, newvec(0, 1, 0)) < 0 ? newvec(0, 1, 0)
+			  	: opposite(newvec(0, 1, 0)));
+    else
+		  n = (dotproduct(r.dir, newvec(0, 0, 1)) < 0 ? newvec(0, 0, 1)
+			  	: opposite(newvec(0, 0, 1)));
+  }
 	else
 		n = find_normal_vec_if_not_plane(itemtype, curr, newstart, e);
 	if (e->hit_negative > 0)

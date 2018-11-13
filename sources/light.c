@@ -78,7 +78,7 @@ void		color_blinnphuong(t_color *c, double b, t_light currl)
 int			in_shadow(t_ray lightray, t_env *e, double t)
 {
 	int		k;
-	int		(*hit[10])(t_ray, t_item, double *);
+	int		(*hit[15])(t_ray, t_item, double *);
 
 	hit[SPHERE] = &hitsphere;
 	hit[PLANE] = &hitplane;
@@ -87,6 +87,7 @@ int			in_shadow(t_ray lightray, t_env *e, double t)
 	hit[DISK] = &hitdisk;
 	hit[F_CYL] = &hitfcylinder;
 	hit[F_CONE] = &hitfcone;
+	hit[BOX] = &hitbox;
 	k = -1;
 	while (++k < e->nbs[3])
 		if (hit[e->item[k].item_type](lightray, e->item[k], &t) && t > 0.001 &&

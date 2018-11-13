@@ -169,3 +169,15 @@ t_item	newfcone(t_vec dir, t_vec center, double angle, int mat, double height, i
 	co.angle = angle;
 	return (co);
 }
+
+t_item  newbox(t_vec center, t_vec end, int mat)
+{
+  t_item bo;
+
+  bo.item_type = BOX;
+  bo.center = center;
+  bo.end = end;
+  bo.mat = mat;
+  bo.isNega = 0;
+  return (bo);
+}

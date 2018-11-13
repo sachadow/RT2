@@ -41,11 +41,11 @@ int			find_closest_item(t_ray r, t_env *e, t_vec *newstart, int *curr)
 		return (-1);
 	e->hit[e->item[*curr].item_type](r, e->item[*curr], &t);
 	*newstart = add(scale(t, r.dir), r.start);
-	if (!e->item[*curr].isNega)
+//	if (!e->item[*curr].isNega)
 		return (e->item[*curr].item_type);
 	e->hit_negative = 1;
 	return (-1);
-//	return (find_post_nega(r, e, newstart, curr));
+	return (find_post_nega(r, e, newstart, curr));
 }
 
 int			find_post_nega(t_ray r, t_env *e, t_vec *newstart, int *curr)
