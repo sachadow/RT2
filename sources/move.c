@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 16:34:11 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/11/05 17:58:08 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/16 23:06:59 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	move_cam(t_env *e)
 		e->cam->dir = rotate_axis(e->cam->dir, e->j, -10);
 	if (e->key[KEY_E])
 		e->cam->dir = rotate_axis(e->cam->dir, e->j, 10);
+	reload(e);
 }
 
 void	create_axis(t_env *e)

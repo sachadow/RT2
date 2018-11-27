@@ -6,19 +6,20 @@
 	<light>
 		<sublight pos="2000,0,-1000" intensity="255,255,255"/>
 		<sublight pos="-2000,0,-1000" intensity="255,255,255"/>
+		<ambiant color="255,255,255"/>
 	</light>
 
 	<material>
-		<submaterial diffusion="255,0,0" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
-		<submaterial diffusion="0,255,0" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
-		<submaterial diffusion="0,0,255" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
+		<uniform diffusion="255,0,0" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
+		<uniform diffusion="0,255,0" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
+		<uniform diffusion="0,0,255" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
 	</material>
 
 	<objects>
-		<icyl dir="0,1,0" center="900,0,200" radius="150" mat="2"/>
-		<icyl dir="0,1,0" center="-900,0,200" radius="150" mat="2"/>
-		<icyl dir="0,1,0" center="900,0,900" radius="150" mat="2"/>
-		<icyl dir="0,1,0" center="-900,0,900" radius="150" mat="2"/>
+		<icyl dir="0,1,0" axispoint="900,0,200" radius="150" mat="2"/>
+		<icyl dir="0,1,0" axispoint="-900,0,200" radius="150" mat="2"/>
+		<icyl dir="0,1,0" axispoint="900,0,900" radius="150" mat="2"/>
+		<icyl dir="0,1,0" axispoint="-900,0,900" radius="150" mat="2"/>
 		<sphere center="900,500,200" radius="250" mat="2"/>
 		<sphere center="-900,500,200" radius="250" mat="2"/>
 		<sphere center="900,500,900" radius="250" mat="2"/>
@@ -28,9 +29,9 @@
 		<sphere center="900,-500,900" radius="250" mat="2"/>
 		<sphere center="-900,-500,900" radius="250" mat="2"/>
 		<sphere center="0,0,0" radius="100" mat="0"/>
-		<plane dir="0,-1,0" d="-500" mat="1"/>
-		<plane dir="0,0,1" d="-1500" mat="1"/>
-		<plane dir="0,1,0" d="-500" mat="1"/>
-		<disk dir="1,1,1" center="-300,0,-500" radius="100" mat="2"/>
+		<plane normale="0,-1,0" d="-500" mat="1"/>
+		<plane normale="0,0,1" d="-1500" mat="1"/>
+		<plane normale="0,1,0" d="-500" mat="1"/>
+		<disk dir="1,1,1" axispoint="-300,0,-500" radius="100" mat="2"/>
 	</objects>
 </scene>

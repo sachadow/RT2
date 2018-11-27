@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/09 15:59:47 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/23 14:35:07 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	The loop is here for reflections
 */
 
-t_color		color_calc(int x, int y, t_env *e)
+t_color		color_calc(double x, double y, t_env *e)
 {
 	t_work	w;
 	int		i;
@@ -60,7 +60,8 @@ t_color		get_light_value(t_work w, t_vec newstart, t_mat mat, t_env *e)
 		inshdw = in_shadow(lightray, e, sqrt(magnitude2(dist)));
 		if (inshdw == EMPTY || e->mat[e->item[inshdw].mat].n)
 		{
-			color_lambert(&c, lambert(lightray, w.n_vec), e->light[j], mat);
+			color_lambert(&c, lambert(lightray, w.n_vec), e->light[j],
+					find_texture_color(newstart, w, e));
 			color_blinnphuong(&c, blinnphuong(lightray, &w.r, w.n_vec,
 						mat), e->light[j]);
 		}
@@ -75,7 +76,7 @@ t_color		get_light_value(t_work w, t_vec newstart, t_mat mat, t_env *e)
 **	Calculation of the ray parameters from the x and y (screen parameters)
 */
 
-t_vec		set_ray_dir(int x, int y, t_env *e)
+t_vec		set_ray_dir(double x, double y, t_env *e)
 {
 	t_vec	i;
 	t_vec	j;
@@ -87,12 +88,12 @@ t_vec		set_ray_dir(int x, int y, t_env *e)
 		newvec(0.0, 0.0, 1.0) : newvec(0.0, 1.0, 0.0);
 	i = crossproduct(k, l);
 	j = crossproduct(i, k);
-	l.x = (IMG_W - (double)x * 2.0) / IMG_W * i.x
-			+ (IMG_H - (double)y * 2.0) / IMG_W * j.x + FOV * k.x;
-	l.y = (IMG_W - (double)x * 2.0) / IMG_W * i.y
-			+ (IMG_H - (double)y * 2.0) / IMG_W * j.y + FOV * k.y;
-	l.z = (IMG_W - (double)x * 2.0) / IMG_W * i.z
-			+ (IMG_H - (double)y * 2.0) / IMG_W * j.z + FOV * k.z;
+	l.x = (IMG_W - x * 2.0) / IMG_W * i.x
+			+ (IMG_H - y * 2.0) / IMG_W * j.x + FOV * k.x;
+	l.y = (IMG_W - x * 2.0) / IMG_W * i.y
+			+ (IMG_H - y * 2.0) / IMG_W * j.y + FOV * k.y;
+	l.z = (IMG_W - x * 2.0) / IMG_W * i.z
+			+ (IMG_H - y * 2.0) / IMG_W * j.z + FOV * k.z;
 	l = normalize(l);
 	return (l);
 }

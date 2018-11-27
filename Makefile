@@ -6,7 +6,7 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/23 19:01:27 by squiquem          #+#    #+#              #
-#    Updated: 2018/11/13 17:15:42 by sderet           ###   ########.fr        #
+#    Updated: 2018/11/27 14:59:33 by sderet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,33 +21,32 @@ OBJ_DIR			=	./objects/
 CPPFLAGS 		=	-I includes/
 
 SRC_FILES		=	color.c \
+					display1.c \
 					draw.c \
+					error.c \
 					fct_to_add.c \
 					find_closest.c \
 					find_normal.c \
+					ft_draw.c \
 					fresnel.c \
+					get_position.c \
+					get_value_mat.c \
+					get_value_obj.c \
+					get_value_obj2.c \
 					hit_disk.c \
 					hit_func.c \
 					hit_items.c \
+					hud.c \
 					keyhook.c \
 					light.c \
 					main.c \
 					mousehook.c \
 					move.c \
 					new.c \
-					parsing.c \
-					parsing2.c \
-					parsing_items.c \
-					ray.c \
-					rotate.c \
-					vec.c \
-					vec2.c \
-					parser_all.c \
-					error.c \
-					get_position.c \
-					get_value_obj.c \
-					get_value_obj2.c \
+					new_image.c \
 					parser.c \
+					parser_all.c \
+					ray.c \
 					recup_camera.c \
 					recup_env.c \
 					recup_light.c \
@@ -57,8 +56,15 @@ SRC_FILES		=	color.c \
 					recup_object3.c \
 					recursive_element.c \
 					recursive_elem2.c \
+					rotate.c \
 					tab.c \
-					textures.c
+					textures_util.c \
+					textures.c \
+					checker.c \
+					noise.c \
+					marble.c \
+					vec.c \
+					vec2.c
 
 OBJ_FILES		=	$(SRC_FILES:.c=.o)
 

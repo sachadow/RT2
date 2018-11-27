@@ -1,19 +1,18 @@
+
 <scene>
-    <light>
-        <sublight pos="-2000,20,-10" intensity="255,255,255"/>
-    </light>
-    <camera pos="-2000,0,0" dir="1,0,0"/>
-    <material>
-        <submaterial diffusion="255,255,0" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
-        <submaterial diffusion="0,255,255" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
-        <submaterial diffusion="255,0,255" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
-    </material>
-    <objects>
-        <sphere center="233,290,200" radius="100" mat="0"/>
-        <sphere center="407,290,0" radius="100" mat="1"/>
-        <sphere center="320,140,-100" radius="100" mat="2"/>
-		<fcyl dir="-1,1,0" axispoint="0,0,-500" radius="150" mat="1" height="100"/>
-		<fcone dir="0,1,0" axispoint="500,300,200" angle="10" mat="0" height="100"/>
-		<plane normale="1,0,0" d="-5000" mat="1"/>
-    </objects>
+	<light>
+		<sublight pos="640,240,-10000" intensity="255,255,255"/>
+		<ambiant color="255,255,255"/>
+	</light>
+	<camera pos="-2000,0,0" dir="1,0,0"/>
+	<material>
+		<uniform diffusion="255,255,0" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
+		<uniform diffusion="0,255,255" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
+		<uniform diffusion="255,0,255" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
+	</material>
+	<objects>
+		<sphere center="233,290,0" radius="100" mat="0"/>
+		<sphere center="407,290,0" radius="100" mat="1"/>
+		<sphere center="320,140,0" radius="100" mat="2"/>
+	</objects>
 </scene>

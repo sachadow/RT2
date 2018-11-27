@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/13 16:12:52 by sderet           ###   ########.fr       */
+/*   Updated: 2018/11/15 11:00:08 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ double		lambert(t_ray lightray, t_vec n)
 **	COLOR_LAMBERT function:
 */
 
-void		color_lambert(t_color *c, double l, t_light currl, t_mat currm)
+void		color_lambert(t_color *c, double l, t_light currl, t_color matdiff)
 {
-	c->red += l * currl.intensity.red * currm.diffuse.red / 255 / 255;
-	c->green += l * currl.intensity.green * currm.diffuse.green / 255 / 255;
-	c->blue += l * currl.intensity.blue * currm.diffuse.blue / 255 / 255;
+	c->red += l * currl.intensity.red * matdiff.red / 255 / 255;
+	c->green += l * currl.intensity.green * matdiff.green / 255 / 255;
+	c->blue += l * currl.intensity.blue * matdiff.blue / 255 / 255;
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/12 16:40:37 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/23 18:02:51 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@
 
 t_color			multiply_color(t_color c, double k)
 {
+	t_color	res;
+
 	if (k == 0.00f)
 		return (newcolor(0, 0, 0));
-	else
-		return (newcolor(c.red * k, c.green * k, c.blue * k));
+	res.red = c.red * k;
+	res.green = c.green * k;
+	res.blue = c.blue * k;
+	return (res);
 }
 
 /*
@@ -53,4 +57,14 @@ t_color			add_3colors(t_color a, t_color b, t_color c)
 	d.green = a.green + b.green + c.green;
 	d.blue = a.blue + b.blue + c.blue;
 	return (d);
+}
+
+t_color			add_4colors(t_color a, t_color b, t_color c, t_color d)
+{
+	t_color	e;
+
+	e.red = a.red + b.red + c.red + d.red;
+	e.green = a.green + b.green + c.green + d.green;
+	e.blue = a.blue + b.blue + c.blue + d.blue;
+	return (e);
 }

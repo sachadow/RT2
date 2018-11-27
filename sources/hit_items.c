@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/13 15:29:37 by sderet           ###   ########.fr       */
+/*   Updated: 2018/11/16 18:06:21 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ int		hitfcone(t_ray r, t_item cy, double *t)
 	{
 		tmp = find_h(cy.dir, cy.center, intersection);
 		return (hitdisk(r, newdisk(cy.dir, add(cy.center, scale(cy.height,
-			cy.dir)), sqrt(magnitude2(sub(tmp, intersection))), cy.mat), t));
+								cy.dir)), sqrt(magnitude2(sub(tmp, intersection))), cy.mat), t));
 	}
 	else if (sign <= 0)
 		return (0);
@@ -193,9 +193,9 @@ int		hitfcone(t_ray r, t_item cy, double *t)
 
 int		hitbox(t_ray r, t_item bo, double *t)
 {
-	t_vec   min;
-	t_vec   max;
-	double  tmp;
+	t_vec	min;
+	t_vec	max;
+	double	tmp;
 
 	min.x = (bo.center.x - r.start.x) / r.dir.x;
 	max.x = (bo.end.x - r.start.x) / r.dir.x;

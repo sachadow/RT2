@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:43:14 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/19 22:07:47 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ double	magnitude2(t_vec v)
 }
 
 /*
+**	MAGNITUDE function:
+**	Returns the magnitude of a vector
+*/
+
+double	magnitude(t_vec u)
+{
+	return (sqrt(magnitude2(u)));
+}
+
+/*
 **	NORMALIZE function:
 **	Normalizes a vector if its magnitude != 0
 */
@@ -39,24 +49,9 @@ t_vec	normalize(t_vec v)
 	tmp2 = magnitude2(v);
 	if (!tmp2)
 		ft_printerror("Vector null");
-	tmp = 1.0f / sqrtf(tmp2);
+	tmp = 1.0f / sqrt(tmp2);
 	uv = scale(tmp, v);
 	return (uv);
-}
-
-/*
-**	OPPOSITE function:
-**	Returns the opposite vector
-*/
-
-t_vec	opposite(t_vec u)
-{
-	t_vec	w;
-
-	w.x = -u.x;
-	w.y = -u.y;
-	w.z = -u.z;
-	return (w);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/13 16:24:17 by sderet           ###   ########.fr       */
+/*   Updated: 2018/11/15 11:37:10 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@
 
 t_color			ft_resolve(t_env *e, t_work w, int lvl)
 {
-	int			item_hit;
 	t_mat		mat;
 	t_vec		newstart;
 	double		nrefr;
 
-	item_hit = find_closest_item(w.r, e, &newstart);
-	if (item_hit == EMPTY || lvl > e->lvl)
+	w.item_hit = find_closest_item(w.r, e, &newstart);
+	if (w.item_hit == EMPTY || lvl > e->lvl)
 		return (e->backgroundcolor);
-	mat = find_material(item_hit, newstart, e);
-	nrefr = find_nrefr(w, mat, item_hit, e);
-	w.n_vec = find_normal_vec(w.r, item_hit, e);
+	mat = find_material(w.item_hit, newstart, e);
+	nrefr = find_nrefr(w, mat, w.item_hit, e);
+	w.n_vec = find_normal_vec(w.r, w.item_hit, e);
 	if (mat.n)
 		return (add_3colors(get_light_value(w, newstart, mat, e),
 			multiply_color(ft_resolve(e, newwork(w, refracted_ray(w.r.dir,

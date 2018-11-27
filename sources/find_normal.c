@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/13 16:31:23 by sderet           ###   ########.fr       */
+/*   Updated: 2018/11/27 15:21:45 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_vec		find_normal_vec_if_not_plane(int id, t_vec newstart, t_env *e)
 		n = sub(newstart, e->item[id].center);
 	else if (type == I_CYL || type == F_CYL)
 		n = find_cylinder_normal(newstart, e->item[id]);
-	else if (type == I_CONE)
+	else if (type == I_CONE || type == F_CONE)
 		n = find_cone_normal(newstart, e->item[id]);
 	return (n);
 }
@@ -124,17 +124,23 @@ t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 					e->item[id].center.x + 0.001) || (newstart.x >
 					e->item[id].end.x - 0.001 && newstart.x <
 					e->item[id].end.x + 0.001))
-			n = (newstart.x > e->item[id].center.x + 0.001 ? newvec(1, 0, 0)
-					: opposite(newvec(1, 0, 0)));
+//			n = (newstart.x > e->item[id].center.x + 0.001 ? newvec(1, 0, 0)
+//					: opposite(newvec(1, 0, 0)));
+			n = (dotproduct(r.dir, newvec(1, 0, 0)) < 0 ? newvec(1, 0, 0)
+				: opposite(newvec(1, 0, 0)));
 		if ((newstart.y > e->item[id].center.y - 0.001 && newstart.y <
 					e->item[id].center.y + 0.001) || (newstart.y >
 					e->item[id].end.y - 0.001 && newstart.y <
 					e->item[id].end.y + 0.001))
-			n = (newstart.y > e->item[id].center.y + 0.001 ? newvec(0, 1, 0)
-					: opposite(newvec(0, 1, 0)));
+//			n = (newstart.y > e->item[id].center.y + 0.001 ? newvec(0, 1, 0)
+//					: opposite(newvec(0, 1, 0)));
+			n = (dotproduct(r.dir, newvec(0, 1, 0)) < 0 ? newvec(0, 1, 0)
+				: opposite(newvec(0, 1, 0)));
 		else
-			n = (newstart.z > e->item[id].center.z + 0.001 ? newvec(0, 0, 1)
-					: opposite(newvec(0, 0, 1)));
+//			n = (newstart.z > e->item[id].center.z + 0.001 ? newvec(0, 0, 1)
+//					: opposite(newvec(0, 0, 1)));
+			n = (dotproduct(r.dir, newvec(0, 0, 1)) < 0 ? newvec(0, 0, 1)
+				: opposite(newvec(0, 0, 1)));
 	}
 	else
 		n = find_normal_vec_if_not_plane(id, newstart, e);

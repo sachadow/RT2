@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 15:19:32 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/13 15:21:42 by sderet           ###   ########.fr       */
+/*   Updated: 2018/11/16 17:58:55 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ t_item		newfcone(t_vec dir, t_vec center, double angle, int mat, double height, 
 	return (co);
 }
 
-t_item  newbox(t_vec center, t_vec end, int mat)
+t_item		newbox(t_vec center, t_vec end, int mat)
 {
 	t_item bo;
 

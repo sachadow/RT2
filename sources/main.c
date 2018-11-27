@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 17:07:15 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/13 15:49:42 by sderet           ###   ########.fr       */
+/*   Updated: 2018/11/23 16:51:11 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,15 @@ static void	init(t_env *e)
 	e->hit[F_CONE] = &hitfcone;
 	e->hit[BOX] = &hitbox;
 	e->backgroundcolor = newcolor(0, 0, 0);
+	e->backgroundcolor = multiply_color(e->backgroundcolor, 0.00392156862);
 	e->lvl = 4;
+	e->antialiasing = 0;
 	create_axis(e);
-	load_textures(e);
+	//load_textures(e);
+	ft_memset(e->key, 0, sizeof(int) * 300);
+	e->s_line[CENTER] = 0;
+	e->button = 0;
+	e->interface.onglet = 1;
 }
 
 /*
@@ -73,7 +79,7 @@ int			main(int ac, char **av)
 	parser_all(av[1], e);
 	if (!(e->mlx = mlx_init()))
 		ft_printerror("Error mlx init");
-	ft_memset(e->key, 0, sizeof(int) * 300);
+	open_textures_mat(e);
 	e->win = mlx_new_window(e->mlx, WIN_W, WIN_H, "RT");
 	mlx_centertop_window(e->win);
 	init(e);
@@ -82,6 +88,8 @@ int			main(int ac, char **av)
 	mlx_hook(e->win, KPRESS, KPRESSMASK, keypress, e);
 	mlx_hook(e->win, KRELEASE, KRELEASEMASK, keyrelease, e);
 	mlx_hook(e->win, MOTION_NOTIFY, PTR_MOTION_MASK, mousemove, e);
+	mlx_hook(e->win, BPRESS, BPRESSMASK, &mousepress, e);
+	mlx_hook(e->win, BRELEASE, BRELEASEMASK, &mouserelease, e);
 	mlx_hook(e->win, DESTROY, SNOTIFYMASK, quit, e);
 	mlx_loop(e->mlx);
 	return (1);

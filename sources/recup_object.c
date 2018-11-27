@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 14:18:27 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/12 13:03:13 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/11/14 12:36:26 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int		soloobject(t_env *e, t_element elem, int i, int nbr_mat)
 		get_fcyl(e, elem, i, nbr_mat);
 	else if (ft_strcmp(elem.object, "fcone") == 0)
 		get_fcone(e, elem, i, nbr_mat);
+	else if (ft_strcmp(elem.object, "box") == 0)
+		get_box(e, elem, i, nbr_mat);
 	else
 		std_err(0);
 	return (0);

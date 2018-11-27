@@ -6,62 +6,87 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 13:14:56 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/12 13:55:59 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/11/27 15:22:26 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int			solomat2(t_env *e, t_element elem, int i)
+int			recup_checker_mat(t_env *e, t_element elem, int i, char *name)
 {
-	int j;
+	int nb;
 
-	j = 0;
-	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "specvalue"))
-		j++;
-	if (j == elem.nbr_attr)
+	nb = 0;
+	if (elem.nbr_attr < 7 || elem.nbr_attr > 8)
 		std_err(0);
-	e->mat[i].specvalue = ft_posatoi(elem.attribut[j].content) / 100;
-	j = 0;
-	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "specpower"))
-		j++;
-	if (j == elem.nbr_attr)
+	if (ft_strcmp(name, "checker") == 0)
+		e->mat[i].type = 2;
+	else if (ft_strcmp(name, "marble") == 0)
+		e->mat[i].type = 3;
+	else if (ft_strcmp(name, "perturb") == 0)
+		e->mat[i].type = 4;
+	else if (ft_strcmp(name, "waves") == 0)
+		e->mat[i].type = 5;
+	else
 		std_err(0);
-	e->mat[i].specpower = ft_posatoi(elem.attribut[j].content);
-	j = 0;
-	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "n"))
-		j++;
-	if (j == elem.nbr_attr)
+	recup_value_mat(e, elem, i);
+	recup_value_checker(e, elem, i);
+	nb = get_bump(e, elem, i);
+	if (elem.nbr_attr - nb != 7)
 		std_err(0);
-	e->mat[i].n = ft_posatoi(elem.attribut[j].content) / 1000;
 	return (0);
 }
 
-int			solomat(t_env *e, t_element elem, int i)
+int			recup_texture_mat(t_env *e, t_element elem, int i)
 {
 	int j;
+	int nb;
+
+	nb = 0;
+	j = 0;
+	if (elem.nbr_attr < 9 || elem.nbr_attr > 11)
+		std_err(0);
+	e->mat[i].type = 1;
+	recup_value_mat(e, elem, i);
+	recup_value_text(e, elem, i);
+	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "angle"))
+		j++;
+	if (j == elem.nbr_attr)
+		std_err(0);
+	e->mat[i].tex.angle = ft_posatoi(elem.attribut[j].content);
+	if (e->mat[i].tex.angle > 360)
+		std_err(0);
+	e->mat[i].tex.center = newvec(0, 0, 0);
+	nb = get_bump(e, elem, i);
+	if (elem.nbr_attr - nb == 9)
+		return(0);
+	j = 0;
+	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "center"))
+		j++;
+	if (j == elem.nbr_attr)
+		std_err(0);
+	e->mat[i].tex.center = ft_getpos(elem.attribut[j].content);
+	return (0);
+}
+
+int			recup_uniform_mat(t_env *e, t_element elem, int i)
+{
+	int j;
+	int nb;
 
 	j = 0;
-	if (ft_strcmp(elem.object, "submaterial") != 0 || elem.nbr_attr != 6)
+	if (elem.nbr_attr < 6 || elem.nbr_attr > 7)
 		std_err(0);
+	e->mat[i].type = 0;
+	recup_value_mat(e, elem, i);
 	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "diffusion"))
 		j++;
 	if (j == elem.nbr_attr)
 		std_err(0);
 	e->mat[i].diffuse = ft_getcolor(elem.attribut[j].content);
-	j = 0;
-	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "t"))
-		j++;
-	if (j == elem.nbr_attr)
+	nb = get_bump(e, elem, i);
+	if (elem.nbr_attr - nb != 6)
 		std_err(0);
-	e->mat[i].transparency = ft_posatoi(elem.attribut[j].content) / 100;
-	j = 0;
-	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "reflexion"))
-		j++;
-	if (j == elem.nbr_attr)
-		std_err(0);
-	solomat2(e, elem, i);
-	e->mat[i].reflection = ft_posatoi(elem.attribut[j].content) / 100;
 	return (0);
 }
 
@@ -77,8 +102,13 @@ int			get_mat(t_element elem, t_env *e)
 	e->nbs[1] = elem.nbr_element;
 	while (i < elem.nbr_element)
 	{
-		solomat(e, elem.elem[i], i);
-		if(e->mat[i].reflection > 100 || e->mat[i].transparency > 100)
+		if (ft_strcmp(elem.elem[i].object, "uniform") == 0)
+			recup_uniform_mat(e, elem.elem[i], i);
+		else if (ft_strcmp(elem.elem[i].object, "texture") == 0)
+			recup_texture_mat(e, elem.elem[i], i);
+		else
+			recup_checker_mat(e, elem.elem[i], i, elem.elem[i].object);
+		if (e->mat[i].reflection > 100 || e->mat[i].transparency > 100)
 			std_err(0);
 		i++;
 	}
