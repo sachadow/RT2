@@ -24,6 +24,7 @@ int			find_closest_item(t_ray r, t_env *e, t_vec *newstart, int *curr)
 	int		i;
 
 	t = -1;
+  e->ncurr = -1;
 	e->hit_negative = 0;
 	before = -1;
 	*curr = -1;
@@ -41,10 +42,10 @@ int			find_closest_item(t_ray r, t_env *e, t_vec *newstart, int *curr)
 		return (-1);
 	e->hit[e->item[*curr].item_type](r, e->item[*curr], &t);
 	*newstart = add(scale(t, r.dir), r.start);
-//	if (!e->item[*curr].isNega)
+	if (e->item[*curr].isNega == 0)
 		return (e->item[*curr].item_type);
-	e->hit_negative = 1;
-	return (-1);
+  return (-1);
+  e->hit_negative = 1;
 	return (find_post_nega(r, e, newstart, curr));
 }
 
@@ -56,18 +57,17 @@ int			find_post_nega(t_ray r, t_env *e, t_vec *newstart, int *curr)
 	int		ncurr;
 	t_ray	to_use;
 
-	return (-1);
-	*curr += 0;
+  e->ncurr = -1;
 	t = -1;
-	before = -1;
+  before = -1;
 	ncurr = -1;
 	i = -1;
 	to_use.dir = r.dir;
-	to_use.start = *newstart;
+	to_use.start = add(scale(0.001, r.dir), *newstart);
 	while (++i < e->nbs[3])
 	{
 		if (e->hit[e->item[i].item_type](to_use, e->item[i], &t))
-			if (before == -1 || (t < before && t >= 0))
+			if (before == -1 || (t < before))
 			{
 				before = t;
 				ncurr = i;
@@ -77,7 +77,10 @@ int			find_post_nega(t_ray r, t_env *e, t_vec *newstart, int *curr)
 		return (-1);
 	e->ncurr = ncurr;
 	e->hit[e->item[ncurr].item_type](to_use, e->item[ncurr], &t);
-	*newstart = add(add(scale(t, r.dir), *newstart), scale(0.001, r.dir));
+	*newstart = add(add(scale(t, r.dir), to_use.start), scale(0.01, r.dir));
+  if (e->item[ncurr].isNega == 1)
+    return (find_closest_item(r, e, newstart, curr));
+  return (-1);
 	if (e->item[ncurr].isNega && e->hit_negative == 1)
 		return (find_closest_item(r, e, newstart, curr));
 	else if (!e->item[ncurr].isNega && e->item[*curr].isNega)

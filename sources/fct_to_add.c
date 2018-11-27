@@ -52,7 +52,7 @@ t_vec			find_normal_vec(t_ray r, int itemtype, int curr, t_env *e)
 	t_vec	n;
 	double	finite;
 
-	if (e->hit_negative > 0)
+	if (e->hit_negative > 0 && e->ncurr != -1)
 		curr = e->ncurr;
 	n = newvec(0, 0, 0);
 	if (itemtype == EMPTY)
@@ -85,7 +85,7 @@ t_vec			find_normal_vec(t_ray r, int itemtype, int curr, t_env *e)
   }
 	else
 		n = find_normal_vec_if_not_plane(itemtype, curr, newstart, e);
-	if (e->hit_negative > 0)
+	if (e->hit_negative > 0 && e->ncurr != -1)
 		n = sub(newvec(0, 0, 0), n);
 	if (!magnitude2(n))
 		return (newvec(0, 0, 0));
