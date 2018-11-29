@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 14:18:27 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/14 12:36:26 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/11/29 14:53:04 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		get_objects(t_element elem, t_env *e, int nbr_mat)
 	e->nbs[3] = elem.nbr_element;
 	while (i < elem.nbr_element)
 	{
+		e->item[i].isNega = 0;
 		soloobject(e, elem.elem[i], i, nbr_mat);
 		i++;
 	}
@@ -65,7 +66,7 @@ t_env	*recup_object(t_env *e, t_element elem, int nbr_mat)
 	{
 		if (ft_strcmp(elem.elem[i].object, "objects") == 0)
 		{
-			if (j == 1)
+			if (j == 1 || elem.elem[i].nbr_attr > 0)
 				std_err(0);
 			get_objects(elem.elem[i], e, nbr_mat);
 			j++;

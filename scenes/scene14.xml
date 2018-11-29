@@ -1,26 +1,24 @@
 
 <scene>
 	<light>
-		<sublight pos="0,0,-2000" intensity="255,255,255"/>
+		<sublight pos="500,0,-2000" intensity="255,255,255"/>
 		<ambiant color="255,255,255"/>
 	</light>
-	<camera pos="0,0,-2000" dir="0,0,1"/>
+	<camera pos="0,0,-2000" dir="0,0,100"/>
 	<material>
 		<uniform diffusion="255,255,0" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
 		<uniform diffusion="0,255,255" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
 		<uniform diffusion="255,0,255" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
-		<texture pathtext="textures/redbrick.xpm" angle="0" width="100" height="100" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
 		<checker diffusion="255,0,255" diffusionbis="0,255,0" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
 	</material>
 	<objects>
-		<fcyl dir="1,0,1" axispoint="500,600,100" radius="100" mat="0" height="100"/>
-		<icyl dir="1,0,0" axispoint="500,0,0" radius="100" mat="1"/>
-		<icyl dir="1,0,0" axispoint="500,-400,0" radius="100" mat="3"/>
-		<plane normale="0,0,1" d="-200" mat="0"/>
-		<sphere center="233,290,0" radius="100" mat="0"/>
+		<icone dir="0,1,0" axispoint="500,-100,0" angle="15" mat="1"/>
+		<icyl dir="1,0,1" axispoint="500,-300,0" radius="100" mat="1"/>
+		<fcyl dir="1,0,1" axispoint="500,300,-150" radius="100" mat="2" height="100"/>
+		<fcone dir="0,1,0" axispoint="500,-100,-100" angle="15" mat="2" height="100"/>
+		<plane normale="0,0,1" d="-1500" mat="1"/>
 		<sphere center="407,290,0" radius="100" mat="1"/>
+		<sphere center="233,290,0" radius="100" mat="0"/>
 		<sphere center="320,140,0" radius="100" mat="2"/>
-		<box center="4000,4000,1000" end="-100,100,100" mat="2"/>
-		<fcone dir="0,1,0" axispoint="500,300,200" angle="15" mat="0" height="100"/>
 	</objects>
 </scene>

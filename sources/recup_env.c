@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/23 12:25:37 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/14 16:22:43 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/11/28 16:54:07 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_env	*recup_env(t_env *e, t_element elem)
 {
 	int nbr_mat;
 
+	if (elem.nbr_attr > 0)
+		std_err(0);
 	recup_light(e, elem);
 	recup_camera(e, elem);
 	nbr_mat = recup_mat(e, elem);

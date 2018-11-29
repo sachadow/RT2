@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:09:49 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/27 14:06:56 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/29 16:49:24 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define MARBLE		3
 # define PERTURB	4
 # define WAVES		5
+# define WOOD		6
 
 # define KPRESSMASK			1L << 0
 # define KRELEASEMASK		1L << 1
@@ -159,7 +160,6 @@ typedef struct		s_item
 	int				item_type;
 	t_vec			center;
 	t_vec			dir;
-	t_vec			signs;
 	t_vec			end;
 	int				isNega;
 	double			d;
@@ -370,6 +370,7 @@ double				noise(double x, double y, double z);
 
 t_color				color_marble(t_color c1, t_color c2, t_vec impact);
 t_color				color_turbulence(t_color c1, t_color c2, t_vec impact);
+t_color				color_wood(t_color c1, t_color c2, t_vec impact);
 t_vec				bumpmapping(t_vec n, t_vec impact, t_mat m);
 
 void				hud(t_env *e);

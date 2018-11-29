@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/19 22:07:47 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/29 17:47:31 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ t_vec	normalize(t_vec v)
 	double	tmp2;
 
 	tmp2 = magnitude2(v);
-	if (!tmp2)
-		ft_printerror("Vector null");
+//	if (!tmp2)
+//		ft_printerror("Vector null");
 	tmp = 1.0f / sqrt(tmp2);
 	uv = scale(tmp, v);
 	return (uv);

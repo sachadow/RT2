@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 13:14:56 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/27 15:22:26 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/11/29 14:45:36 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int			recup_checker_mat(t_env *e, t_element elem, int i, char *name)
 		e->mat[i].type = 4;
 	else if (ft_strcmp(name, "waves") == 0)
 		e->mat[i].type = 5;
+	else if (ft_strcmp(name, "wood") == 0)
+		e->mat[i].type = 6;
 	else
 		std_err(0);
 	recup_value_mat(e, elem, i);
@@ -40,9 +42,7 @@ int			recup_checker_mat(t_env *e, t_element elem, int i, char *name)
 int			recup_texture_mat(t_env *e, t_element elem, int i)
 {
 	int j;
-	int nb;
 
-	nb = 0;
 	j = 0;
 	if (elem.nbr_attr < 9 || elem.nbr_attr > 11)
 		std_err(0);
@@ -54,12 +54,10 @@ int			recup_texture_mat(t_env *e, t_element elem, int i)
 	if (j == elem.nbr_attr)
 		std_err(0);
 	e->mat[i].tex.angle = ft_posatoi(elem.attribut[j].content);
-	if (e->mat[i].tex.angle > 360)
-		std_err(0);
 	e->mat[i].tex.center = newvec(0, 0, 0);
-	nb = get_bump(e, elem, i);
-	if (elem.nbr_attr - nb == 9)
-		return(0);
+	j = get_bump(e, elem, i);
+	if (elem.nbr_attr - j == 9)
+		return (0);
 	j = 0;
 	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "center"))
 		j++;
@@ -95,7 +93,7 @@ int			get_mat(t_element elem, t_env *e)
 	int i;
 
 	i = 0;
-	if (elem.nbr_element == 0)
+	if (elem.nbr_element == 0 || elem.nbr_attr > 0)
 		std_err(0);
 	if (!(e->mat = (t_mat*)malloc(sizeof(t_mat) * elem.nbr_element)))
 		std_err(0);
@@ -105,10 +103,15 @@ int			get_mat(t_element elem, t_env *e)
 		if (ft_strcmp(elem.elem[i].object, "uniform") == 0)
 			recup_uniform_mat(e, elem.elem[i], i);
 		else if (ft_strcmp(elem.elem[i].object, "texture") == 0)
+		{
 			recup_texture_mat(e, elem.elem[i], i);
+			if (e->mat[i].tex.angle > 360)
+				std_err(0);
+		}
 		else
 			recup_checker_mat(e, elem.elem[i], i, elem.elem[i].object);
-		if (e->mat[i].reflection > 100 || e->mat[i].transparency > 100)
+		if (e->mat[i].reflection > 100 || e->mat[i].transparency > 100 ||\
+				e->mat[i].n > 2000)
 			std_err(0);
 		i++;
 	}

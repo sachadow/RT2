@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/27 15:04:08 by sderet           ###   ########.fr       */
+/*   Updated: 2018/11/29 18:11:20 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int			find_closest_item(t_ray r, t_env *e, t_vec *newstart)
 	while (++i < e->nbs[ITEM])
 	{
 		if (e->hit[e->item[i].item_type](r, e->item[i], &t)
-			&& (before == -1 || (t < before && t >= 0)))
+			&& (before == -1 || (t < before && t > 0.001f)))
 		{
 			before = t;
 			curr = i;
 		}
 	}
 	if (curr > -1)
-		*newstart = add(scale(t, r.dir), r.start);
+		*newstart = add(scale(before, r.dir), r.start);
 	return (curr);
 }
 

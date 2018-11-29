@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 16:24:23 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/15 17:09:15 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/11/27 16:57:45 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,17 @@ int		get_rotation(t_env *e, t_element elem, int i)
 	r = ft_getpos(elem.attribut[j].content);
 	e->item[i].dir = rotate(e->item[i].dir, r.x, r.y, r.z);
 	return (1);
+}
+
+int			get_end(t_env *e, t_element elem, int i, char *name)
+{
+	int j;
+
+	j = 0;
+	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, name))
+		j++;
+	if (j == elem.nbr_attr)
+		std_err(0);
+	e->item[i].end = ft_getpos(elem.attribut[j].content);
+	return (0);
 }

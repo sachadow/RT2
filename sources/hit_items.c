@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/16 18:06:21 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/11/29 16:53:55 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		calc_discr(double a, double b, double c, double *t)
 		return (0);
 	if (t1 < 0.001f)
 		t1 = t0;
-	if (t0 > t1)
+	if (t0 > t1 && t1 > 0)
 		t0 = t1;
 	if (t0 > 0.001f && (*t == -1 || t0 < *t))
 	{
@@ -229,7 +229,7 @@ int		hitbox(t_ray r, t_item bo, double *t)
 		return (0);
 	min.x = (min.z > min.x ? min.z : min.x);
 	max.x = (max.z < max.x ? max.z : max.x);
-	if (min.x < 0 && max.x < 0)
+	if ((min.x < 0 && max.x < 0) || (*t != -1 && *t < max.x && *t < min.x))
 		return (0);
 	else if (min.x < 0)
 		return ((*t = max.x) > 0 ? 1 : 0);

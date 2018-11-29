@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 17:25:35 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/27 15:23:09 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/11/27 16:57:42 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int						get_angle(t_env *e, t_element elem, int i);
 int						get_height(t_env *e, t_element elem, int i);
 int						get_translation(t_env *e, t_element elem, int i);
 int						get_rotation(t_env *e, t_element elem, int i);
+int						get_end(t_env *e, t_element elem, int i, char *name);
 int						recup_value_mat(t_env *e, t_element elem, int i);
 int						recup_value_text(t_env *e, t_element elem, int i);
 int						get_bump(t_env *, t_element elem, int i);

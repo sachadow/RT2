@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/23 14:30:35 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/27 12:23:38 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/11/28 16:53:10 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		ambiantlight(t_env *e, t_element elem)
 	if (ft_strcmp(elem.attribut[0].name, "color") != 0)
 		std_err(0);
 	e->backgroundcolor = ft_getcolor(elem.attribut[0].content);
-	return(1);
+	return (1);
 }
 
 int		sololight(t_env *e, t_element elem, int i)
@@ -63,9 +63,9 @@ int		get_light(t_element elem, t_env *e)
 	i = 0;
 	if (elem.nbr_element == 0)
 		std_err(0);
-	if (!(e->light = (t_light*)malloc(sizeof(t_light) * (elem.nbr_element - 1))))
+	if (!(e->light = (t_light*)malloc(sizeof(t_light) * elem.nbr_element - 1)))
 		std_err(0);
-	e->nbs[2] = elem.nbr_element;
+	e->nbs[2] = elem.nbr_element - 1;
 	while (i < elem.nbr_element)
 	{
 		if (ft_strcmp(elem.elem[i].object, "sublight") == 0)
@@ -76,7 +76,7 @@ int		get_light(t_element elem, t_env *e)
 			std_err(0);
 		i++;
 	}
-	if (j != 1)
+	if (j != 1 || elem.nbr_attr > 0)
 		std_err(0);
 	return (0);
 }

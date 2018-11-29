@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 12:08:12 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/27 15:21:46 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/11/29 14:46:50 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,12 @@ int		get_bump(t_env *e, t_element elem, int i)
 	int j;
 
 	j = 0;
+	e->mat[i].bump = 0;
 	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "bump"))
 		j++;
 	if (j == elem.nbr_attr)
 		return (0);
-	e->mat[i].bump = ft_posatoi(elem.attribut[j].content);
+	e->mat[i].bump = ft_posatoi(elem.attribut[j].content) / 100;
 	if (e->mat[i].bump < 1 || e->mat[i].bump > 99)
 		std_err(0);
 	return (1);
