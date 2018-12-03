@@ -6,7 +6,11 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 10:26:24 by squiquem          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2018/12/03 16:08:15 by squiquem         ###   ########.fr       */
+=======
+/*   Updated: 2018/11/23 17:09:32 by squiquem         ###   ########.fr       */
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +112,13 @@ void				ft_lstremoveif(t_list **begin_list, void *data_ref,
 int					ft_whitespace(char c);
 void				ft_swap(int *a, int *b);
 void				ft_dswap(double *a, double *b);
+<<<<<<< HEAD
 double				ft_lerp(double p, double first, double second);
 double				ft_lerpi(double p, int first, int second);
+=======
+double				ft_lerp(double first, double second, double p);
+double				ft_lerpi(int first, int second, double p);
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 double				ft_fade(double t);
 int					get_next_line(const int fd, char **line);
 size_t				ft_lstlen(t_list *lst);

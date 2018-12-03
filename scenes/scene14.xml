@@ -15,8 +15,13 @@
 		<icone dir="0,1,0" axispoint="500,-100,0" angle="15" mat="1"/>
 		<icyl dir="1,0,1" axispoint="500,-300,0" radius="100" mat="1"/>
 		<fcyl dir="1,0,1" axispoint="500,300,-150" radius="100" mat="2" height="100"/>
+<<<<<<< HEAD
 		<plane normale="0,0,1" d="-1500" mat="1"/>
 		<fcone dir="0,1,0" axispoint="200,-100,-100" angle="15" mat="1" height="500"/>
+=======
+		<fcone dir="0,1,0" axispoint="500,-100,-100" angle="15" mat="2" height="100"/>
+		<plane normale="0,0,1" d="-1500" mat="1"/>
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 		<sphere center="407,290,0" radius="100" mat="1"/>
 		<sphere center="233,290,0" radius="100" mat="0"/>
 		<sphere center="320,140,0" radius="100" mat="2"/>

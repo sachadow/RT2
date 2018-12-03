@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 15:19:32 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/02 14:54:08 by sderet           ###   ########.fr       */
+/*   Updated: 2018/11/16 17:58:55 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	Create a new color with 3 parameters
 */
 
-t_color	newcolor(double r, double g, double b)
+t_color		newcolor(double r, double g, double b)
 {
 	t_color	c;
 
@@ -34,7 +34,7 @@ t_color	newcolor(double r, double g, double b)
 **	Create a new sphere with 3 parameters
 */
 
-t_item	newsph(t_vec center, double radius, int mat, int isNega)
+t_item		newsph(t_vec center, double radius, int mat, int isNega)
 {
 	t_item	sph;
 
@@ -42,11 +42,11 @@ t_item	newsph(t_vec center, double radius, int mat, int isNega)
 		ft_printerror("Wrong value for sphere");
 	sph.item_type = SPHERE;
 	sph.dir = newvec(0, 0, 0);
+	sph.isNega = isNega;
 	sph.center = center;
 	sph.radius = radius;
 	sph.mat = mat;
 	sph.d = 0;
-	sph.isNega = isNega;
 	sph.angle = 0;
 	return (sph);
 }
@@ -56,7 +56,7 @@ t_item	newsph(t_vec center, double radius, int mat, int isNega)
 **	Create a new plane with 3 parameters
 */
 
-t_item	newplane(t_vec dir, double d, int mat, int isNega)
+t_item		newplane(t_vec dir, double d, int mat)
 {
 	t_item	p;
 
@@ -65,10 +65,9 @@ t_item	newplane(t_vec dir, double d, int mat, int isNega)
 	p.item_type = PLANE;
 	p.dir = dir;
 	p.center = newvec(0, 0, 0);
+	p.isNega = 0;
 	p.radius = 0;
 	p.mat = mat;
-	p.isNega = 0;
-	isNega += 0;
 	p.d = d;
 	p.angle = 0;
 	return (p);
@@ -79,7 +78,7 @@ t_item	newplane(t_vec dir, double d, int mat, int isNega)
 **	Create a new cylinder with 4 parameters
 */
 
-t_item	newcyl(t_vec dir, t_vec center, double radius, int mat, int isNega)
+t_item		newcyl(t_vec dir, t_vec center, double radius, int mat, int isNega)
 {
 	t_item	cy;
 
@@ -87,11 +86,11 @@ t_item	newcyl(t_vec dir, t_vec center, double radius, int mat, int isNega)
 		ft_printerror("Wrong value for cylinder");
 	cy.item_type = I_CYL;
 	cy.dir = dir;
+	cy.isNega = isNega;
 	cy.center = center;
 	cy.radius = radius;
 	cy.mat = mat;
 	cy.d = 0;
-	cy.isNega = isNega;
 	cy.angle = 0;
 	return (cy);
 }
@@ -101,7 +100,7 @@ t_item	newcyl(t_vec dir, t_vec center, double radius, int mat, int isNega)
 **	Create a new cone with 4 parameters
 */
 
-t_item	newcone(t_vec dir, t_vec center, double angle, int mat, int isNega)
+t_item		newcone(t_vec dir, t_vec center, double angle, int mat, int isNega)
 {
 	t_item	co;
 
@@ -110,15 +109,15 @@ t_item	newcone(t_vec dir, t_vec center, double angle, int mat, int isNega)
 	co.item_type = I_CONE;
 	co.dir = dir;
 	co.center = center;
+	co.isNega = isNega;
 	co.radius = 0;
 	co.mat = mat;
-	co.isNega = isNega;
 	co.d = 0;
 	co.angle = angle;
 	return (co);
 }
 
-t_item	newdisk(t_vec dir, t_vec center, double radius, int mat, int isNega)
+t_item		newdisk(t_vec dir, t_vec center, double radius, int mat)
 {
 	t_item	cy;
 
@@ -127,16 +126,15 @@ t_item	newdisk(t_vec dir, t_vec center, double radius, int mat, int isNega)
 	cy.item_type = DISK;
 	cy.dir = dir;
 	cy.center = center;
+	cy.isNega = 0;
 	cy.radius = radius;
 	cy.mat = mat;
-	cy.isNega = 0;
-	isNega += 0;
 	cy.d = 0;
 	cy.angle = 0;
 	return (cy);
 }
 
-t_item	newfcyl(t_vec dir, t_vec center, double radius, int mat, double height, int isNega)
+t_item		newfcyl(t_vec dir, t_vec center, double radius, int mat, double height, int isNega)
 {
 	t_item	cy;
 
@@ -152,7 +150,7 @@ t_item	newfcyl(t_vec dir, t_vec center, double radius, int mat, double height, i
 	return (cy);
 }
 
-t_item	newfcone(t_vec dir, t_vec center, double angle, int mat, double height, int isNega)
+t_item		newfcone(t_vec dir, t_vec center, double angle, int mat, double height, int isNega)
 {
 	t_item	co;
 
@@ -170,14 +168,14 @@ t_item	newfcone(t_vec dir, t_vec center, double angle, int mat, double height, i
 	return (co);
 }
 
-t_item  newbox(t_vec center, t_vec end, int mat)
+t_item		newbox(t_vec center, t_vec end, int mat)
 {
-  t_item bo;
+	t_item bo;
 
-  bo.item_type = BOX;
-  bo.center = center;
-  bo.end = end;
-  bo.mat = mat;
-  bo.isNega = 0;
-  return (bo);
+	bo.item_type = BOX;
+	bo.center = center;
+	bo.end = end;
+	bo.mat = mat;
+	bo.isNega = 0;
+	return (bo);
 }

@@ -6,7 +6,11 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2018/11/27 15:49:09 by sderet           ###   ########.fr       */
+=======
+/*   Updated: 2018/11/29 16:53:55 by sderet           ###   ########.fr       */
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +50,17 @@ int		hitcone(t_ray r, t_item co, double *t)
 	t_vec	h2;
 	t_vec	dist;
 
+	co.angle = co.angle * M_PI / 180;
 	dist = sub(r.start, co.center);
 	h1 = calc_h1(r, co.dir);
 	h2 = calc_h2(dist, co.dir);
-	mod.x = magnitude2(scale(cos(co.angle * M_PI / 180), h1))
-		- pow(sin(co.angle * M_PI / 180) * dotproduct(r.dir, co.dir), 2);
-	mod.y = 2 * pow(cos(co.angle * M_PI / 180), 2) * dotproduct(h1, h2)
-		- 2 * pow(sin(co.angle * M_PI / 180), 2) * dotproduct(r.dir, co.dir)
+	mod.x = magnitude2(scale(cos(co.angle), h1))
+		- pow(sin(co.angle) * dotproduct(r.dir, co.dir), 2);
+	mod.y = 2 * pow(cos(co.angle), 2) * dotproduct(h1, h2)
+		- 2 * pow(sin(co.angle), 2) * dotproduct(r.dir, co.dir)
 		* dotproduct(dist, co.dir);
-	mod.z = magnitude2(scale(cos(co.angle * M_PI / 180), h2))
-		- pow(sin(co.angle * M_PI / 180) * dotproduct(dist, co.dir), 2);
+	mod.z = magnitude2(scale(cos(co.angle), h2))
+		- pow(sin(co.angle) * dotproduct(dist, co.dir), 2);
 	if (mod.y * mod.y - 4 * mod.x * mod.z < 0)
 		return (0);
 	else
@@ -97,9 +102,16 @@ int		calc_discr(double a, double b, double c, double *t)
 	double	t0;
 	double	t1;
 
-	sqrtdiscr = sqrtf(b * b - 4 * a * c);
+	sqrtdiscr = sqrt(b * b - 4 * a * c);
 	t0 = (-b + sqrtdiscr) / (2 * a);
 	t1 = (-b - sqrtdiscr) / (2 * a);
+<<<<<<< HEAD
+=======
+	if (t1 < 0.001f && t0 < 0.001f)
+		return (0);
+	if (t1 < 0.001f)
+		t1 = t0;
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 	if (t0 > t1 && t1 > 0)
 		t0 = t1;
 	if (t0 > 0.001f && (*t == -1 || t0 < *t))
@@ -148,10 +160,10 @@ int		hitfcylinder(t_ray r, t_item cy, double *t)
 	sign = dotproduct(cy.dir, sub(intersection, cy.center)) /
 		magnitude2(cy.dir);
 	if (sign < 0)
-		return (hitdisk(r, newdisk(cy.dir, cy.center, cy.radius, cy.mat, 0), t));
+		return (hitdisk(r, newdisk(cy.dir, cy.center, cy.radius, cy.mat), t));
 	else if (sign > cy.height)
 		return (hitdisk(r, newdisk(cy.dir, add(cy.center, scale(cy.height,
-						cy.dir)), cy.radius, cy.mat, 0), t));
+								cy.dir)), cy.radius, cy.mat), t));
 	else
 	{
 		*t = hit;
@@ -164,7 +176,7 @@ int		hitfcone(t_ray r, t_item cy, double *t)
 	double	hit;
 	double	sign;
 	t_vec	intersection;
-  t_vec tmp;
+	t_vec	tmp;
 
 	if (!hitcone(r, cy, &hit))
 		return (0);
@@ -172,14 +184,13 @@ int		hitfcone(t_ray r, t_item cy, double *t)
 	sign = dotproduct(cy.dir, sub(intersection, cy.center)) /
 		magnitude2(cy.dir);
 	if (sign > cy.height)
-  {
-    tmp = find_h(cy.dir, cy.center, intersection);
+	{
+		tmp = find_h(cy.dir, cy.center, intersection);
 		return (hitdisk(r, newdisk(cy.dir, add(cy.center, scale(cy.height,
-						cy.dir)), sqrt(magnitude2(sub(tmp,
-						intersection))), cy.mat, 0), t));
-  }
-  else if (sign <= 0)
-    return (0);
+								cy.dir)), sqrt(magnitude2(sub(tmp, intersection))), cy.mat), t));
+	}
+	else if (sign <= 0)
+		return (0);
 	else
 	{
 		*t = hit;
@@ -187,48 +198,48 @@ int		hitfcone(t_ray r, t_item cy, double *t)
 	}
 }
 
-int   hitbox(t_ray r, t_item bo, double *t)
+int		hitbox(t_ray r, t_item bo, double *t)
 {
-  t_vec   min;
-  t_vec   max;
-  double  tmp;
+	t_vec	min;
+	t_vec	max;
+	double	tmp;
 
-  min.x = (bo.center.x - r.start.x) / r.dir.x;
-  max.x = (bo.end.x - r.start.x) / r.dir.x;
-  if (min.x > max.x)
-  {
-    tmp = min.x;
-    min.x = max.x;
-    max.x = tmp;
-  }
-  min.y = (bo.center.y - r.start.y) / r.dir.y;
-  max.y = (bo.end.y - r.start.y) / r.dir.y;
-  if (min.y > max.y)
-  {
-    tmp = min.y;
-    min.y = max.y;
-    max.y = tmp;
-  }
-  if (min.x > max.y || min.y > max.x)
-    return (0);
-  min.x = (min.y > min.x ? min.y : min.x);
-  max.x = (max.y < max.x ? max.y : max.x);
-  min.z = (bo.center.z - r.start.z) / r.dir.z;
-  max.z = (bo.end.z - r.start.z) / r.dir.z;
-  if (min.z > max.z)
-  {
-    tmp = min.z;
-    min.z = max.z;
-    max.z = tmp;
-  }
-  if (min.x > max.z || min.z > max.x)
-    return (0);
-  min.x = (min.z > min.x ? min.z : min.x);
-  max.x = (max.z < max.x ? max.z : max.x);
-  if (min.x < 0 && max.x < 0)
-    return (0);
-  else if (min.x < 0)
-    return ((*t = max.x) > 0 ? 1 : 0);
-  else
-    return ((*t = min.x) > 0 ? 1 : 0);
+	min.x = (bo.center.x - r.start.x) / r.dir.x;
+	max.x = (bo.end.x - r.start.x) / r.dir.x;
+	if (min.x > max.x)
+	{
+		tmp = min.x;
+		min.x = max.x;
+		max.x = tmp;
+	}
+	min.y = (bo.center.y - r.start.y) / r.dir.y;
+	max.y = (bo.end.y - r.start.y) / r.dir.y;
+	if (min.y > max.y)
+	{
+		tmp = min.y;
+		min.y = max.y;
+		max.y = tmp;
+	}
+	if (min.x > max.y || min.y > max.x)
+		return (0);
+	min.x = (min.y > min.x ? min.y : min.x);
+	max.x = (max.y < max.x ? max.y : max.x);
+	min.z = (bo.center.z - r.start.z) / r.dir.z;
+	max.z = (bo.end.z - r.start.z) / r.dir.z;
+	if (min.z > max.z)
+	{
+		tmp = min.z;
+		min.z = max.z;
+		max.z = tmp;
+	}
+	if (min.x > max.z || min.z > max.x)
+		return (0);
+	min.x = (min.z > min.x ? min.z : min.x);
+	max.x = (max.z < max.x ? max.z : max.x);
+	if ((min.x < 0 && max.x < 0) || (*t != -1 && *t < max.x && *t < min.x))
+		return (0);
+	else if (min.x < 0)
+		return ((*t = max.x) > 0 ? 1 : 0);
+	else
+		return ((*t = min.x) > 0 ? 1 : 0);
 }

@@ -6,7 +6,11 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:09:49 by squiquem          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2018/12/03 16:04:05 by squiquem         ###   ########.fr       */
+=======
+/*   Updated: 2018/11/29 16:49:24 by sderet           ###   ########.fr       */
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +82,7 @@ typedef union		u_colo
 	unsigned char	argb[4];
 }					t_colo;
 
+<<<<<<< HEAD
 typedef	struct		u_mouse
 {
 	int				button;
@@ -85,6 +90,8 @@ typedef	struct		u_mouse
 	int				y;
 }					t_mouse;
 
+=======
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 typedef struct		s_sgmt
 {
 	int				start;
@@ -160,7 +167,10 @@ typedef struct		s_mat
 	double			specpower;
 	double			n;
 	double			bump;
+<<<<<<< HEAD
 	double			scale;
+=======
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 }					t_mat;
 
 typedef struct		s_cam
@@ -197,10 +207,14 @@ typedef struct		s_work
 typedef struct		s_interface
 {
 	int				onglet;
+<<<<<<< HEAD
 	t_colo			spec;
 	t_colo			spec_shade;
 	t_pix			spectrum;
 	t_mouse			shade;
+=======
+	t_colo			color;
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 }					t_interface;
 
 typedef struct		s_perlin
@@ -230,7 +244,11 @@ typedef struct		s_env
 	int				ed[3];
 	int				nbs[4];
 	int				key[300];
+<<<<<<< HEAD
 	t_mouse			mouse;
+=======
+	int				button;
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 	int				(*hit[10])(t_ray, t_item, double *);
 	int				hit_negative;
 	int				ncurr;
@@ -294,7 +312,11 @@ int					in_shadow(t_ray lightray, t_env *e, double t);
 int					find_closest_item(t_ray r, t_env *e, t_vec *newstart);
 int					find_post_nega(t_ray r, t_env *e, t_vec *newstart, int *curr);
 t_vec				find_newstart(t_env *e, t_ray r);
+<<<<<<< HEAD
 t_mat				find_material(int curr, t_env *e);
+=======
+t_mat				find_material(int curr, t_vec newstart, t_env *e);
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 
 t_vec				find_normal_vec_if_not_plane(int curr, t_vec newstart,
 					t_env *e);
@@ -385,9 +407,15 @@ double				grad(int hash, double x, double y, double z);
 void				perlin(int *p, int *permutation);
 double				noise(double x, double y, double z);
 
+<<<<<<< HEAD
 t_color				color_marble(t_color c1, t_color c2, t_vec impact, double s);
 t_color				color_turbulence(t_color c1, t_color c2, t_vec impact, double s);
 t_color				color_wood(t_color c1, t_color c2, t_vec impact, double s);
+=======
+t_color				color_marble(t_color c1, t_color c2, t_vec impact);
+t_color				color_turbulence(t_color c1, t_color c2, t_vec impact);
+t_color				color_wood(t_color c1, t_color c2, t_vec impact);
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 t_vec				bumpmapping(t_vec n, t_vec impact, t_mat m);
 
 void				hud(t_env *e);

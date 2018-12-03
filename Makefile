@@ -6,7 +6,11 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/23 19:01:27 by squiquem          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2018/12/03 15:48:57 by qsebasti         ###   ########.fr        #
+=======
+#    Updated: 2018/11/29 14:59:02 by sderet           ###   ########.fr        #
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +24,7 @@ OBJ_DIR			=	objects
 
 CPPFLAGS 		=	-I includes/
 
+<<<<<<< HEAD
 SRC_FILES		=	main.c \
 					handle/keyhook.c \
 					handle/mousehook.c \
@@ -73,6 +78,53 @@ SRC_FILES		=	main.c \
 SUB_FOLDERS		=	parser render hud handle maths
 
 BUILD_DIR		=	$(addprefix $(OBJ_DIR)/,$(SUB_FOLDERS))
+=======
+SRC_FILES		=	color.c \
+					display1.c \
+					draw.c \
+					error.c \
+					fct_to_add.c \
+					find_closest.c \
+					find_normal.c \
+					ft_draw.c \
+					fresnel.c \
+					get_position.c \
+					get_value_mat.c \
+					get_value_obj.c \
+					get_value_obj2.c \
+					hit_disk.c \
+					hit_func.c \
+					hit_items.c \
+					hud.c \
+					keyhook.c \
+					light.c \
+					main.c \
+					mousehook.c \
+					move.c \
+					new.c \
+					new_image.c \
+					parser.c \
+					parser_all.c \
+					ray.c \
+					recup_camera.c \
+					recup_env.c \
+					recup_light.c \
+					recup_mat.c \
+					recup_object.c \
+					recup_object2.c \
+					recup_object3.c \
+					recursive_element.c \
+					recursive_elem2.c \
+					rotate.c \
+					tab.c \
+					textures_util.c \
+					textures.c \
+					checker.c \
+					noise.c \
+					marble.c \
+					vec.c \
+					vec2.c
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 
 OBJ_FILES		=	$(SRC_FILES:.c=.o)
 
@@ -94,7 +146,11 @@ LIBMLX			=	minilibx/libmlx.a
 
 CC				=	gcc
 
+<<<<<<< HEAD
 CFLAGS			=	-Wall -Wextra -Werror -g -O2 -MMD
+=======
+CFLAGS			=	-Wall -Wextra -Werror -g
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 
 opti			:
 	@make -j8 all
@@ -116,7 +172,11 @@ $(NAME)			:	$(OBJ)
 	@touch .gitignore
 	@echo $(NAME) > .gitignore
 
+<<<<<<< HEAD
 $(OBJ_DIR)/%.o	:	$(SRC_DIR)/%.c $(LIBFT) $(LIBMLX)
+=======
+$(OBJ_DIR)%.o	:	$(SRC_DIR)%.c $(LIBFT) $(LIBMLX)
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 	@mkdir $(OBJ_DIR) 2> /dev/null || true
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 	@printf '\033[0m[ ✔ ] %s\n\033[0m' "$<"

@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/02 17:48:39 by sderet           ###   ########.fr       */
+/*   Updated: 2018/11/29 17:00:17 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ double		lambert(t_ray lightray, t_vec n)
 **	COLOR_LAMBERT function:
 */
 
-void		color_lambert(t_color *c, double l, t_light currl, t_mat currm)
+void		color_lambert(t_color *c, double l, t_light currl, t_color matdiff)
 {
-	c->red += l * currl.intensity.red * currm.diffuse.red / 255 / 255;
-	c->green += l * currl.intensity.green * currm.diffuse.green / 255 / 255;
-	c->blue += l * currl.intensity.blue * currm.diffuse.blue / 255 / 255;
+	c->red += l * currl.intensity.red * matdiff.red / 255 / 255;
+	c->green += l * currl.intensity.green * matdiff.green / 255 / 255;
+	c->blue += l * currl.intensity.blue * matdiff.blue / 255 / 255;
 }
 
 /*
@@ -73,25 +73,26 @@ void		color_blinnphuong(t_color *c, double b, t_light currl)
 /*
 **	IN_SHADOW function:
 **	Determines if the point is in the shadow
+**	Returns the item id creating the shadow or -1 if not in shadow
 */
 
 int			in_shadow(t_ray lightray, t_env *e, double t)
 {
 	int		k;
-	int		(*hit[15])(t_ray, t_item, double *);
+	int		x;
 
-	hit[SPHERE] = &hitsphere;
-	hit[PLANE] = &hitplane;
-	hit[I_CONE] = &hitcone;
-	hit[I_CYL] = &hitcylinder;
-	hit[DISK] = &hitdisk;
-	hit[F_CYL] = &hitfcylinder;
-	hit[F_CONE] = &hitfcone;
-	hit[BOX] = &hitbox;
 	k = -1;
-	while (++k < e->nbs[3])
-		if (hit[e->item[k].item_type](lightray, e->item[k], &t) && t > 0.001 &&
-				e->item[k].isNega == 0)
-			return (1);
-	return (0);
+	x = -1;
+	while (++k < e->nbs[ITEM])
+	{
+		if (e->hit[e->item[k].item_type](lightray, e->item[k], &t) && t > 0.001f/* &&
+				e->item[k].isNega == 0*/)
+		{
+			if (!(e->mat[e->item[k].mat].n))
+				return (k);
+			else
+				x = k;
+		}
+	}
+	return (x);
 }

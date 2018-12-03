@@ -6,7 +6,11 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 17:25:35 by asarasy           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2018/12/03 12:27:06 by asarasy          ###   ########.fr       */
+=======
+/*   Updated: 2018/11/27 16:57:42 by asarasy          ###   ########.fr       */
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +82,10 @@ int						recup_value_mat(t_env *e, t_element elem, int i);
 int						recup_value_text(t_env *e, t_element elem, int i);
 int						get_bump(t_env *, t_element elem, int i);
 int						recup_value_checker(t_env *e, t_element elem, int i);
+<<<<<<< HEAD
 void					clean_value_mat(t_env *e);
+=======
+>>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 
 t_vec					ft_getpos(char *pos);
 t_color					ft_getcolor(char *color);
