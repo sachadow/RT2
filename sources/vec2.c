@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/19 21:55:23 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/10/22 14:43:18 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,6 @@ t_vec	scale(double k, t_vec u)
 	w.y = u.y * k;
 	w.z = u.z * k;
 	return (w);
-}
-
-/*
-**	OPPOSITE function:
-**	Returns the opposite vector
-*/
-
-t_vec	opposite(t_vec u)
-{
-	return (sub(newvec(0, 0, 0), u));
 }
 
 /*

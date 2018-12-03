@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 13:45:09 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/12 16:40:57 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/10/22 14:41:50 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,10 @@ t_ray	refracted_ray(t_vec inc, t_vec norm, double n, t_vec newstart)
 	double	c2;
 	t_ray	r;
 
+	c1 = dotproduct(norm, inc);
+	c2 = sqrtf(1 - n * n * (1 - c1 * c1));
+	r.dir = add(scale(n, inc), scale(n * c1 - c2, norm));
 	r.start = newstart;
-	c1 = -dotproduct(inc, norm);
-	if (c1 < 0)
-	{
-		norm = opposite(norm);
-		c1 = -c1;
-	}
-	c2 = 1 - (n * n) * (1 - (c1 * c1));
-	if (c2 < 0)
-	{
-		r.dir = newvec(0, 0, 0);
-		return (r);
-	}
-	r.dir = normalize(add(scale(n, inc), scale(n * c1 - sqrt(c2), norm)));
 	return (r);
 }
 
@@ -53,7 +43,7 @@ t_ray	reflected_ray(t_vec inc, t_vec norm, t_vec newstart)
 
 	f = dotproduct(inc, norm);
 	tmp = scale(2.0f * f, norm);
-	r.dir = normalize(sub(inc, tmp));
+	r.dir = sub(inc, tmp);
 	r.start = newstart;
 	return (r);
 }
@@ -87,20 +77,4 @@ double	fresnel(t_vec i, t_vec n, double n1, double n2)
 			cost)), 2) + pow(((etai * cosi) - (etat * cost)) / ((etai * cosi) +
 			(etat * cost)), 2)) / 2);
 	}
-}
-
-/*
-**	FIND_NREFR function:
-**	Finds the right refraction index for refraction
-*/
-
-double	find_nrefr(t_work w, t_mat mat, int item_hit, t_env *e)
-{
-	double	nrefr;
-
-	if (remove_from_tab(w.id, item_hit, REFRINCL))
-		nrefr = find_max_ior(w.id, REFRINCL, e);
-	else
-		nrefr = ft_max(mat.n, find_max_ior(w.id, REFRINCL, e));
-	return (nrefr);
 }

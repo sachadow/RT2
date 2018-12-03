@@ -6,11 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 17:07:15 by squiquem          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2018/11/30 19:14:30 by qsebasti         ###   ########.fr       */
-=======
-/*   Updated: 2018/11/23 16:51:11 by squiquem         ###   ########.fr       */
->>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +59,7 @@ static void	init(t_env *e)
 	//load_textures(e);
 	ft_memset(e->key, 0, sizeof(int) * 300);
 	e->s_line[CENTER] = 0;
-<<<<<<< HEAD
 	e->mouse.button = 0;
-=======
-	e->button = 0;
->>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 	e->interface.onglet = 1;
 }
 

@@ -6,11 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2018/11/27 17:56:23 by sderet           ###   ########.fr       */
-=======
-/*   Updated: 2018/11/15 11:37:10 by squiquem         ###   ########.fr       */
->>>>>>> 9bb6ef917ac07142ede3f5b0bd805df97aba3b8d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,69 +19,104 @@
 
 t_color			ft_resolve(t_env *e, t_work w, int lvl)
 {
-	t_mat		mat;
-	t_vec		newstart;
-	double		nrefr;
+	int		itemtype;
+	int		curr;
+	t_mat	currmat;
+	t_vec	newstart;
 
-	w.item_hit = find_closest_item(w.r, e, &newstart);
-	if (w.item_hit == EMPTY || lvl > e->lvl)
+	if (lvl > 2)
 		return (e->backgroundcolor);
-	mat = find_material(w.item_hit, newstart, e);
-	nrefr = find_nrefr(w, mat, w.item_hit, e);
-	w.n_vec = find_normal_vec(w.r, w.item_hit, e);
-	if (mat.n)
-		return (add_3colors(get_light_value(w, newstart, mat, e),
-			multiply_color(ft_resolve(e, newwork(w, refracted_ray(w.r.dir,
-			w.n_vec, w.n / nrefr, newstart), 1, e), lvl + 1),
-			1 - fresnel(w.r.dir, w.n_vec, w.n, nrefr)),
+	curr = -1;
+	itemtype = find_closest_item(w.r, e, &newstart, &curr);
+	if (itemtype == EMPTY)
+		return (e->backgroundcolor);
+	currmat = find_material(itemtype, curr, newstart, e);
+	if (currmat.n)
+		return (add_colors(multiply_color(ft_resolve(e, newwork(w,
+			refracted_ray(w.r.dir, w.n_vec, w.n / currmat.n, newstart), 1, e),
+			lvl + 1), 1 - fresnel(w.r.dir, w.n_vec, w.n, currmat.n)),
 			multiply_color(ft_resolve(e, newwork(w, reflected_ray(w.r.dir,
 			w.n_vec, newstart), 0, e), lvl + 1), fresnel(w.r.dir, w.n_vec,
-			w.n, nrefr))));
-	else if (!mat.n && mat.reflection)
-		return (add_2colors(get_light_value(w, newstart, mat, e),
+			w.n, currmat.n))));
+	else if (!currmat.n && currmat.reflection)
+		return (add_colors(get_light_value(w, newstart, currmat, e),
 			multiply_color(ft_resolve(e, newwork(w, reflected_ray(w.r.dir,
-			w.n_vec, newstart), 0, e), lvl + 1), mat.reflection)));
+			w.n_vec, newstart), 0, e), lvl + 1), currmat.reflection)));
 	else
-		return (get_light_value(w, newstart, mat, e));
+		return (get_light_value(w, newstart, currmat, e));
 }
 
-/*
-**	NEWWORK function:
-**	Creation of a new work structure (for refraction and reflection)
-*/
-
-t_work			newwork(t_work oldwork, t_ray newray, int refr, t_env *e)
+t_vec			find_normal_vec(t_ray r, int itemtype, int curr, t_env *e)
 {
-	t_work		w;
-	int			itemstart;
-	int			itemend;
-	t_mat		mat;
-	t_vec		newstart;
+	t_vec	newstart;
+	t_vec	n;
+	double	finite;
+
+	if (e->hit_negative > 0 && e->ncurr != -1)
+		curr = e->ncurr;
+	n = newvec(0, 0, 0);
+	if (itemtype == EMPTY)
+		return (n);
+	newstart = find_newstart(e, r);
+	finite = dotproduct(e->item[curr].dir, sub(newstart, e->item[curr].center))
+		/ magnitude2(e->item[curr].dir);
+	if (itemtype == PLANE || itemtype == DISK || (itemtype == F_CYL
+				&& (finite <= 0.001 || finite >= e->item[curr].height - 0.001)) ||
+        (itemtype == F_CONE && (finite >= e->item[curr].height - 0.001)))
+		n = (dotproduct(r.dir, e->item[curr].dir) < 0 ? e->item[curr].dir
+				: opposite(e->item[curr].dir));
+  else if (itemtype == BOX)
+  {
+    if ((newstart.x > e->item[curr].center.x - 0.001 && newstart.x <
+          e->item[curr].center.x + 0.001) || (newstart.x >
+          e->item[curr].end.x - 0.001 && newstart.x <
+          e->item[curr].end.x + 0.001))
+		  n = (dotproduct(r.dir, newvec(1, 0, 0)) < 0 ? newvec(1, 0, 0)
+			  	: opposite(newvec(1, 0, 0)));
+    else if ((newstart.y > e->item[curr].center.y - 0.001 && newstart.y <
+          e->item[curr].center.y + 0.001) || (newstart.y >
+          e->item[curr].end.y - 0.001 && newstart.y <
+          e->item[curr].end.y + 0.001))
+		  n = (dotproduct(r.dir, newvec(0, 1, 0)) < 0 ? newvec(0, 1, 0)
+			  	: opposite(newvec(0, 1, 0)));
+    else
+		  n = (dotproduct(r.dir, newvec(0, 0, 1)) < 0 ? newvec(0, 0, 1)
+			  	: opposite(newvec(0, 0, 1)));
+  }
+	else
+		n = find_normal_vec_if_not_plane(itemtype, curr, newstart, e);
+	if (e->hit_negative > 0 && e->ncurr != -1)
+		n = sub(newvec(0, 0, 0), n);
+	if (!magnitude2(n))
+		return (newvec(0, 0, 0));
+	return (normalize(n));
+}
+
+t_vec			find_newstart(t_env *e, t_ray r)
+{
+	t_vec	newstart;
+	int		curr;
+	int		k;
+
+	k = find_closest_item(r, e, &newstart, &curr);
+	return (newstart);
+}
+
+t_work			newwork(t_work oldwork, t_ray newray, int r, t_env *e)
+{
+	t_work	w;
+	int		itemtype;
+	int		curr;
+	t_mat	currmat;
+	t_vec	newstart;
 
 	w = oldwork;
 	w.r = newray;
-	itemstart = find_closest_item(oldwork.r, e, &newstart);
-	mat = find_material(itemstart, newstart, e);
-	itemend = find_closest_item(newray, e, &newstart);
-	w.n_vec = find_normal_vec(newray, itemend, e);
-	if (refr)
-	{
-		if (itemtype(itemstart, e) != 2 && itemtype(itemstart, e) != 5
-			&& position_in_tab(w.id, itemstart, REFRINCL) != -1)
-			refr_enter_or_exit(&w, itemstart, 0, e);
-		else
-			refr_enter_or_exit(&w, itemstart, 1, e);
-	}
-	w.coef = oldwork.coef * mat.reflection;
+	itemtype = find_closest_item(oldwork.r, e, &newstart, &curr);
+	currmat = find_material(itemtype, curr, newstart, e);
+	w.n_vec = find_normal_vec(oldwork.r, itemtype, curr, e);
+	if (r)
+		w.n = currmat.n;
+	w.coef = oldwork.coef * currmat.reflection;
 	return (w);
-}
-
-/*
-**	ITEMTYPE function:
-**	Finds the item type from the item id
-*/
-
-int				itemtype(int id, t_env *e)
-{
-	return (e->item[id].item_type);
 }
