@@ -6,41 +6,73 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/23 19:01:27 by squiquem          #+#    #+#              #
-#    Updated: 2018/11/02 17:02:06 by sderet           ###   ########.fr        #
+#    Updated: 2018/12/03 15:48:57 by qsebasti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY			:	all clean fclean re opti
 
-NAME			=	rt
+NAME			=	RT
 
-SRC_DIR			=	./sources/
+SRC_DIR			=	sources
 
-OBJ_DIR			=	./objects/
+OBJ_DIR			=	objects
 
 CPPFLAGS 		=	-I includes/
 
-SRC_FILES		=	draw.c \
-					main.c \
-					vec.c \
-					vec2.c \
-					hit_items.c \
-					hit_disk.c \
-					hit_func.c \
-					ray.c \
-					find_closest.c \
-					find_normal.c \
-					light.c \
-					parsing.c \
-					parsing2.c \
-					parsing_items.c \
-					rotate.c \
-					new.c \
-					fresnel.c \
-					color.c \
-					fct_to_add.c \
-					keyhook.c \
-					move.c
+SRC_FILES		=	main.c \
+					handle/keyhook.c \
+					handle/mousehook.c \
+					handle/move.c \
+					hud/cursor.c \
+					hud/draw_color.c \
+					hud/general_ui.c \
+					hud/hud.c \
+					hud/new_image.c \
+					hud/ui1.c \
+					maths/rotate.c \
+					maths/vec.c \
+					maths/vec2.c \
+					parser/error.c \
+					parser/get_position.c \
+					parser/get_value_mat.c \
+					parser/get_value_obj.c \
+					parser/get_value_obj2.c \
+					parser/parser.c \
+					parser/parser_all.c \
+					parser/recup_camera.c \
+					parser/recup_env.c \
+					parser/recup_light.c \
+					parser/recup_mat.c \
+					parser/recup_object.c \
+					parser/recup_object2.c \
+					parser/recup_object3.c \
+					parser/recursive_element.c \
+					parser/recursive_elem2.c \
+					parser/set_zero_mat.c \
+					render/checker.c \
+					render/draw.c \
+					render/color.c \
+					render/fct_to_add.c \
+					render/find_closest.c \
+					render/find_normal.c \
+					render/fresnel.c \
+					render/hit_disk.c \
+					render/hit_func.c \
+					render/hit_items.c \
+					render/light.c \
+					render/marble.c \
+					render/new.c \
+					render/noise.c \
+					render/ray.c \
+					render/shadow.c \
+					render/tab.c \
+					render/textures_util.c \
+					render/textures.c
+
+SUB_FOLDERS		=	parser render hud handle maths
+
+BUILD_DIR		=	$(addprefix $(OBJ_DIR)/,$(SUB_FOLDERS))
 
 OBJ_FILES		=	$(SRC_FILES:.c=.o)
 
@@ -48,32 +80,43 @@ OBJ_D_FILES		=	$(SRC_FILES:.c=.d)
 
 SRC				=	$(addprefix $(SRC_DIR)/,$(SRC_FILES))
 
-OBJ				=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
+OBJ				=	$(addprefix $(OBJ_DIR)/, $(OBJ_FILES))
 
-OBJ_D			=	$(addprefix $(OBJ_DIR), $(OBJ_D_FILES))
+OBJ_D			=	$(addprefix $(OBJ_DIR)/, $(OBJ_D_FILES))
 
 LFT				=	-L libft/ -lft
 
 MLX				=	-L minilibx/ -lmlx -framework OpenGL -framework AppKit
 
+LIBFT			=	libft/libft.a
+
+LIBMLX			=	minilibx/libmlx.a
+
 CC				=	gcc
 
-CFLAGS		=	-Wall -Wextra -Werror -g
+CFLAGS			=	-Wall -Wextra -Werror -g -O2 -MMD
 
 opti			:
 	@make -j8 all
 
-all				:
+all				:	objects
 	@make all -C libft/
 	@make all -C minilibx/
 	@make $(NAME)
+
+objects			:	$(BUILD_DIR)
+
+$(BUILD_DIR)	:
+	@mkdir -p $@
 
 $(NAME)			:	$(OBJ)
 	@$(CC) $(CFLAGS) $(LFT) $(MLX) $(OBJ) -o $@ 
 	@printf '\033[4m'
 	@printf "\033[32m[ ✔ ] $(NAME)\n\033[0m"
+	@touch .gitignore
+	@echo $(NAME) > .gitignore
 
-$(OBJ_DIR)%.o	:	$(SRC_DIR)%.c
+$(OBJ_DIR)/%.o	:	$(SRC_DIR)/%.c $(LIBFT) $(LIBMLX)
 	@mkdir $(OBJ_DIR) 2> /dev/null || true
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 	@printf '\033[0m[ ✔ ] %s\n\033[0m' "$<"
@@ -85,7 +128,7 @@ clean			:
 	@rm -f $(OBJ_D)
 	@rm -rf $(OBJ_DIR) 2> /dev/null || true
 	@printf '\033[4m'
-	@echo "\033[31mRTV1:\033[0m"
+	@echo "\033[31m$(NAME):\033[0m"
 	@printf '\033[31m[ ✔ ] %s\n\033[0m' "Clean Object Files"
 
 fclean			:	clean
@@ -95,3 +138,5 @@ fclean			:	clean
 re				:
 	@make fclean
 	@make opti
+
+-include $(OBJ_D)

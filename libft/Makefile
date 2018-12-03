@@ -6,7 +6,7 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/12 19:01:27 by squiquem          #+#    #+#              #
-#    Updated: 2018/10/09 15:12:42 by squiquem         ###   ########.fr        #
+#    Updated: 2018/11/23 17:09:45 by squiquem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,9 @@ SRC_FILES		=	ft_memset.c \
 					ft_max.c \
 					ft_abs.c \
 					ft_clamp.c \
+					ft_strjoinfree.c \
+					ft_strsubf.c \
+					ft_fade.c
 
 OBJ_FILES		=	$(SRC_FILES:.c=.o)
 

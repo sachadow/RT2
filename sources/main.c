@@ -6,12 +6,13 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 17:07:15 by squiquem          #+#    #+#             */
-/*   Updated: 2018/10/22 14:41:03 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/11/30 19:14:30 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "keyboard.h"
+#include "parser.h"
 
 /*
 **	QUIT function:
@@ -25,25 +26,41 @@ int			quit(void)
 }
 
 /*
-**	ESCAPE function:
-**	Quits when typing ESC key
-*/
-
-void		escape(t_env *e)
-{
-	if (e->key[KEY_ESC])
-		exit(1);
-}
-
-/*
 **	FILENAME_CONTROL function:
 **	Controls if the filename ends with ".rt"
 */
 
-void		filename_control(char *av)
+static void	filename_control(char *av)
 {
-	if (ft_strcmp(av + ft_strlen(av) - 3, ".rt"))
+	if (ft_strcmp(av + ft_strlen(av) - 4, ".xml"))
 		ft_printerror("Please use valid file");
+}
+
+/*
+**	INIT function:
+**	Feeds some env variables
+*/
+
+static void	init(t_env *e)
+{
+	e->hit[SPHERE] = &hitsphere;
+	e->hit[PLANE] = &hitplane;
+	e->hit[I_CYL] = &hitcylinder;
+	e->hit[I_CONE] = &hitcone;
+	e->hit[DISK] = &hitdisk;
+	e->hit[F_CYL] = &hitfcylinder;
+	e->hit[F_CONE] = &hitfcone;
+	e->hit[BOX] = &hitbox;
+	e->backgroundcolor = newcolor(0, 0, 0);
+	e->backgroundcolor = multiply_color(e->backgroundcolor, 0.00392156862);
+	e->lvl = 4;
+	e->antialiasing = 0;
+	create_axis(e);
+	//load_textures(e);
+	ft_memset(e->key, 0, sizeof(int) * 300);
+	e->s_line[CENTER] = 0;
+	e->mouse.button = 0;
+	e->interface.onglet = 1;
 }
 
 /*
@@ -59,17 +76,20 @@ int			main(int ac, char **av)
 	filename_control(av[1]);
 	if (!(e = (t_env*)malloc(sizeof(t_env))))
 		ft_printerror("Error malloc");
-	if (read_file1(av[1], e) == -1)
-		ft_printerror("Please enter a valid file");
+	parser_all(av[1], e);
 	if (!(e->mlx = mlx_init()))
 		ft_printerror("Error mlx init");
-	read_file2(av[1], e);
-	ft_memset(e->key, 0, sizeof(int) * 300);
-	e->win = mlx_new_window(e->mlx, WIN_W, WIN_H, "rt");
-	e->backgroundcolor = newcolor(0, 0, 0);
+	open_textures_mat(e);
+	e->win = mlx_new_window(e->mlx, WIN_W, WIN_H, "RT");
+	mlx_centertop_window(e->win);
+	init(e);
+	//mlx_expose_hook(e->win, debug, e);
 	mlx_loop_hook(e->mlx, reload, e);
 	mlx_hook(e->win, KPRESS, KPRESSMASK, keypress, e);
 	mlx_hook(e->win, KRELEASE, KRELEASEMASK, keyrelease, e);
+	mlx_hook(e->win, MOTION_NOTIFY, PTR_MOTION_MASK, mousemove, e);
+	mlx_hook(e->win, BPRESS, BPRESSMASK, &mousepress, e);
+	mlx_hook(e->win, BRELEASE, BRELEASEMASK, &mouserelease, e);
 	mlx_hook(e->win, DESTROY, SNOTIFYMASK, quit, e);
 	mlx_loop(e->mlx);
 	return (1);

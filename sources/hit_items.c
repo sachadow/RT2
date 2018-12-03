@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/02 15:02:15 by sderet           ###   ########.fr       */
+/*   Updated: 2018/11/27 15:49:09 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int		calc_discr(double a, double b, double c, double *t)
 	sqrtdiscr = sqrtf(b * b - 4 * a * c);
 	t0 = (-b + sqrtdiscr) / (2 * a);
 	t1 = (-b - sqrtdiscr) / (2 * a);
-	if (t0 > t1)
+	if (t0 > t1 && t1 > 0)
 		t0 = t1;
 	if (t0 > 0.001f && (*t == -1 || t0 < *t))
 	{

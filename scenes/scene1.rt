@@ -6,11 +6,11 @@ LIGHT {position: (2000, 0, -1000), intensity: (255, 255, 255)};
 SPHERE {center: (-900, -500, 200), radius: 250, mat: 2, 0};
 SPHERE {center: (900, -500, 900), radius: 250, mat: 2, 0};
 SPHERE {center: (-900, -500, 900), radius: 250, mat: 2, 0};
-PLANE {normale: (0, 0, 1), d: -1500, mat: 2};
+// PLANE {normale: (0, 0, 1), d: -1500, mat: 2};
 CYLINDER {direction: (0, 1, 0), axispoint: (900, 0, 900), radius: 150, mat: 2};
 CYLINDER {direction: (0, 1, 0), axispoint: (-900, 0, 900), radius: 150, mat: 2};
 F_CYLINDER {direction: (1, 1, -1), axispoint: (-100, 0, 200), radius: 100, mat: 2, height: 200};
 BOX center (-500, 0, 200 ok (-100, -200, -100, ok 1
-// F_CONE {direction: (1, 1, -1), axispoint: (-100, -100, 200), radius: 15, mat: 2, height: 200, 1};
-SPHERE {center: (-100, 0, -20), radius: 100, mat: 2, 1};
-CYLINDER {direction: (0, 1, 0), axispoint: (0, 0, -2000), radius: 150, mat: 2};
+// F_CONE {direction: (1, 1, -1), axispoint: (-100, -100, 200), radius: 15, mat: 2, height: 200, 0};
+// SPHERE {center: (-100, 0, -20), radius: 100, mat: 2, 1};
+// CYLINDER {direction: (0, 1, 0), axispoint: (0, 0, -2000), radius: 150, mat: 2};
