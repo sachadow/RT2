@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:09:49 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/03 16:04:05 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/07 15:23:09 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,13 @@ typedef struct		s_color
 	double			blue;
 }					t_color;
 
+typedef struct		s_hsv
+{
+	double			h;
+	double			s;
+	double			v;
+}					t_hsv;
+
 typedef struct		s_ray
 {
 	t_vec			start;
@@ -199,7 +206,7 @@ typedef struct		s_interface
 	int				onglet;
 	t_colo			spec;
 	t_colo			spec_shade;
-	t_pix			spectrum;
+	t_mouse			spectrum;
 	t_mouse			shade;
 }					t_interface;
 
@@ -245,6 +252,8 @@ typedef struct		s_env
 	t_light			*light;
 	pthread_t		thr[NB_THR];
 	int				debug;
+	int				loading;
+	int				filter;
 	t_interface		interface;
 }					t_env;
 
@@ -289,9 +298,9 @@ double				lambert(t_ray lightray, t_vec n);
 void				color_blinnphuong(t_color *c, double b, t_light currl);
 double				blinnphuong(t_ray lightray, t_ray *r, t_vec n,
 					t_mat currm);
-int					in_shadow(t_ray lightray, t_env *e, double t);
 
 int					find_closest_item(t_ray r, t_env *e, t_vec *newstart);
+int					get_closest_item(t_ray r, t_env *e);
 int					find_post_nega(t_ray r, t_env *e, t_vec *newstart, int *curr);
 t_vec				find_newstart(t_env *e, t_ray r);
 t_mat				find_material(int curr, t_env *e);
@@ -390,6 +399,31 @@ t_color				color_turbulence(t_color c1, t_color c2, t_vec impact, double s);
 t_color				color_wood(t_color c1, t_color c2, t_vec impact, double s);
 t_vec				bumpmapping(t_vec n, t_vec impact, t_mat m);
 
+int					in_shadow(t_ray lightray, t_env *e, double t);
+double				shadow_from_sphere(t_light light, t_vec impact, t_work w, t_env *e);
+double				shadow_from_point(t_ray lray, t_vec dist, t_env *e);
+
+void				supersamplingx4(t_pix p, t_env *e);
+void				supersampling(int k, t_pix p, t_env *e);
+void				aliasing(int k, t_pix p, t_env *e);
+
+t_hsv				color_to_hsv(t_color c);
+t_color				hsv_to_color(t_hsv hsv);
+
+size_t				limit_clr(size_t color);
+int					x_g(t_env *e, t_pix p, char type);
+
+void				draw_point(t_env *e, int x, int y, t_color c);
+t_color				get_pt_color(int x, int y, t_env *e);
+
+t_color				add_sepia_filter(t_color c);
+t_color				add_greyscale_filter(t_color c);
+t_color				add_reverse_filter(t_color c);
+t_color				add_saturate_filter(t_color c);
+void				add_cartoon_effect(t_pix p, t_env *e);
+
 void				hud(t_env *e);
 void				new_image(int num, int width, int height, t_env *e);
+
+void				load(t_env *e);
 #endif

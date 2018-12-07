@@ -2,7 +2,7 @@
 <scene>
 	<light>
 		<sublight pos="500,0,-2000" intensity="255,255,255"/>
-		<ambiant color="255,255,255"/>
+		<ambiant color="0,0,0"/>
 	</light>
 	<camera pos="0,0,-2000" dir="0,0,100"/>
 	<material>
@@ -12,13 +12,13 @@
 		<checker diffusion="255,0,255" diffusionbis="0,255,0" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
 	</material>
 	<objects>
-		<icone dir="0,1,0" axispoint="500,-100,0" angle="15" mat="1"/>
-		<icyl dir="1,0,1" axispoint="500,-300,0" radius="100" mat="1"/>
-		<fcyl dir="1,0,1" axispoint="500,300,-150" radius="100" mat="2" height="100"/>
+		<icone dir="0,1,0" axispoint="500,-100,0" angle="15" mat="1" isneg="0"/>
+		<icyl dir="1,0,1" axispoint="500,-300,0" radius="100" mat="1" isneg="0"/>
+		<fcyl dir="1,0,1" axispoint="500,300,-150" radius="100" mat="2" height="100" isneg="0"/>
 		<plane normale="0,0,1" d="-1500" mat="1"/>
-		<fcone dir="0,1,0" axispoint="200,-100,-100" angle="15" mat="1" height="500"/>
-		<sphere center="407,290,0" radius="100" mat="1"/>
-		<sphere center="233,290,0" radius="100" mat="0"/>
-		<sphere center="320,140,0" radius="100" mat="2"/>
+		<fcone dir="0,1,0" axispoint="200,-100,-100" angle="15" mat="1" height="500" isneg="1"/>
+		<sphere center="407,290,0" radius="100" mat="1" isneg="0"/>
+		<sphere center="233,290,0" radius="100" mat="0" isneg="0"/>
+		<sphere center="320,140,0" radius="100" mat="2" isneg="0"/>
 	</objects>
 </scene>

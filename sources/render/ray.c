@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/23 14:35:07 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/04 16:30:55 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	The loop is here for reflections
 */
 
-t_color		color_calc(double x, double y, t_env *e)
+t_color			color_calc(double x, double y, t_env *e)
 {
 	t_work	w;
 	int		i;
@@ -34,41 +34,54 @@ t_color		color_calc(double x, double y, t_env *e)
 }
 
 /*
+**	COLOR_TAB_SUM function:
+**	Sums the colors of a tab
+**	Necessary for the get_light_value function
+*/
+
+static t_color	color_tab_sum(t_color *c, t_env *e)
+{
+	t_color	k;
+	int		i;
+
+	k = e->backgroundcolor;
+	i = -1;
+	while (++i < e->nbs[LIGHT])
+		k = add_2colors(k, c[i]);
+	return (k);
+}
+
+/*
 **	GET_LIGHT_VALUE function:
 **	Calculation of the light value from diffusion and lighting
 **	(Lambert diffusion & Blinn-Phuong reflection)
 */
 
-t_color		get_light_value(t_work w, t_vec newstart, t_mat mat, t_env *e)
+t_color			get_light_value(t_work w, t_vec impact, t_mat mat, t_env *e)
 {
 	int		j;
 	t_vec	dist;
-	t_ray	lightray;
-	t_color	c;
-	int		inshdw;
+	t_ray	lray;
+	t_color	c[e->nbs[LIGHT]];
 
-	c = e->backgroundcolor;
 	j = -1;
 	while (++j < e->nbs[LIGHT])
 	{
-		dist = sub(e->light[j].pos, newstart);
-		if (dotproduct(w.n_vec, dist) <= 0.0f
-			|| sqrt(magnitude2(dist)) <= 0.0f)
+		c[j] = newcolor(0, 0, 0);
+		dist = sub(e->light[j].pos, impact);
+		if (dotproduct(w.n_vec, dist) <= 0.0f || magnitude(dist) <= 0.0f)
 			continue;
-		lightray.start = newstart;
-		lightray.dir = normalize(dist);
-		inshdw = in_shadow(lightray, e, sqrt(magnitude2(dist)));
-		if (inshdw == EMPTY || e->mat[e->item[inshdw].mat].n)
-		{
-			color_lambert(&c, lambert(lightray, w.n_vec), e->light[j],
-					find_texture_color(newstart, w, e));
-			color_blinnphuong(&c, blinnphuong(lightray, &w.r, w.n_vec,
-						mat), e->light[j]);
-		}
-		if (inshdw != -1 && e->mat[e->item[inshdw].mat].n)
-			c = multiply_color(c, e->mat[e->item[inshdw].mat].transparency);
+		lray.start = impact;
+		lray.dir = normalize(dist);
+		color_lambert(&c[j], lambert(lray, w.n_vec), e->light[j],
+				find_texture_color(impact, w, e));
+		color_blinnphuong(&c[j], blinnphuong(lray, &w.r, w.n_vec,
+				mat), e->light[j]);
+		c[j] = multiply_color(c[j], e->light[j].radius ?
+				shadow_from_sphere(e->light[j], impact, w, e)
+				: shadow_from_point(lray, dist, e));
 	}
-	return (c);
+	return (color_tab_sum(c, e));
 }
 
 /*
@@ -76,7 +89,7 @@ t_color		get_light_value(t_work w, t_vec newstart, t_mat mat, t_env *e)
 **	Calculation of the ray parameters from the x and y (screen parameters)
 */
 
-t_vec		set_ray_dir(double x, double y, t_env *e)
+t_vec			set_ray_dir(double x, double y, t_env *e)
 {
 	t_vec	i;
 	t_vec	j;

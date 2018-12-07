@@ -6,7 +6,7 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/23 19:01:27 by squiquem          #+#    #+#              #
-#    Updated: 2018/12/03 15:48:57 by qsebasti         ###   ########.fr        #
+#    Updated: 2018/12/07 15:14:21 by squiquem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,15 @@ SRC_FILES		=	main.c \
 					handle/mousehook.c \
 					handle/move.c \
 					hud/cursor.c \
-					hud/draw_color.c \
 					hud/general_ui.c \
 					hud/hud.c \
+					hud/loading.c \
 					hud/new_image.c \
+					hud/shade_bar.c \
+					hud/shape.c \
 					hud/ui1.c \
+					hud/ui1_bottom.c \
+					hud/util.c \
 					maths/rotate.c \
 					maths/vec.c \
 					maths/vec2.c \
@@ -50,25 +54,31 @@ SRC_FILES		=	main.c \
 					parser/recursive_element.c \
 					parser/recursive_elem2.c \
 					parser/set_zero_mat.c \
+					parser/get_value_obj3.c \
+					render/aliasing.c \
+					render/cartoon.c \
 					render/checker.c \
-					render/draw.c \
 					render/color.c \
 					render/fct_to_add.c \
+					render/filters.c \
 					render/find_closest.c \
 					render/find_normal.c \
 					render/fresnel.c \
 					render/hit_disk.c \
 					render/hit_func.c \
 					render/hit_items.c \
+					render/hsv.c \
 					render/light.c \
 					render/marble.c \
 					render/new.c \
 					render/noise.c \
+					render/pixel.c \
 					render/ray.c \
 					render/shadow.c \
 					render/tab.c \
 					render/textures_util.c \
-					render/textures.c
+					render/textures.c \
+					render/threads.c \
 
 SUB_FOLDERS		=	parser render hud handle maths
 

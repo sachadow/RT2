@@ -5,7 +5,7 @@
 
 	<light>
 		<sublight pos="-2000,0,0" intensity="255,255,255"/>
-		<ambiant color="255,255,255"/>
+		<ambiant color="0,0,0"/>
 	</light>
 
 	<material>
@@ -17,8 +17,8 @@
 	</material>
 
 	<objects>
-		<sphere center="400,0,0" radius="200" mat="1"/>
-		<sphere center="0,-300,0" radius="100" mat="4"/>
+		<sphere center="400,0,0" radius="200" mat="1" isneg="0"/>
+		<sphere center="0,-300,0" radius="100" mat="4" isneg="0"/>
 		<plane normale="1,0,0" d="-5000" mat="1"/>
 	</objects>
 </scene>
