@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/27 17:56:23 by sderet           ###   ########.fr       */
+/*   Updated: 2018/12/06 17:43:15 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ t_vec			find_normal_vec(t_ray r, int itemtype, int curr, t_env *e)
 	t_vec	n;
 	double	finite;
 
-	if (e->hit_negative > 0 && e->ncurr != -1)
-		curr = e->ncurr;
+//	if (e->hit_negative > 0 && e->ncurr != -1)
+//		curr = e->ncurr;
 	n = newvec(0, 0, 0);
 	if (itemtype == EMPTY)
 		return (n);
@@ -85,8 +85,8 @@ t_vec			find_normal_vec(t_ray r, int itemtype, int curr, t_env *e)
   }
 	else
 		n = find_normal_vec_if_not_plane(itemtype, curr, newstart, e);
-	if (e->hit_negative > 0 && e->ncurr != -1)
-		n = sub(newvec(0, 0, 0), n);
+//	if (e->hit_negative > 0 && e->ncurr != -1)
+//		n = sub(newvec(0, 0, 0), n);
 	if (!magnitude2(n))
 		return (newvec(0, 0, 0));
 	return (normalize(n));
