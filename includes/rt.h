@@ -241,6 +241,7 @@ typedef struct		s_env
 	int				(*hit[10])(t_ray, t_item, double *);
 	int				hit_negative;
 	int				ncurr;
+	int				curr;
 	t_color			backgroundcolor;
 	int				lvl;
 	int				antialiasing;
@@ -301,7 +302,13 @@ double				blinnphuong(t_ray lightray, t_ray *r, t_vec n,
 
 int					find_closest_item(t_ray r, t_env *e, t_vec *newstart);
 int					get_closest_item(t_ray r, t_env *e);
-int					find_post_nega(t_ray r, t_env *e, t_vec *newstart, int *curr);
+int					find_post_nega(t_ray r, t_env *e, t_vec *newstart);
+int					is_empty(int *hit, int count, int *id, t_env *e);
+int					get_hits(int* hit, int *id, int last);
+void				hit_id(int* id, int nb, int* hit, t_env *e);
+void				init_int_tab(int* tab, int size, int value);
+int					got_out(int count, int *nb_hit, int *id, t_env *e);
+int					count_items(t_ray r, t_env *e);
 t_vec				find_newstart(t_env *e, t_ray r);
 t_mat				find_material(int curr, t_env *e);
 

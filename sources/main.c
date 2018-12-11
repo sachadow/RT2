@@ -54,7 +54,7 @@ static void	init(t_env *e)
 	e->hit[BOX] = &hitbox;
 	e->backgroundcolor = multiply_color(e->backgroundcolor, 0.00392156862);
 	e->lvl = 4;
-	e->antialiasing = 2;
+	e->antialiasing = 1;
 	create_axis(e);
 	ft_memset(e->key, 0, sizeof(int) * 300);
 	e->s_line[CENTER] = 0;
