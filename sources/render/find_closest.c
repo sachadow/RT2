@@ -32,7 +32,7 @@ int			find_closest_item(t_ray r, t_env *e, t_vec *newstart)
 		*newstart = add(scale(t, r.dir), r.start);
 	else if (e->item[curr].isNega == 1)
 	{
-		e->hit_negative = 1;
+//		e->hit_negative = 1;
 		curr = find_post_nega(r, e, newstart);
 	}
 	return (curr);
@@ -40,35 +40,13 @@ int			find_closest_item(t_ray r, t_env *e, t_vec *newstart)
 
 int			find_post_nega(t_ray r, t_env *e, t_vec *newstart)
 {
-/*
-	double	t;
-	int		ncurr;
-	t_ray	to_use;
-
-	curr += 0;
-	e->ncurr = -1;
-	to_use.dir = r.dir;
-	to_use.start = *newstart;
-	ncurr = get_closest_item(to_use, e);
-	if (ncurr < 0)
-		return (-1);
-	e->ncurr = ncurr;
-	t = -1;
-	e->hit[e->item[ncurr].item_type](to_use, e->item[ncurr], &t);
-	*newstart = add(add(scale(t, r.dir), *newstart), scale(0.001, r.dir));
-	r.start = *newstart;
-	if (e->item[ncurr].isNega == 1)
-	{
-		return (find_closest_item(r, e, newstart));
-	}
-	return (-1);
-	*/
 	int		item_count;
 	int		*items_id;
 	int		*hit_items;
 	int		last_hit;
 	double	t;
 
+	e->curr = -1;
 	item_count = count_items(r, e);
 	hit_items = (int*)malloc(sizeof(int) * item_count);
 	items_id = (int*)malloc(sizeof(int) * item_count);
@@ -78,14 +56,14 @@ int			find_post_nega(t_ray r, t_env *e, t_vec *newstart)
 	hit_id(items_id, last_hit, hit_items, e);
 	t = -1;
 	e->hit[e->item[last_hit].item_type](r, e->item[last_hit], &t);
-	r.start = add(add(scale(t, r.dir), r.start), scale(0.001, r.dir));
+	r.start = add(scale(t, r.dir), r.start);
 	while (got_out(item_count, hit_items, items_id, e) == 0)
 	{
 		last_hit = get_closest_item(r, e);
 		hit_id(items_id, last_hit, hit_items, e);
 		t = -1;
 		e->hit[e->item[last_hit].item_type](r, e->item[last_hit], &t);
-		r.start = add(add(scale(t, r.dir), r.start), scale(0.001, r.dir));
+		r.start = add(scale(t, r.dir), r.start);
 		if (e->item[last_hit].isNega == 0 &&
 				get_hits(hit_items, items_id, last_hit) % 2 != 0)
 			e->curr = last_hit;
@@ -163,19 +141,11 @@ int			got_out(int count, int *nb_hit, int *id, t_env *e)
 	b = 0;
 	while (a < count)
 	{
-		if (e->item[id[a]].isNega == 1 && nb_hit[a] % 2 != 0)
+		if (e->item[id[a]].isNega == 1 && nb_hit[a] % 2 == 0)
 			b++;
 		a++;
 	}
 	return (b);
-/*
-	a = 0;
-	while (a < count && id[a] != last_hit)
-		a++;
-	if (a < count && nb_hit[a] % 2 == 0)
-		return (1);
-	return (0);
-*/
 }
 
 int			count_items(t_ray r, t_env *e)

@@ -106,6 +106,8 @@ t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 	double	finite;
 	int		type;
 
+	if (e->hit_negative > 0)
+		return (newvec(0, 0, 0));
 	n = newvec(0, 0, 0);
 	if (id == EMPTY)
 		return (n);
