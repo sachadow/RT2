@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:48:17 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/07 15:13:49 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/11 13:13:03 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,30 @@ t_color	add_saturate_filter(t_color c)
 	return (hsv_to_color(hsv));
 }
 
-void	add_cartoon_effect(t_pix p, t_env *e)
+void	add_cartoon_effect(t_env *e)
 {
+	t_pix	q;
 	t_color	c;
 	short	sum;
 
-	c = get_pt_color(p.x, p.y, e);
-	sum = 255 - sqrt(x_g(e, p, 'X') * x_g(e, p, 'X') + x_g(e, p, 'Y')
-			* x_g(e, p, 'Y'));
-	sum = ft_clamp(0, 255, sum);
-	if (sum > 100)
+	q.y = -1;
+	while (++q.y < IMG_H)
 	{
-		c.red = limit_clr(c.red);
-		c.green = limit_clr(c.green);
-		c.blue = limit_clr(c.blue);
+		q.x = -1;
+		while (++q.x < IMG_W)
+		{
+			c = get_pt_color(q.x, q.y, e);
+			sum = 255 - sqrt(x_g(e, q, 'X') * x_g(e, q, 'X') + x_g(e, q, 'Y')
+					* x_g(e, q, 'Y'));
+			sum = ft_clamp(0, 255, sum);
+			if (sum > 100)
+			{
+				c.red = limit_clr(c.red);
+				c.green = limit_clr(c.green);
+				c.blue = limit_clr(c.blue);
+			}
+			c = multiply_color(c, 0.0039215686);
+			draw_point(e, q.x, q.y, c);
+		}
 	}
-	draw_point(e, p.x, p.y, c);
 }

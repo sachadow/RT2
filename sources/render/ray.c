@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/04 16:30:55 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/12 16:44:11 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_color			color_calc(double x, double y, t_env *e)
 {
 	t_work	w;
 	int		i;
+	t_color	c;
 
 	w.c = e->backgroundcolor;
 	w.coef = 1.0;
@@ -30,7 +31,16 @@ t_color			color_calc(double x, double y, t_env *e)
 	i = -1;
 	while (++i < REFRINCL)
 		w.id[i] = -1;
-	return (ft_resolve(e, w, 0));
+	c = ft_resolve(e, w, 0);
+	if (e->filter == SEPIA)
+		c = add_sepia_filter(c);
+	else if (e->filter == GREYSCALE)
+		c = add_greyscale_filter(c);
+	else if (e->filter == REVERSE)
+		c = add_reverse_filter(c);
+	else if (e->filter == SATURATE)
+		c = add_saturate_filter(c);
+	return (c);
 }
 
 /*
@@ -75,13 +85,13 @@ t_color			get_light_value(t_work w, t_vec impact, t_mat mat, t_env *e)
 		lray.dir = normalize(dist);
 		color_lambert(&c[j], lambert(lray, w.n_vec), e->light[j],
 				find_texture_color(impact, w, e));
-		color_blinnphuong(&c[j], blinnphuong(lray, &w.r, w.n_vec,
+		color_blinnphong(&c[j], blinnphong(lray, &w.r, w.n_vec,
 				mat), e->light[j]);
 		c[j] = multiply_color(c[j], e->light[j].radius ?
 				shadow_from_sphere(e->light[j], impact, w, e)
 				: shadow_from_point(lray, dist, e));
 	}
-	return (color_tab_sum(c, e));
+	return (add_2colors(lens_flaring(w.r, e), color_tab_sum(c, e)));
 }
 
 /*

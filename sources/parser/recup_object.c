@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 14:18:27 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/06 12:03:15 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/12/11 12:15:12 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		get_objects(t_element elem, t_env *e, int nbr_mat)
 	e->nbs[3] = elem.nbr_element;
 	while (i < elem.nbr_element)
 	{
-		e->item[i].isNega = 0;
+		e->item[i].isnega = 0;
 		soloobject(e, elem.elem[i], i, nbr_mat);
 		i++;
 	}

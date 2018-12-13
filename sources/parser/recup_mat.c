@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 13:14:56 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/03 13:41:02 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/12/13 17:02:35 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,14 @@ int			recup_checker_mat(t_env *e, t_element elem, int i, char *name)
 	int nb;
 
 	nb = 0;
-	if (elem.nbr_attr < 7 || elem.nbr_attr > 9)
+	if (elem.nbr_attr < 7)
 		std_err(0);
 	if (ft_strcmp(name, "checker") == 0)
+	{
+		printf("test");
 		e->mat[i].type = 2;
+		recup_value_text(e, elem, i);
+	}
 	else if (ft_strcmp(name, "marble") == 0)
 		e->mat[i].type = 3;
 	else if (ft_strcmp(name, "perturb") == 0)
@@ -34,7 +38,7 @@ int			recup_checker_mat(t_env *e, t_element elem, int i, char *name)
 	recup_value_mat(e, elem, i);
 	recup_value_checker(e, elem, i);
 	nb = get_bump(e, elem, i);
-	if (elem.nbr_attr - nb != 7)
+	if (elem.nbr_attr - nb != 7 && ft_strcmp(name, "checker") != 0)
 		std_err(0);
 	return (0);
 }
@@ -49,11 +53,11 @@ int			recup_texture_mat(t_env *e, t_element elem, int i)
 	e->mat[i].type = 1;
 	recup_value_mat(e, elem, i);
 	recup_value_text(e, elem, i);
-	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "angle"))
+	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "pathtext"))
 		j++;
 	if (j == elem.nbr_attr)
 		std_err(0);
-	e->mat[i].tex.angle = ft_posatoi(elem.attribut[j].content);
+	e->mat[i].path_text = ft_strdup(elem.attribut[j].content);
 	e->mat[i].tex.center = newvec(0, 0, 0);
 	j = get_bump(e, elem, i);
 	if (elem.nbr_attr - j == 9)

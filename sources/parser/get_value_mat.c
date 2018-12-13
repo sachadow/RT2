@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 12:08:12 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/03 16:34:18 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/12/13 16:52:09 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int		recup_value_text(t_env *e, t_element elem, int i)
 	int j;
 
 	j = 0;
-	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "pathtext"))
+	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "angle"))
 		j++;
 	if (j == elem.nbr_attr)
 		std_err(0);
-	e->mat[i].path_text = ft_strdup(elem.attribut[j].content);
+	e->mat[i].tex.angle = ft_posatoi(elem.attribut[j].content);
 	j = 0;
 	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "width"))
 		j++;

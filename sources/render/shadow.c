@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 19:41:27 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/06 16:23:31 by sderet           ###   ########.fr       */
+/*   Updated: 2018/12/11 12:16:40 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int			in_shadow(t_ray lightray, t_env *e, double t)
 	x = -1;
 	while (++k < e->nbs[ITEM])
 	{
-		if (e->hit[e->item[k].item_type](lightray, e->item[k], &t) && t > 0.001f &&
-				e->item[k].isNega == 0)
+		if (e->hit[e->item[k].item_type](lightray, e->item[k], &t) && t > 0.001f
+				&& e->item[k].isnega == 0)
 		{
 			if (!(e->mat[e->item[k].mat].n))
 				return (k);

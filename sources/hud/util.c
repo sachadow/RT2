@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:21:01 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/03 18:21:16 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/12/12 20:12:30 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	get_color(int x, int y, t_img img)
 	return (0);
 }
 
-void		insert_xpm(int num, t_pix pt, char *name, t_env *e)
+void		insert_xpm(int nb, t_pix pt, char *name, t_env *e)
 {
 	t_img	img;
 	int		i;
@@ -48,34 +48,34 @@ void		insert_xpm(int num, t_pix pt, char *name, t_env *e)
 			tmp.x = i + pt.x;
 			tmp.y = j + pt.y;
 			c.val = get_color(i, j, img);
-			color_point(num, tmp, c.val, e);
+			color_point(nb, tmp, c.val, e);
 		}
 	}
 }
 
-void		color_point(int num, t_pix pt, int color, t_env *e)
+void		color_point(int nb, t_pix pt, int color, t_env *e)
 {
 	int width;
 	int height;
 
 	width = 0;
 	height = 0;
-	if (num == RIGHT)
+	if (nb == RIGHT)
 	{
 		width = RIGHT_SPC;
 		height = IMG_H;
 	}
-	else if (num == BOTTOM)
+	else if (nb == BOTTOM)
 	{
 		width = WIN_W;
 		height = BOTTOM_SPC;
 	}
 	if (pt.x < width && pt.x >= 0 && pt.y < height && pt.y >= 0)
-		*(int *)&e->pixel_img[num][(int)pt.x * (e->bpp[num] / 8)
-			+ (int)pt.y * e->s_line[num]] = color;
+		*(int *)&e->pixel_img[nb][(int)pt.x * (e->bpp[nb] / 8)
+			+ (int)pt.y * e->s_line[nb]] = color;
 }
 
-int			color_picker(int num, t_pix pt, t_env *e)
+int			color_picker(int nb, t_pix pt, t_env *e)
 {
 	int width;
 	int height;
@@ -83,20 +83,20 @@ int			color_picker(int num, t_pix pt, t_env *e)
 
 	width = 0;
 	height = 0;
-	if (num == RIGHT)
+	if (nb == RIGHT)
 	{
 		width = RIGHT_SPC;
 		height = IMG_H;
 	}
-	else if (num == BOTTOM)
+	else if (nb == BOTTOM)
 	{
 		width = WIN_W;
 		height = BOTTOM_SPC;
 	}
 	if (pt.x < width && pt.x >= 0 && pt.y < height && pt.y >= 0)
 	{
-		color = *(int *)&e->pixel_img[num][(int)pt.x * (e->bpp[num] / 8)
-			+ (int)pt.y * e->s_line[num]];
+		color = *(int *)&e->pixel_img[nb][(int)pt.x * (e->bpp[nb] / 8)
+			+ (int)pt.y * e->s_line[nb]];
 		return (color);
 	}
 	return (0);

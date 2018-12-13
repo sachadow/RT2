@@ -6,13 +6,13 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 11:17:57 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/06 12:07:35 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/12/11 12:23:12 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-int		get_isNega(t_env *e, t_element elem, int i)
+int		get_isnega(t_env *e, t_element elem, int i)
 {
 	int j;
 
@@ -21,8 +21,8 @@ int		get_isNega(t_env *e, t_element elem, int i)
 		j++;
 	if (j == elem.nbr_attr)
 		std_err(0);
-	e->item[i].isNega = ft_posatoi(elem.attribut[j].content);
-	if (e->item[i].isNega < 0 || e->item[i].isNega > 1)
+	e->item[i].isnega = ft_posatoi(elem.attribut[j].content);
+	if (e->item[i].isnega < 0 || e->item[i].isnega > 1)
 		std_err(0);
 	return (0);
 }

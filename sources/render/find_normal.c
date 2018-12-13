@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/03 15:57:16 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:40:07 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 	double	finite;
 	int		type;
 
-	if (e->hit_negative > 0)
-		return (newvec(0, 0, 0));
+//	if (e->ncurr > -1)
+//		id = e->ncurr;
 	n = newvec(0, 0, 0);
 	if (id == EMPTY)
 		return (n);
@@ -140,6 +140,9 @@ t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 	}
 	else
 		n = find_normal_vec_if_not_plane(id, newstart, e);
+//	if (e->ncurr > -1)
+//		n = opposite(n);
+	e->ncurr = -1;
 	if (!magnitude2(n))
 		return (newvec(0, 0, 0));
 	return (bumpmapping(normalize(n), newstart, find_material(id, e)));

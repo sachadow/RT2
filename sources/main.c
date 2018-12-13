@@ -6,13 +6,14 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 17:07:15 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/06 17:44:13 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/12/12 17:43:42 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "keyboard.h"
 #include "parser.h"
+#include "hud.h"
 
 /*
 **	QUIT function:
@@ -54,14 +55,18 @@ static void	init(t_env *e)
 	e->hit[BOX] = &hitbox;
 	e->backgroundcolor = multiply_color(e->backgroundcolor, 0.00392156862);
 	e->lvl = 4;
-	e->antialiasing = 1;
+	e->antialiasing = 2;
 	create_axis(e);
 	ft_memset(e->key, 0, sizeof(int) * 300);
 	e->s_line[CENTER] = 0;
 	e->mouse.button = 0;
+	e->interface.item.button = -1;
 	e->interface.onglet = 1;
 	e->interface.spec.val = 0;
+	e->interface.spectrum.x = (RIGHT_SPC) / 2;
+	e->interface.spectrum.y = M_IMG_H + (RIGHT_SPC) / 2 - MARGE;
 	e->loading = 0;
+	e->apply = 0;
 }
 
 /*

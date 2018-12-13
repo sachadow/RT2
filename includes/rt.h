@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:09:49 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/07 15:23:09 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/13 17:20:32 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@
 # define WAVES		5
 # define WOOD		6
 
+# define SEPIA		1
+# define GREYSCALE	2
+# define REVERSE	3
+# define SATURATE	4
+
 # define KPRESSMASK			1L << 0
 # define KRELEASEMASK		1L << 1
 # define BPRESSMASK			1L << 2
@@ -78,7 +83,7 @@ typedef union		u_colo
 	unsigned char	argb[4];
 }					t_colo;
 
-typedef	struct		u_mouse
+typedef	struct		s_mouse
 {
 	int				button;
 	int				x;
@@ -182,7 +187,7 @@ typedef struct		s_item
 	t_vec			center;
 	t_vec			dir;
 	t_vec			end;
-	int				isNega;
+	int				isnega;
 	double			d;
 	double			height;
 	double			radius;
@@ -208,6 +213,7 @@ typedef struct		s_interface
 	t_colo			spec_shade;
 	t_mouse			spectrum;
 	t_mouse			shade;
+	t_mouse			item;
 }					t_interface;
 
 typedef struct		s_perlin
@@ -240,8 +246,8 @@ typedef struct		s_env
 	t_mouse			mouse;
 	int				(*hit[10])(t_ray, t_item, double *);
 	int				hit_negative;
-	int				ncurr;
 	int				curr;
+	int				ncurr;
 	t_color			backgroundcolor;
 	int				lvl;
 	int				antialiasing;
@@ -255,6 +261,8 @@ typedef struct		s_env
 	int				debug;
 	int				loading;
 	int				filter;
+	int				cartoon;
+	int				apply;
 	t_interface		interface;
 }					t_env;
 
@@ -296,9 +304,10 @@ t_color				get_light_value(t_work w, t_vec newstart, t_mat currmat,
 void				color_lambert(t_color *c, double l, t_light currl,
 					t_color matdiff);
 double				lambert(t_ray lightray, t_vec n);
-void				color_blinnphuong(t_color *c, double b, t_light currl);
-double				blinnphuong(t_ray lightray, t_ray *r, t_vec n,
+void				color_blinnphong(t_color *c, double b, t_light currl);
+double				blinnphong(t_ray lightray, t_ray *r, t_vec n,
 					t_mat currm);
+t_color				lens_flaring(t_ray r, t_env *e);
 
 int					find_closest_item(t_ray r, t_env *e, t_vec *newstart);
 int					get_closest_item(t_ray r, t_env *e);
@@ -319,19 +328,6 @@ t_vec				find_cylinder_normal(t_vec newstart, t_item cyl);
 t_vec				find_h(t_vec cd, t_vec cc, t_vec n);
 t_vec				find_normal_vec(t_ray r, int curr, t_env *e);
 
-int					read_file1(char *av, t_env *e);
-int					read_file2(char *av, t_env *e);
-void				count_param_control(char *line, int nbs[6]);
-void				count_param(int nbs[6], char **s, int l);
-void				build_struct(t_env *e, int nbs[6]);
-
-void				parsing_cam(char **s, t_env *e);
-void				fill_struct(t_env *e, char *line, int index[6]);
-int					table_len(char **s);
-
-void				parsing_light(char **s, t_env *e, int *k);
-void				parsing_item(char **s, t_env *e, int *k);
-
 t_vec				rotate_x(t_vec u, double angle);
 t_vec				rotate_y(t_vec u, double angle);
 t_vec				rotate_z(t_vec u, double angle);
@@ -340,15 +336,17 @@ t_vec				rotate(t_vec u, double anglex, double angley,
 t_vec				rotate_axis(t_vec u, t_vec r, double angle);
 
 t_color				newcolor(double r, double g, double b);
-t_item				newsph(t_vec center, double radius, int mat, int isNega);
+t_item				newsph(t_vec center, double radius, int mat, int isnega);
 t_item				newplane(t_vec dir, double d, int mat);
-t_item				newcyl(t_vec dir, t_vec center, double radius, int mat, int isNega);
+t_item				newcyl(t_vec dir, t_vec center, double radius, int mat,
+					int isnega);
 t_item				newdisk(t_vec dir, t_vec center, double radius, int mat);
-t_item				newcone(t_vec dir, t_vec center, double angle, int mat, int isNega);
-t_item				newfcyl(t_vec dir, t_vec center, double radius, int mat, double height,
-					int isNega);
-t_item				newfcone(t_vec dir, t_vec center, double radius, int mat, double height,
-					int isNega);
+t_item				newcone(t_vec dir, t_vec center, double angle, int mat,
+					int isnega);
+t_item				newfcyl(t_vec dir, t_vec center, double radius, int mat,
+					double height, int isnega);
+t_item				newfcone(t_vec dir, t_vec center, double radius, int mat,
+					double height, int isnega);
 t_item				newbox(t_vec center, t_vec end, int mat);
 
 t_ray				refracted_ray(t_vec i, t_vec nm, double n, t_vec newstart);
@@ -385,7 +383,7 @@ double				find_max_ior(int *tab, int size, t_env *e);
 
 void				open_texture(t_env *e, t_img *tex, char *name);
 void				get_img_color(t_img tex, t_pix p, t_color *c);
-t_pix				rotate_pix(double angle, t_pix p);
+t_pix				rotate_pix(t_pix p, int w, int h, double angle);
 t_pix				adjust_pix(t_pix p, int w, int h);
 
 t_color				find_texture_color(t_vec newstart, t_work w, t_env *e);
@@ -401,13 +399,16 @@ double				grad(int hash, double x, double y, double z);
 void				perlin(int *p, int *permutation);
 double				noise(double x, double y, double z);
 
-t_color				color_marble(t_color c1, t_color c2, t_vec impact, double s);
-t_color				color_turbulence(t_color c1, t_color c2, t_vec impact, double s);
+t_color				color_marble(t_color c1, t_color c2, t_vec impact,
+					double s);
+t_color				color_turbulence(t_color c1, t_color c2, t_vec impact,
+					double s);
 t_color				color_wood(t_color c1, t_color c2, t_vec impact, double s);
 t_vec				bumpmapping(t_vec n, t_vec impact, t_mat m);
 
 int					in_shadow(t_ray lightray, t_env *e, double t);
-double				shadow_from_sphere(t_light light, t_vec impact, t_work w, t_env *e);
+double				shadow_from_sphere(t_light light, t_vec impact, t_work w,
+					t_env *e);
 double				shadow_from_point(t_ray lray, t_vec dist, t_env *e);
 
 void				supersamplingx4(t_pix p, t_env *e);
@@ -427,10 +428,9 @@ t_color				add_sepia_filter(t_color c);
 t_color				add_greyscale_filter(t_color c);
 t_color				add_reverse_filter(t_color c);
 t_color				add_saturate_filter(t_color c);
-void				add_cartoon_effect(t_pix p, t_env *e);
+void				add_cartoon_effect(t_env *e);
 
 void				hud(t_env *e);
 void				new_image(int num, int width, int height, t_env *e);
 
-void				load(t_env *e);
 #endif

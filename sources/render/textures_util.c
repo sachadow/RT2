@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 15:12:07 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/23 14:08:40 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/11 12:03:47 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	open_texture(t_env *e, t_img *tex, char *name)
 {
 	if (!(tex->img = mlx_xpm_file_to_image(e->mlx, name, &tex->w, &tex->h)))
 		ft_printerror("Error mlx");
-	if (!(tex->pixel_img = (unsigned char *)mlx_get_data_addr(tex->img, &tex->bpp,
-					&tex->s_line, &tex->ed)))
+	if (!(tex->pixel_img = (unsigned char *)mlx_get_data_addr(tex->img,
+					&tex->bpp, &tex->s_line, &tex->ed)))
 		ft_printerror("Error mlx");
 }
 
@@ -31,15 +31,20 @@ void	get_img_color(t_img tex, t_pix p, t_color *c)
 	}
 }
 
-t_pix	rotate_pix(double angle, t_pix p)
+t_pix	rotate_pix(t_pix p, int w, int h, double angle)
 {
 	t_pix	res;
 
-	if (!angle)
-		return (p);
-	angle = angle * M_PI / 180;
-	res.x = (int)round(p.x * cos(angle) - p.y * sin(angle));
-	res.y = (int)round(p.x * sin(angle) + p.y * cos(angle));
+	p = adjust_pix(p, w, h);
+	if (angle != 0)
+	{
+		angle = angle * M_PI / 180;
+		res.x = (int)round(p.x * cos(angle) - p.y * sin(angle));
+		res.y = (int)round(p.x * sin(angle) + p.y * cos(angle));
+	}
+	else
+		res = p;
+	res = adjust_pix(res, w, h);
 	return (res);
 }
 

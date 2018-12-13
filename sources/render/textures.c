@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 15:12:07 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/03 16:35:34 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/11 12:28:51 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,15 @@ t_color	find_texture_color(t_vec impact, t_work w, t_env *e)
 			return (texture_sphere(m.tex, item, w));
 		else if (item.item_type == I_CYL || item.item_type == F_CYL)
 			return (texture_cylinder(m.tex, item, impact));
-		else if (item.item_type == I_CONE || item.item_type == F_CONE)
-			return (texture_cone(m.tex, item, impact));
 		else
-			return (e->backgroundcolor);
+			return (texture_cone(m.tex, item, impact));
 	}
 	else if (m.type == MARBLE)
 		return (color_marble(m.diffuse, m.diffuse2, impact, m.scale));
 	else if (m.type == PERTURB)
 		return (color_turbulence(m.diffuse, m.diffuse2, impact, m.scale));
-	else if (m.type == WOOD)
-		return (color_wood(m.diffuse, m.diffuse2, impact, m.scale));
 	else
-		return (multiply_color(e->backgroundcolor, 255));
+		return (color_wood(m.diffuse, m.diffuse2, impact, m.scale));
 }
 
 t_color	texture_plane(t_img tex, t_item item, t_vec impact)
@@ -61,9 +57,7 @@ t_color	texture_plane(t_img tex, t_item item, t_vec impact)
 	p.x = (int)(dotproduct(d, u) * tex.w / tex.realw + tex.w / 2);
 	p.y = (int)(dotproduct(d, crossproduct(item.dir, u)) * tex.h / tex.realh
 			+ tex.h / 2);
-	p = adjust_pix(p, tex.w, tex.h);
-	p = rotate_pix(tex.angle, p);
-	p = adjust_pix(p, tex.w, tex.h);
+	p = rotate_pix(p, tex.w, tex.h, tex.angle);
 	get_img_color(tex, p, &c);
 	return (c);
 }
@@ -84,9 +78,7 @@ t_color	texture_sphere(t_img tex, t_item item, t_work w)
 		/ tex.realw + tex.w / 2);
 	p.y = (int)((asin(w.n_vec.y) - (magnitude(tex.center) ? asin(k.y) : 0))
 			/ M_PI * tex.h * 1.5 * item.radius / tex.realh + tex.h / 2);
-	p = adjust_pix(p, tex.w, tex.h);
-	p = rotate_pix(tex.angle, p);
-	p = adjust_pix(p, tex.w, tex.h);
+	p = rotate_pix(p, tex.w, tex.h, tex.angle);
 	get_img_color(tex, p, &c);
 	return (c);
 }
@@ -114,9 +106,7 @@ t_color	texture_cylinder(t_img tex, t_item item, t_vec impact)
 		- (magnitude(tex.center) ? atan(dotproduct(v, m.colvec2)
 		/ dotproduct(v, m.colvec3)) : 0)) / M_PI * 2 * tex.h * item.radius
 			/ tex.realh + tex.h / 2);
-	p = adjust_pix(p, tex.w, tex.h);
-	p = rotate_pix(tex.angle, p);
-	p = adjust_pix(p, tex.w, tex.h);
+	p = rotate_pix(p, tex.w, tex.h, tex.angle);
 	get_img_color(tex, p, &c);
 	return (c);
 }
@@ -145,9 +135,7 @@ t_color	texture_cone(t_img tex, t_item item, t_vec impact)
 		- (magnitude(tex.center) ? atan(dotproduct(v, m.colvec2)
 		/ dotproduct(v, m.colvec3)) : 0)) / M_PI * 2 * tex.h * 150
 			/ tex.realh + tex.h / 2);
-	p = adjust_pix(p, tex.w, tex.h);
-	p = rotate_pix(tex.angle, p);
-	p = adjust_pix(p, tex.w, tex.h);
+	p = rotate_pix(p, tex.w, tex.h, tex.angle);
 	get_img_color(tex, p, &c);
 	return (c);
 }

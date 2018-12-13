@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 17:15:06 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/26 00:29:21 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/11 11:52:28 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	waves_tex_build(t_img *tex, t_color c)
 		while (++p.y < tex->h)
 		{
 			k = (sin(p.x * 2 * M_PI * 5 / 256) + 1) * 0.5;
-			tex->pixel_img[p.y * 1024 + p.x * 4] = k * c.blue;;
+			tex->pixel_img[p.y * 1024 + p.x * 4] = k * c.blue;
 			tex->pixel_img[p.y * 1024 + p.x * 4 + 1] = k * c.green;
 			tex->pixel_img[p.y * 1024 + p.x * 4 + 2] = k * c.red;
 		}

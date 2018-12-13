@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 17:25:35 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/06 11:21:49 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/12/11 12:08:42 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int						get_rotation(t_env *e, t_element elem, int i);
 int						get_end(t_env *e, t_element elem, int i, char *name);
 int						recup_value_mat(t_env *e, t_element elem, int i);
 int						recup_value_text(t_env *e, t_element elem, int i);
-int						get_bump(t_env *, t_element elem, int i);
-int						get_isNega(t_env *e, t_element elem, int i);
+int						get_bump(t_env *e, t_element elem, int i);
+int						get_isnega(t_env *e, t_element elem, int i);
 int						recup_value_checker(t_env *e, t_element elem, int i);
 void					clean_value_mat(t_env *e);
 

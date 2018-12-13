@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 12:12:13 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/03 13:29:57 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/12/12 14:35:44 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		clean_value_mat(t_env *e)
 	int i;
 
 	i = 0;
-	while(i < e->nbs[1])
+	while (i < e->nbs[1])
 	{
 		e->mat[i].type = 0;
 		e->mat[i].path_text = NULL;

@@ -1,22 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_image.c                                        :+:      :+:    :+:   */
+/*   init_hud.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/16 19:07:06 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/06 20:22:25 by qsebasti         ###   ########.fr       */
+/*   Created: 2018/12/12 20:06:30 by qsebasti          #+#    #+#             */
+/*   Updated: 2018/12/12 20:10:36 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+#include "hud.h"
 #include <stdio.h>
 
-void	new_image(int num, int width, int height, t_env *e)
+t_size			init_size(int width, int height)
 {
-	if (!(e->img[num] = mlx_new_image(e->mlx, width, height))
-		|| !(e->pixel_img[num] = (unsigned char*)mlx_get_data_addr(e->img[num],
-		&(e->bpp[num]), &(e->s_line[num]), &(e->ed[num]))))
-		ft_printerror("Error mlx");
+	t_size size;
+
+	size.width = width;
+	size.height = height;
+	return (size);
+}
+
+t_pix			init_point(int x, int y)
+{
+	t_pix pt;
+
+	pt.x = x;
+	pt.y = y;
+	return (pt);
+}
+
+t_rect			init_rect(int x, int y, int width, int height)
+{
+	t_rect rect;
+
+	rect.x = x;
+	rect.y = y;
+	rect.width = width;
+	rect.height = height;
+	return (rect);
 }

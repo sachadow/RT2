@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 16:19:16 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/11/27 19:10:09 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/12/06 20:18:04 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int		keypress(int keycode, t_env *e)
 	else if (keycode == KEY_SPC)
 		e->key[KEY_SPC] = (e->key[KEY_SPC] == 1 ? 0 : 1);
 	else
+	{
+		e->loading = 0;
 		e->key[keycode] = 1;
+	}
 	move_cam(e);
 	show_mouse(e);
 	return (keycode);

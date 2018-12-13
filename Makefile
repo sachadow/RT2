@@ -6,7 +6,7 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/23 19:01:27 by squiquem          #+#    #+#              #
-#    Updated: 2018/12/07 15:14:21 by squiquem         ###   ########.fr        #
+#    Updated: 2018/12/13 18:18:02 by sderet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,11 @@ SRC_FILES		=	main.c \
 					hud/cursor.c \
 					hud/general_ui.c \
 					hud/hud.c \
+					hud/init_hud.c \
 					hud/loading.c \
 					hud/new_image.c \
+					hud/pick_item.c \
+					hud/ruler.c \
 					hud/shade_bar.c \
 					hud/shape.c \
 					hud/ui1.c \
@@ -104,7 +107,7 @@ LIBMLX			=	minilibx/libmlx.a
 
 CC				=	gcc
 
-CFLAGS			=	-Wall -Wextra -Werror -g -O2 -MMD
+CFLAGS			=	-Wall -Wextra -Werror -g
 
 opti			:
 	@make -j8 all

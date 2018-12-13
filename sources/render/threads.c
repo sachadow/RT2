@@ -6,11 +6,12 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/07 15:18:08 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/12 18:19:53 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+#include "hud.h"
 #include <string.h>
 #include <errno.h>
 
@@ -48,34 +49,6 @@ static void	*draw(void *e)
 	pthread_exit(NULL);
 }
 
-static int	bypass(unsigned char *s, int len)
-{
-	static unsigned char *tmp;
-
-	if (!s || !len || !tmp)
-	{
-		tmp = (unsigned char *)ft_memalloc(sizeof(s) * len);
-		tmp = (unsigned char *)ft_memcpy(tmp, s, sizeof(s) * len);
-		return (0);
-	}
-	else if (ft_memcmp(tmp, s, sizeof(s) * len))
-	{
-		free(tmp);
-		tmp = (unsigned char *)ft_memalloc(sizeof(s) * len);
-		tmp = (unsigned char *)ft_memcpy(tmp, s, sizeof(s) * len);
-		return (0);
-	}
-	else
-		return (1);
-}
-
-static int	veccmp(t_vec veca, t_vec vecb)
-{
-	if (veca.x != vecb.x || veca.y != vecb.y || veca.z != vecb.z)
-		return (0);
-	return (1);
-}
-
 /*
 **	RELOAD function:
 **	Sets image in the window
@@ -85,17 +58,11 @@ int			reload(t_env *e)
 {
 	int				i;
 	int				rc;
-	static t_vec	tmp;
 
-	//key_hook(e);
-/*	if (!(e->img = mlx_new_image(e->mlx, WIN_W, WIN_H))
-		|| !(e->pixel_img = (unsigned char*)mlx_get_data_addr(e->img, &e->bpp,
-			&e->s_line, &e->ed)))
-		ft_printerror("Error mlx");*/
-	if (!(bypass(e->pixel_img[CENTER], e->s_line[CENTER]))
-			|| !veccmp(tmp, e->cam->pos))
-	{
+	if (!e->loading)
 		load(e);
+	else if (e->loading == 1)
+	{
 		new_image(CENTER, IMG_W, IMG_H, e);
 		i = -1;
 		while (++i < NB_THR)
@@ -105,10 +72,12 @@ int			reload(t_env *e)
 		while (++i < NB_THR)
 			if (pthread_join(e->thr[i], NULL))
 				ft_putendl_fd(strerror(errno), 2);
-		e->loading = 1;
+		if (e->cartoon == 1)
+			add_cartoon_effect(e);
 		mlx_put_image_to_window(e->mlx, e->win, e->img[CENTER], 0, 0);
 		mlx_destroy_image(e->mlx, e->img[CENTER]);
-		tmp = newvec(e->cam->pos.x, e->cam->pos.y, e->cam->pos.z);
+		e->apply = 0;
+		e->loading = 2;
 	}
 	hud(e);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 17:29:16 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/06 17:12:53 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/12/12 18:16:42 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 
 static void	ui_checker(int x, int y, t_env *e)
 {
-	if (x >= Z1_XS && x <= Z1_XE && y >= Z1_YS && y <= Z1_YE)
+	if (x >= TAB1_XS && x <= TAB1_XE && y >= TAB1_YS && y <= TAB1_YE)
 		e->interface.onglet = 1;
-	else if (x >= Z2_XS && x <= Z2_XE && y >= Z2_YS && y <= Z2_YE)
+	else if (x >= TAB2_XS && x <= TAB2_XE && y >= TAB2_YS && y <= TAB2_YE)
 		e->interface.onglet = 2;
-	else if (x >= Z3_XS && x <= Z3_XE && y >= Z3_YS && y <= Z3_YE)
+	else if (x >= TAB3_XS && x <= TAB3_XE && y >= TAB3_YS && y <= TAB3_YE)
 		e->interface.onglet = 3;
 }
 
@@ -43,6 +43,7 @@ int			mousepress(int button, int x, int y, t_env *e)
 	ui_checker(x, y, e);
 	ui1_spectrum(button, x, y, e);
 	ui1_shade(button, x, y, e);
+	pick_item(button, x, y, e);
 //	printf("%d %d\n", x, y);
 	hud(e);
 	return (0);

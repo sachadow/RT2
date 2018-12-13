@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/03 15:58:53 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/11 11:41:01 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_color			ft_resolve(t_env *e, t_work w, int lvl)
 
 	w.item_hit = find_closest_item(w.r, e, &newstart);
 	if (w.item_hit == EMPTY || lvl > e->lvl)
-		return (e->backgroundcolor);
+		return (add_2colors(lens_flaring(w.r, e), e->backgroundcolor));
 	mat = find_material(w.item_hit, e);
 	nrefr = find_nrefr(w, mat, w.item_hit, e);
 	w.n_vec = find_normal_vec(w.r, w.item_hit, e);

@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 16:24:23 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/06 11:17:08 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/12/12 14:35:02 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		get_rotation(t_env *e, t_element elem, int i)
 	return (1);
 }
 
-int			get_end(t_env *e, t_element elem, int i, char *name)
+int		get_end(t_env *e, t_element elem, int i, char *name)
 {
 	int j;
 

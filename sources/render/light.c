@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/02 19:47:19 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/11 11:39:29 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void		color_lambert(t_color *c, double l, t_light currl, t_color matdiff)
 **	Returns the Blinn-Phuong coefficient (for bright)
 */
 
-double		blinnphuong(t_ray lightray, t_ray *r, t_vec n, t_mat currmat)
+double		blinnphong(t_ray lightray, t_ray *r, t_vec n, t_mat currmat)
 {
 	t_vec	blinndir;
 	double	blinnterm;
@@ -63,9 +63,38 @@ double		blinnphuong(t_ray lightray, t_ray *r, t_vec n, t_mat currmat)
 **	Changes the color to add the BP coefficient according to the color
 */
 
-void		color_blinnphuong(t_color *c, double b, t_light currl)
+void		color_blinnphong(t_color *c, double b, t_light currl)
 {
 	c->red += b * currl.intensity.red / 255;
 	c->green += b * currl.intensity.green / 255;
 	c->blue += b * currl.intensity.blue / 255;
+}
+
+/*
+**	LENS_FLARING function:
+**	Blinds the user when a light is in front of the camera
+*/
+
+t_color		lens_flaring(t_ray r, t_env *e)
+{
+	int		j;
+	t_color	c;
+	t_vec	dist;
+	t_ray	lray;
+
+	c = newcolor(0, 0, 0);
+	j = -1;
+	while (++j < e->nbs[LIGHT])
+	{
+		dist = sub(e->light[j].pos, e->cam->pos);
+		dist = (magnitude(dist) < 0.01f ? newvec(0, 0, 0) : normalize(dist));
+		lray.start = e->cam->pos;
+		lray.dir = dist;
+		if (in_shadow(lray, e, magnitude(sub(e->light[j].pos,
+							e->cam->pos))) != -1)
+			continue ;
+		c = add_2colors(c, multiply_color(e->light[j].intensity,
+					pow(ft_max(dotproduct(r.dir, dist), 0.0f), 10) / 255.0f));
+	}
+	return (c);
 }

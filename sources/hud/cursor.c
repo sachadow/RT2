@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 17:04:25 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/04 21:17:25 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/12/12 21:02:27 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,36 +18,37 @@
 void		cursor_shade(t_env *e)
 {
 	t_pix	pt;
-	t_size	base;
 	t_colo	color;
+	t_rect	rect;
 
 	if (e->interface.shade.x >= MARGE
-			&& e->interface.shade.x < Z4_XE - IMG_W)
+			&& e->interface.shade.x < SHAD1_XE - IMG_W)
 	{
 		pt = init_point(e->interface.shade.x, e->interface.shade.y);
 		e->interface.spec_shade.val = color_picker(RIGHT, pt, e);
 		color = e->interface.spec_shade;
-		if (e->interface.shade.x < (RIGHT_SPC) / 2) 
+		if (e->interface.shade.x < (RIGHT_SPC) / 2)
 			color.val = WHITE;
 		else
 			color.val = BLACK;
-		base = init_size(9, 5);
-		draw_rev_tri(RIGHT, pt, base, color.val, e);
-		pt = init_point(e->interface.shade.x, e->interface.shade.y + MARGE);
-		draw_tri(RIGHT, pt, base, color.val, e);
-		pt = init_point((RIGHT_SPC) / 2 - 2 * MARGE, Z4_YE + MARGE);
-		base = init_size(MARGE * 4, MARGE * 2);
-		draw_rect(RIGHT, pt, base, e->interface.spec_shade.val, e);
-		frame(RIGHT, pt, base, GREY, e);
+		rect = init_rect(pt.x, pt.y, 9, 5);
+		draw_rev_tri(RIGHT, rect, color.val, e);
+		rect = init_rect(e->interface.shade.x, e->interface.shade.y + MARGE,
+				rect.width, rect.height);
+		draw_tri(RIGHT, rect, color.val, e);
+		rect = init_rect((RIGHT_SPC) / 2 - 2 * MARGE, SHAD1_YE + MARGE,
+				MARGE * 4, MARGE * 2);
+		draw_rect(RIGHT, rect, e->interface.spec_shade.val, e);
+		frame(RIGHT, rect, GREY, e);
 	}
 }
 
 void		cursor_spectrum(t_env *e)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
+	t_pix	pt;
 
-	t_pix pt;
 	j = -2;
 	if (e->interface.spectrum.x > 0 && e->interface.spectrum.x < RIGHT_SPC
 			&& e->interface.spectrum.y > 0 && e->interface.spectrum.y < IMG_H)

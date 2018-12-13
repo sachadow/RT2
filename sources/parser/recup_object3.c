@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 16:45:30 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/06 12:08:01 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/12/11 12:13:01 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		get_fcyl(t_env *e, t_element elem, int i, int nbr_mat)
 	get_radius(e, elem, i);
 	get_material(e, elem, i, nbr_mat);
 	get_height(e, elem, i);
-	get_isNega(e, elem, i);
+	get_isnega(e, elem, i);
 	if (elem.nbr_attr > 6)
 	{
 		j += get_translation(e, elem, i);
@@ -50,7 +50,7 @@ int		get_fcone(t_env *e, t_element elem, int i, int nbr_mat)
 	get_angle(e, elem, i);
 	get_material(e, elem, i, nbr_mat);
 	get_height(e, elem, i);
-	get_isNega(e, elem, i);
+	get_isnega(e, elem, i);
 	if (elem.nbr_attr > 6)
 	{
 		j += get_translation(e, elem, i);
@@ -72,7 +72,7 @@ int		get_box(t_env *e, t_element elem, int i, int nbr_mat)
 	get_center(e, elem, i, "start");
 	get_end(e, elem, i, "end");
 	get_material(e, elem, i, nbr_mat);
-	get_isNega(e, elem, i);
+	get_isnega(e, elem, i);
 	if (elem.nbr_attr > 4)
 	{
 		j += get_translation(e, elem, i);
