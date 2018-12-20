@@ -22,9 +22,33 @@ int			in_shadow(t_ray lightray, t_env *e, double t)
 {
 	int		k;
 	int		x;
+	int		counter;
+	t_ray	r;
+	double	tt;
 
 	k = -1;
+	counter = 0;
+	r.dir = lightray.dir;
+	r.start = sub(lightray.start, scale(1, lightray.dir));
+	k = get_closest_item(r, e);
+	while (e->item[k].isnega == 1 && k != -1)
+	{
+		k = get_closest_item(r, e);
+		counter++;
+		tt = -1;
+		e->hit[e->item[k].item_type](r, e->item[k], &tt);
+		r.start = add(scale(tt, r.dir), r.start);
+		tt = -1;
+		k = get_closest_item(r, e);
+		if (k == -1)
+			return (k);
+		e->hit[e->item[k].item_type](r, e->item[k], &tt);
+		r.start = add(scale(tt, r.dir), r.start);
+		if (e->item[k].isnega == 0)
+			return (find_closest_item(r, e, &(r.start)) % (e->nbs[ITEM] + 1));
+	}
 	x = -1;
+	k = -1;
 	while (++k < e->nbs[ITEM])
 	{
 		if (e->hit[e->item[k].item_type](lightray, e->item[k], &t) && t > 0.001f

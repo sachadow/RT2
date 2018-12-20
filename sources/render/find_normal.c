@@ -105,9 +105,14 @@ t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 	t_vec	n;
 	double	finite;
 	int		type;
+	int		negative;
 
-//	if (e->ncurr > -1)
-//		id = e->ncurr;
+	negative = 0;
+	if (id > e->nbs[ITEM])
+	{
+		negative = 1;
+		id = (id / (e->nbs[ITEM] + 1)) - 1;
+	}
 	n = newvec(0, 0, 0);
 	if (id == EMPTY)
 		return (n);
@@ -140,8 +145,8 @@ t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 	}
 	else
 		n = find_normal_vec_if_not_plane(id, newstart, e);
-//	if (e->ncurr > -1)
-//		n = opposite(n);
+	if (negative)
+		n = opposite(n);
 	e->ncurr = -1;
 	if (!magnitude2(n))
 		return (newvec(0, 0, 0));

@@ -107,7 +107,7 @@ LIBMLX			=	minilibx/libmlx.a
 
 CC				=	gcc
 
-CFLAGS			=	-Wall -Wextra -Werror -g
+CFLAGS			=	-Wall -Wextra -Werror -g -O2 -MMD
 
 opti			:
 	@make -j8 all

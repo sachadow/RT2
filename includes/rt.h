@@ -102,6 +102,13 @@ typedef struct		s_pix
 	int				y;
 }					t_pix;
 
+typedef struct		s_curr
+{
+	double			t;
+	int				ncurr;
+	int				curr;
+}					t_curr;
+
 typedef struct		s_vec
 {
 	double			x;
@@ -311,10 +318,11 @@ t_color				lens_flaring(t_ray r, t_env *e);
 
 int					find_closest_item(t_ray r, t_env *e, t_vec *newstart);
 int					get_closest_item(t_ray r, t_env *e);
-int					find_post_nega(t_ray r, t_env *e, t_vec *newstart);
+int					find_post_nega(t_ray r, t_env *e, t_vec *newstart,
+					t_curr *t);
 int					is_empty(int *hit, int count, int *id, t_env *e);
 int					get_hits(int* hit, int *id, int last);
-void				hit_id(int* id, int nb, int* hit, t_env *e);
+void				hit_mod(int* id, int nb, int* hit, t_env *e);
 void				init_int_tab(int* tab, int size, int value);
 int					got_out(int count, int *nb_hit, int *id, t_env *e);
 int					count_items(t_ray r, t_env *e);
