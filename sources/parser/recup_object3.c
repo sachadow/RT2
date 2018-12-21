@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 16:45:30 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/11 12:13:01 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/17 16:16:07 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,20 @@ int		get_box(t_env *e, t_element elem, int i, int nbr_mat)
 		if (j + 4 != elem.nbr_attr)
 			std_err(0);
 	}
+	return (0);
+}
+
+int		get_quadric(t_env *e, t_element elem, int i, int nbr_mat)
+{
+	int j;
+
+	j = 0;
+	if (elem.nbr_attr < 4)
+		std_err(0);
+	e->item[i].item_type = QUADRIC;
+	get_center(e, elem, i, "center");
+	get_param(e, elem, i, "param");
+	get_material(e, elem, i, nbr_mat);
+	get_isnega(e, elem, i);
 	return (0);
 }

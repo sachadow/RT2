@@ -6,7 +6,7 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/23 19:01:27 by squiquem          #+#    #+#              #
-#    Updated: 2018/12/13 18:18:02 by sderet           ###   ########.fr        #
+#    Updated: 2018/12/21 16:03:55 by sderet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC_FILES		=	main.c \
 					handle/keyhook.c \
 					handle/mousehook.c \
 					handle/move.c \
+					handle/ui1_zone.c \
 					hud/cursor.c \
 					hud/general_ui.c \
 					hud/hud.c \
@@ -31,11 +32,14 @@ SRC_FILES		=	main.c \
 					hud/loading.c \
 					hud/new_image.c \
 					hud/pick_item.c \
+					hud/reset_ui.c \
 					hud/ruler.c \
 					hud/shade_bar.c \
 					hud/shape.c \
 					hud/ui1.c \
 					hud/ui1_bottom.c \
+					hud/ui2.c \
+					hud/ui2_bottom.c \
 					hud/util.c \
 					maths/rotate.c \
 					maths/vec.c \
@@ -76,6 +80,7 @@ SRC_FILES		=	main.c \
 					render/new.c \
 					render/noise.c \
 					render/pixel.c \
+					render/quadric.c \
 					render/ray.c \
 					render/shadow.c \
 					render/tab.c \

@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/11 11:41:01 by squiquem         ###   ########.fr       */
+/*   Updated: 2018/12/21 17:11:11 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ t_color			ft_resolve(t_env *e, t_work w, int lvl)
 	mat = find_material(w.item_hit, e);
 	nrefr = find_nrefr(w, mat, w.item_hit, e);
 	w.n_vec = find_normal_vec(w.r, w.item_hit, e);
-	if (w.item_hit > e->nbs[ITEM])
-		w.item_hit %= (e->nbs[ITEM] + 1);
+	w.item_hit %= (e->nbs[ITEM] + 1);
 	if (mat.n)
 		return (add_3colors(get_light_value(w, newstart, mat, e),
 			multiply_color(ft_resolve(e, newwork(w, refracted_ray(w.r.dir,
@@ -66,10 +65,8 @@ t_work			newwork(t_work oldwork, t_ray newray, int refr, t_env *e)
 	mat = find_material(itemstart, e);
 	itemend = find_closest_item(newray, e, &newstart);
 	w.n_vec = find_normal_vec(newray, itemend, e);
-	if (itemend > e->nbs[ITEM])
-		itemend %= (e->nbs[ITEM] + 1);
-	if (itemstart > e->nbs[ITEM])
-		itemstart %= (e->nbs[ITEM] + 1);
+	itemend %= (e->nbs[ITEM] + 1);
+	itemstart %= (e->nbs[ITEM] + 1);
 	if (refr)
 	{
 		if (itemtype(itemstart, e) != 2 && itemtype(itemstart, e) != 5

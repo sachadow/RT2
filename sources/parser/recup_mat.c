@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 13:14:56 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/13 17:02:35 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/12/17 16:13:28 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,31 @@ int			recup_checker_mat(t_env *e, t_element elem, int i, char *name)
 	nb = 0;
 	if (elem.nbr_attr < 7)
 		std_err(0);
+	recup_value_mat(e, elem, i);
+	recup_value_checker(e, elem, i);
 	if (ft_strcmp(name, "checker") == 0)
 	{
-		printf("test");
 		e->mat[i].type = 2;
 		recup_value_text(e, elem, i);
+		checker_tex_build(&e->mat[i].tex, e->mat[i].diffuse, e->mat[i].diffuse2);
 	}
 	else if (ft_strcmp(name, "marble") == 0)
 		e->mat[i].type = 3;
 	else if (ft_strcmp(name, "perturb") == 0)
 		e->mat[i].type = 4;
 	else if (ft_strcmp(name, "waves") == 0)
+	{
 		e->mat[i].type = 5;
+		recup_value_text(e, elem, i);
+		waves_tex_build(&e->mat[i].tex, e->mat[i].diffuse);
+	}
 	else if (ft_strcmp(name, "wood") == 0)
 		e->mat[i].type = 6;
 	else
 		std_err(0);
-	recup_value_mat(e, elem, i);
-	recup_value_checker(e, elem, i);
 	nb = get_bump(e, elem, i);
-	if (elem.nbr_attr - nb != 7 && ft_strcmp(name, "checker") != 0)
+	if (elem.nbr_attr - nb != 7 && ft_strcmp(name, "checker") != 0 \
+			&& ft_strcmp(name, "waves") != 0)
 		std_err(0);
 	return (0);
 }

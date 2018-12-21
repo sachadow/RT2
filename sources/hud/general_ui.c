@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:17:53 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/12 21:01:09 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/12/20 20:07:03 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,48 @@ static void		top_right(t_env *e)
 	draw_rect(RIGHT, rect, LIGHT_GREY, e);
 }
 
+static void		ui1_writting(t_env *e)
+{
+	t_rect	rect;
+
+	mlx_string_put(e->mlx, e->win, WIN_W / 16 - 10,
+			IMG_H + 2 * (BOTTOM_SPC) / 10, BLACK, "Filters:");
+	rect = init_rect(WIN_W / 14, IMG_H + 2 * (BOTTOM_SPC) / 10 + 22, 40, 2);
+	draw_line(rect, BLACK, e);
+	mlx_string_put(e->mlx, e->win, 4 * WIN_W / 5 + WIN_W / 7 / 4,
+			IMG_H + (BOTTOM_SPC) / 2, BLACK, "Anti-aliasing:");
+	rect = init_rect(4 * WIN_W / 5 + WIN_W / 7 / 3 + 12,
+			IMG_H + (BOTTOM_SPC) / 2 + 22, 74, 2);
+	draw_line(rect, BLACK, e);
+	mlx_string_put(e->mlx, e->win, 4 * WIN_W / 5 + WIN_W / 5 / 6,
+			IMG_H + (BOTTOM_SPC) / 8 + 2, BLACK, "Uniform color");
+	mlx_string_put(e->mlx, e->win, 4 * WIN_W / 5 + WIN_W / 7 / 4 - 10,
+			IMG_H + 4 * (BOTTOM_SPC) / 5 - 13, BLACK, "Off  Middle  On");
+	picked_item(e);
+	color_val(e);
+}
+
 static void		ui_writting(t_env *e)
 {
 	int color;
 
-	color = e->interface.onglet;
+	color = e->itf.onglet;
 	mlx_string_put(e->mlx, e->win, 829, 2, (color == 1 ? RED : BLACK), "1");
 	mlx_string_put(e->mlx, e->win, 895, 2, (color == 2 ? RED : BLACK), "2");
 	mlx_string_put(e->mlx, e->win, 961, 2, (color == 3 ? RED : BLACK), "3");
-	if (e->interface.onglet == 1)
-	{
-		picked_item(e);
-		mlx_string_put(e->mlx, e->win, 5, IMG_H + 5, BLACK, "Filters:");
-		color_val(e);
-	}
+	if (e->itf.onglet == 1)
+		ui1_writting(e);
 }
 
 void			tab(t_env *e)
 {
 	top_right(e);
-	if (e->interface.onglet == 1)
+	if (e->itf.onglet == 1)
 		ui1(e);
+	if (e->itf.onglet == 2)
+		ui2(e);
+	if (e->apply)
+		reset_ui(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img[RIGHT], IMG_W, 0);
 	mlx_put_image_to_window(e->mlx, e->win, e->img[BOTTOM], 0, IMG_H);
 	ui_writting(e);

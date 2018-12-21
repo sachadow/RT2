@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:21:21 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/12 21:04:34 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/12/14 22:16:52 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,22 @@ void		frame(int nb, t_rect rect, int color, t_env *e)
 	ft_swap(&tmp.width, &tmp.height);
 	tmp.height = rect.height + 2 * 2;
 	draw_rect(nb, tmp, color, e);
+}
+
+void		draw_line(t_rect rect, int color, t_env *e)
+{
+	int		i;
+	int		j;
+	t_pix	tmp;
+
+	i = -1;
+	while (++i < rect.height)
+	{
+		j = -1;
+		while (++j < rect.width)
+		{
+			tmp = init_point(rect.x + j, rect.y + i);
+			mlx_pixel_put(e->mlx, e->win, tmp.x, tmp.y, color);
+		}
+	}
 }

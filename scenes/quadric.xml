@@ -1,0 +1,19 @@
+
+<scene>
+	<light>
+		<sublight pos="0,0,-2000" intensity="255,255,255" radius="0"/>
+		<ambiant color="0,0,0"/>
+	</light>
+	<camera pos="0,0,-2000" dir="0,0,1"/>
+	<material>
+		<uniform diffusion="255,255,0" reflexion="0" t="0" specvalue="100" specpower="50" n="0" bump="10"/>
+		<uniform diffusion="0,255,255" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
+		<uniform diffusion="255,0,255" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
+		<texture pathtext="textures/redbrick.xpm" width="100" angle="10" height="100" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
+		<checker diffusion="255,0,255" diffusionbis="0,255,0" angle="45" width="100" height="100" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
+		<marble diffusion="255,0,255" diffusionbis="0,255,0" reflexion="0" t="0" specvalue="100" specpower="50" n="0" scale="1"/>
+	</material>
+	<objects>
+		<quadric center="0,0,0" param="20000,10000,10000" mat="1" isneg="0"/>
+	</objects>
+</scene>

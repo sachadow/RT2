@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/12 18:19:53 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/12/21 17:24:54 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int			reload(t_env *e)
 			add_cartoon_effect(e);
 		mlx_put_image_to_window(e->mlx, e->win, e->img[CENTER], 0, 0);
 		mlx_destroy_image(e->mlx, e->img[CENTER]);
-		e->apply = 0;
 		e->loading = 2;
 	}
 	hud(e);
@@ -99,7 +98,7 @@ int			debug(t_env *e)
 		p.x = -1;
 		while (++p.x < IMG_W)
 		{
-			e->debug = (p.x == 400 && p.y == 300) ? 1 : 0;
+			e->debug = (p.x == 510 && p.y == 240) ? 1 : 0;
 			if (((t_env*)e)->antialiasing == 0)
 				aliasing(10, p, (t_env*)e);
 			else if (((t_env*)e)->antialiasing == 1)

@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:19:26 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/12 21:04:05 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/12/13 21:04:28 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,18 @@ static void	shade_rect(int tab[2], t_rect rect, t_env *e)
 	}
 }
 
-void		shade_bar(t_env *e)
+void		shade_bar(int y, int color, t_env *e)
 {
 	int		tab[2];
 	t_rect	rect;
 
-	rect = init_rect(MARGE, M_IMG_H + RIGHT_SPC - 2 * MARGE + MARGE,
-			(RIGHT_SPC - 2 * MARGE) / 2, MARGE);
+	rect = init_rect(MARGE, y, (RIGHT_SPC - 2 * MARGE) / 2, MARGE);
 	tab[0] = BLACK;
-	tab[1] = e->interface.spec.val;
+	tab[1] = color;
 	shade_rect(tab, rect, e);
-	rect = init_rect((RIGHT_SPC - 2 * MARGE) / 2 + MARGE, M_IMG_H + RIGHT_SPC
-			- 2 * MARGE + MARGE, (RIGHT_SPC - 2 * MARGE) / 2, MARGE);
-	tab[0] = e->interface.spec.val;
+	rect = init_rect((RIGHT_SPC - 2 * MARGE) / 2 + MARGE, y,
+			(RIGHT_SPC - 2 * MARGE) / 2, MARGE);
+	tab[0] = color;
 	tab[1] = WHITE;
 	shade_rect(tab, rect, e);
 }

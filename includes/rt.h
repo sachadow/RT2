@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:09:49 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/13 17:20:32 by sderet           ###   ########.fr       */
+/*   Updated: 2018/12/21 15:54:25 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define WIN_W		1000
 # define IMG_H		600
 # define IMG_W		800
-# define M_IMG_W	IMG_W / 2
+# define M_IMG_W	400
 # define M_IMG_H	IMG_H / 2
 # define RIGHT_SPC	WIN_W - IMG_W
 # define BOTTOM_SPC	WIN_H - IMG_H
@@ -46,6 +46,7 @@
 # define F_CYL		6
 # define F_CONE		7
 # define BOX		8
+# define QUADRIC	9
 
 # define UNIFORM	0
 # define TEXTURE	1
@@ -194,12 +195,14 @@ typedef struct		s_item
 	t_vec			center;
 	t_vec			dir;
 	t_vec			end;
-	int				isnega;
 	double			d;
 	double			height;
 	double			radius;
 	double			angle;
+	t_vec			param;
+	int				paraboloid;
 	int				mat;
+	int				isnega;
 }					t_item;
 
 typedef struct		s_work
@@ -216,11 +219,14 @@ typedef struct		s_work
 typedef struct		s_interface
 {
 	int				onglet;
-	t_colo			spec;
-	t_colo			spec_shade;
-	t_mouse			spectrum;
-	t_mouse			shade;
-	t_mouse			item;
+	t_colo			spec[3];
+	t_colo			spec_shade[3];
+	t_mouse			spectrum[3];
+	t_mouse			shade[3];
+	t_mouse			pick;
+	t_mat			mat;
+	t_item			item;
+	int				nb_texture;
 }					t_interface;
 
 typedef struct		s_perlin
@@ -250,7 +256,6 @@ typedef struct		s_env
 	int				ed[3];
 	int				nbs[4];
 	int				key[300];
-	t_mouse			mouse;
 	int				(*hit[10])(t_ray, t_item, double *);
 	int				hit_negative;
 	int				curr;
@@ -270,7 +275,7 @@ typedef struct		s_env
 	int				filter;
 	int				cartoon;
 	int				apply;
-	t_interface		interface;
+	t_interface		itf;
 }					t_env;
 
 int					reload(t_env *e);
@@ -415,6 +420,7 @@ t_color				color_wood(t_color c1, t_color c2, t_vec impact, double s);
 t_vec				bumpmapping(t_vec n, t_vec impact, t_mat m);
 
 int					in_shadow(t_ray lightray, t_env *e, double t);
+int					negative_shadow(int k, t_ray r, t_env *e);
 double				shadow_from_sphere(t_light light, t_vec impact, t_work w,
 					t_env *e);
 double				shadow_from_point(t_ray lray, t_vec dist, t_env *e);
@@ -437,6 +443,9 @@ t_color				add_greyscale_filter(t_color c);
 t_color				add_reverse_filter(t_color c);
 t_color				add_saturate_filter(t_color c);
 void				add_cartoon_effect(t_env *e);
+
+int					hitquadric(t_ray r, t_item q, double *t);
+t_vec				find_quadric_normal(t_vec impact, t_item q);
 
 void				hud(t_env *e);
 void				new_image(int num, int width, int height, t_env *e);

@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hud.c                                              :+:      :+:    :+:   */
+/*   reset_ui1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/14 17:39:40 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/17 20:32:05 by qsebasti         ###   ########.fr       */
+/*   Created: 2018/12/20 19:55:02 by qsebasti          #+#    #+#             */
+/*   Updated: 2018/12/20 20:20:52 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt.h"
 #include "hud.h"
+#include "rt.h"
 
-/*
-**	HUD function:
-**	Creates new image to display UI
-*/
-
-void		hud(t_env *e)
+void		reset_ui(t_env *e)
 {
-	t_rect	rect;
-
-	new_image(RIGHT, RIGHT_SPC, IMG_H, e);
-	rect = init_rect(0, 0, RIGHT_SPC, IMG_H);
-	draw_rect(RIGHT, rect, DARK_GREY, e);
-	new_image(BOTTOM, WIN_W, BOTTOM_SPC, e);
-	rect = init_rect(0, 0, WIN_W, BOTTOM_SPC);
-	draw_rect(BOTTOM, rect, DARK_GREY, e);
-	tab(e);
+	e->apply = 0;
+	e->itf.nb_texture = 0;
+	ft_memset(&e->itf.mat, 0, sizeof(t_mat) * 1);
+	ft_memset(&e->itf.item, 0, sizeof(t_item) * 1);
 }

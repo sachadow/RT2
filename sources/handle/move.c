@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 16:34:11 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/11/27 19:09:31 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/12/20 16:27:16 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,13 @@ void	move_cam(t_env *e)
 		e->cam->pos = add(e->cam->pos, scale(50, i));
 	if (e->key[KEY_RIGHT] || e->key[KEY_D])
 		e->cam->pos = add(e->cam->pos, scale(-50, i));
-	if (e->key[KEY_UP] || e->key[KEY_W])
+	if (e->key[KEY_W])
+		e->cam->pos = add(e->cam->pos, scale(100, e->cam->dir));
+	if (e->key[KEY_S])
+		e->cam->pos = sub(e->cam->pos, scale(100, e->cam->dir));
+	if (e->key[KEY_UP])
 		e->cam->pos = add(e->cam->pos, scale(50, j));
-	if (e->key[KEY_DOWN] || e->key[KEY_S])
+	if (e->key[KEY_DOWN])
 		e->cam->pos = add(e->cam->pos, scale(-50, j));
 	if (e->key[KEY_Q])
 		e->cam->dir = rotate_axis(e->cam->dir, e->j, -10);

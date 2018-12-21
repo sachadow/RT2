@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/13 18:23:29 by sderet           ###   ########.fr       */
+/*   Updated: 2018/12/21 17:58:51 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int			find_closest_item(t_ray r, t_env *e, t_vec *newstart)
 	int		curr;
 	t_curr	ncurr;
 
-	e->ncurr = -1;
 	curr = get_closest_item(r, e);
 	if (curr < 0)
 		return (curr);
@@ -55,15 +54,23 @@ int			find_post_nega(t_ray r, t_env *e, t_vec *newstart, t_curr *t)
 	t->t = -1;
 	e->hit[e->item[last_hit].item_type](r, e->item[last_hit], &(t->t));
 	r.start = add(scale(t->t, r.dir), r.start);
-	while (got_out(item_count, hit_items, items_mod, e) == 0)
+	while (got_out(item_count, hit_items, items_mod, e) != 0)
 	{
 		last_hit = get_closest_item(r, e);
+		if (e->debug)
+			printf("-------------last_hit %d--------------\n", last_hit);
+		if (e->debug)
+			printf("r.dir %f %f %f\nr.start %f %f %f\n", r.dir.x, r.dir.y, r.dir.z, r.start.x, r.start.y, r.start.z);
 		if (last_hit == -1)
 			return (last_hit);
 		hit_mod(items_mod, last_hit, hit_items, e);
 		t->t = -1;
 		e->hit[e->item[last_hit].item_type](r, e->item[last_hit], &(t->t));
+		if (e->debug)
+			printf("distance %f\n", t->t);
 		r.start = add(scale(t->t, r.dir), r.start);
+		if (e->debug)
+			printf("r.dir %f %f %f\nr.start %f %f %f\n", r.dir.x, r.dir.y, r.dir.z, r.start.x, r.start.y, r.start.z);
 		if (e->item[last_hit].isnega == 0 &&
 				get_hits(hit_items, items_mod, last_hit) % 2 != 0)
 			t->curr = last_hit;
@@ -89,7 +96,7 @@ int			is_empty(int *hit, int count, int *mod, t_env *e)
 
 	a = 0;
 	b = 0;
-	while (a < count)
+	while (a < count && mod[a] != -1)
 	{
 		if (hit[a] % 2 != 0 && e->item[mod[a]].isnega == 0)
 			b++;
@@ -141,9 +148,9 @@ int			got_out(int count, int *nb_hit, int *mod, t_env *e)
 
 	a = 0;
 	b = 0;
-	while (a < count)
+	while (a < count && mod[a] > -1)
 	{
-		if (e->item[mod[a]].isnega == 1 && nb_hit[a] % 2 == 0)
+		if (e->item[mod[a]].isnega == 1 && nb_hit[a] % 2 != 0)
 			b++;
 		a++;
 	}
@@ -158,12 +165,14 @@ int			count_items(t_ray r, t_env *e)
 
 	if (!magnitude2(r.dir))
 		return (-1);
-	t = -1;
 	i = -1;
 	count = 0;
 	while (++i < e->nbs[ITEM])
-		if (e->hit[e->item[i].item_type](r, e->item[i], &t) != -1)
+	{
+		t = -1;
+		if (e->hit[e->item[i].item_type](r, e->item[i], &t) > 0)
 			count++;
+	}
 	return (count);
 }
 

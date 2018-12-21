@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 17:07:15 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/12 17:43:42 by qsebasti         ###   ########.fr       */
+/*   Updated: 2018/12/21 17:17:57 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,22 @@ static void	init(t_env *e)
 	e->hit[F_CYL] = &hitfcylinder;
 	e->hit[F_CONE] = &hitfcone;
 	e->hit[BOX] = &hitbox;
+	e->hit[QUADRIC] = &hitquadric;
 	e->backgroundcolor = multiply_color(e->backgroundcolor, 0.00392156862);
 	e->lvl = 4;
 	e->antialiasing = 1;
 	create_axis(e);
 	ft_memset(e->key, 0, sizeof(int) * 300);
 	e->s_line[CENTER] = 0;
-	e->mouse.button = 0;
-	e->interface.item.button = -1;
-	e->interface.onglet = 1;
-	e->interface.spec.val = 0;
-	e->interface.spectrum.x = (RIGHT_SPC) / 2;
-	e->interface.spectrum.y = M_IMG_H + (RIGHT_SPC) / 2 - MARGE;
+	e->itf.pick.button = -1;
+	e->itf.onglet = 1;
+	ft_memset(e->itf.spec, 0, sizeof(e->itf.spec) * 3);
+	e->itf.spectrum[0].x = (RIGHT_SPC) / 2;
+	e->itf.spectrum[0].y = M_IMG_H + (RIGHT_SPC) / 2 - MARGE;
 	e->loading = 0;
 	e->apply = 0;
+	e->cartoon = 0;
+	e->itf.nb_texture = 0;
 }
 
 /*
@@ -89,8 +91,8 @@ int			main(int ac, char **av)
 	init(e);
 	e->win = mlx_new_window(e->mlx, WIN_W, WIN_H, "RT");
 	mlx_centertop_window(e->win);
-	//mlx_expose_hook(e->win, debug, e);
-	mlx_loop_hook(e->mlx, reload, e);
+	mlx_expose_hook(e->win, debug, e);
+	//mlx_loop_hook(e->mlx, reload, e);
 	mlx_hook(e->win, KPRESS, KPRESSMASK, keypress, e);
 	mlx_hook(e->win, KRELEASE, KRELEASEMASK, keyrelease, e);
 	mlx_hook(e->win, MOTION_NOTIFY, PTR_MOTION_MASK, mousemove, e);

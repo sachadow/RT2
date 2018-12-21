@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 12:08:12 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/13 16:52:09 by asarasy          ###   ########.fr       */
+/*   Updated: 2018/12/14 17:54:51 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ int		recup_value_checker(t_env *e, t_element elem, int i)
 	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name,\
 				"diffusionbis"))
 		j++;
-	if (j == elem.nbr_attr)
+	if (j == elem.nbr_attr && ft_strcmp(elem.object, "waves"))
 		std_err(0);
-	e->mat[i].diffuse2 = ft_getcolor(elem.attribut[j].content);
+	else if(ft_strcmp(elem.object, "waves"))
+		e->mat[i].diffuse2 = ft_getcolor(elem.attribut[j].content);
 	return (0);
 }
 

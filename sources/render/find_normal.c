@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/13 18:40:07 by sderet           ###   ########.fr       */
+/*   Updated: 2018/12/21 17:11:24 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_vec		find_normal_vec_if_not_plane(int id, t_vec newstart, t_env *e)
 		n = find_cylinder_normal(newstart, e->item[id]);
 	else if (type == I_CONE || type == F_CONE)
 		n = find_cone_normal(newstart, e->item[id]);
+	else if (type == QUADRIC)
+		n = find_quadric_normal(newstart, e->item[id]);
 	return (n);
 }
 
@@ -105,7 +107,7 @@ t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 	t_vec	n;
 	double	finite;
 	int		type;
-	int		negative;
+	int     negative;
 
 	negative = 0;
 	if (id > e->nbs[ITEM])
@@ -147,7 +149,6 @@ t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 		n = find_normal_vec_if_not_plane(id, newstart, e);
 	if (negative)
 		n = opposite(n);
-	e->ncurr = -1;
 	if (!magnitude2(n))
 		return (newvec(0, 0, 0));
 	return (bumpmapping(normalize(n), newstart, find_material(id, e)));
