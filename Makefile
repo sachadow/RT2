@@ -6,7 +6,7 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/23 19:01:27 by squiquem          #+#    #+#              #
-#    Updated: 2018/12/21 16:03:55 by sderet           ###   ########.fr        #
+#    Updated: 2019/01/11 18:30:09 by sderet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ SRC_FILES		=	main.c \
 					handle/keyhook.c \
 					handle/mousehook.c \
 					handle/move.c \
-					handle/ui1_zone.c \
+					handle/param_zone.c \
+					handle/ui_zone.c \
+					hud/conversion.c \
 					hud/cursor.c \
 					hud/general_ui.c \
 					hud/hud.c \
@@ -35,15 +37,21 @@ SRC_FILES		=	main.c \
 					hud/reset_ui.c \
 					hud/ruler.c \
 					hud/shade_bar.c \
+					hud/spectrum_shade.c \
 					hud/shape.c \
+					hud/shape2.c \
 					hud/ui1.c \
 					hud/ui1_bottom.c \
 					hud/ui2.c \
 					hud/ui2_bottom.c \
+					hud/ui3.c \
+					hud/ui3_bottom.c \
 					hud/util.c \
 					maths/rotate.c \
 					maths/vec.c \
 					maths/vec2.c \
+					maths/solve_quadric.c \
+					maths/solve_cubic.c \
 					parser/error.c \
 					parser/get_position.c \
 					parser/get_value_mat.c \
@@ -55,6 +63,7 @@ SRC_FILES		=	main.c \
 					parser/recup_env.c \
 					parser/recup_light.c \
 					parser/recup_mat.c \
+					parser/recup_mat2.c \
 					parser/recup_object.c \
 					parser/recup_object2.c \
 					parser/recup_object3.c \
@@ -74,6 +83,7 @@ SRC_FILES		=	main.c \
 					render/hit_disk.c \
 					render/hit_func.c \
 					render/hit_items.c \
+					render/hit_tore.c \
 					render/hsv.c \
 					render/light.c \
 					render/marble.c \
@@ -87,6 +97,9 @@ SRC_FILES		=	main.c \
 					render/textures_util.c \
 					render/textures.c \
 					render/threads.c \
+					render/negative_calc.c \
+					render/negative_calc2.c \
+					render/negative_calc3.c \
 
 SUB_FOLDERS		=	parser render hud handle maths
 
@@ -112,7 +125,7 @@ LIBMLX			=	minilibx/libmlx.a
 
 CC				=	gcc
 
-CFLAGS			=	-Wall -Wextra -Werror -g -O2 -MMD
+CFLAGS			=	-Wall -Wextra -Werror -g
 
 opti			:
 	@make -j8 all

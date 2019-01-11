@@ -12,3 +12,10 @@
 
 #include "rt.h"
 #include "hud.h"
+
+void		ui3_bottom(t_env *e)
+{
+	bottom_ruler(e);
+	if (e->itf.pick.button != -1)
+		ui3_param(e);
+}

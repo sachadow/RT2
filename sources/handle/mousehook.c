@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 17:29:16 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/20 18:05:14 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/10 20:30:32 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 #include "keyboard.h"
 #include "hud.h"
 #include <stdio.h>
+
+static const int	g_tab1_xe = IMG_W + RIGHT_SPC / 3;
+static const int	g_tab_ye = 2 * MARGE;
+static const int	g_tab2_xs = g_tab1_xe + 1;
+static const int	g_tab2_xe = IMG_W + 2 * (RIGHT_SPC / 3) + 1;
+static const int	g_tab3_xs = g_tab2_xe + 1;
 
 /*
 **	UI_CHECKER
@@ -26,9 +32,9 @@ static void	ui_checker(t_mouse m, t_env *e)
 
 	if (e->itf.onglet == 1)
 	{
-		pt = init_point(M_IMG_H + (CIRCLE) / 2, SHAD1_YS);
+		pt = init_point(M_IMG_H + (CIRCLE) / 2, g_shad_ys);
 		ui_spectrum(0, pt, m, e);
-		pt.x = SHAD1_YE;
+		pt.x = g_shad_ye;
 		ui_shade(0, pt, m, e);
 	}
 	if (e->itf.onglet == 2)
@@ -45,7 +51,7 @@ static void	ui_checker(t_mouse m, t_env *e)
 		ui_shade(2, pt, m, e);
 	}
 	pick_item(m, e);
-	ui1_zones(e->itf.onglet, m, e);
+	ui_zones(e->itf.onglet, m, e);
 }
 
 /*
@@ -60,11 +66,11 @@ int			mousepress(int button, int x, int y, t_env *e)
 	mouse.button = button;
 	mouse.x = x;
 	mouse.y = y;
-	if (x >= TAB1_XS && x <= TAB1_XE && y >= TAB1_YS && y <= TAB1_YE)
+	if (x >= IMG_W && x <= g_tab1_xe && y >= 0 && y <= g_tab_ye)
 		e->itf.onglet = 1;
-	else if (x >= TAB2_XS && x <= TAB2_XE && y >= TAB2_YS && y <= TAB2_YE)
+	else if (x >= g_tab2_xs && x <= g_tab2_xe && y >= 0 && y <= g_tab_ye)
 		e->itf.onglet = 2;
-	else if (x >= TAB3_XS && x <= TAB3_XE && y >= TAB3_YS && y <= TAB3_YE)
+	else if (x >= g_tab3_xs && x <= WIN_W && y >= 0 && y <= g_tab_ye)
 		e->itf.onglet = 3;
 	ui_checker(mouse, e);
 	printf("%d %d\n", x, y);
@@ -125,14 +131,8 @@ int			mousemove(int x, int y, t_env *e)
 	t_pix	pt;
 	t_pix	coord;
 
-	if (e->key[KEY_SPC] == 0)
-		if (e->key[KEY_TAB])
-		{
-			e->cam->dir = rotate_y(e->cam->dir, x * M_PI / 8);
-			e->cam->dir = rotate_x(e->cam->dir, y * M_PI / 8);
-		}
 	pt = init_point(x, y);
-	coord = init_point(M_IMG_H + 85, SHAD1_YS);
+	coord = init_point(M_IMG_H + 85, g_shad_ys);
 	update_mouse(0, pt, coord, e);
 	coord = init_point(3 * MARGE + (RIGHT_SPC) / 2 - MARGE,
 			3 * MARGE + RIGHT_SPC - MARGE);

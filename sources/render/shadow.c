@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 19:41:27 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/21 17:12:24 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/11 18:27:09 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int			in_shadow(t_ray lightray, t_env *e, double t)
 	int		x;
 	t_ray	r;
 
+	if (e->debug)
+		;
 	k = -1;
 	r.dir = lightray.dir;
     r.start = sub(lightray.start, scale(1, lightray.dir));

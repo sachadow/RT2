@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/21 17:58:51 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/11 17:57:24 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,160 +37,29 @@ int			find_closest_item(t_ray r, t_env *e, t_vec *newstart)
 
 int			find_post_nega(t_ray r, t_env *e, t_vec *newstart, t_curr *t)
 {
-	int		item_count;
-	int		*items_mod;
-	int		*hit_items;
-	int		last_hit;
+	t_hititem	i;
+	int			last_hit;
 
 	t->ncurr = -1;
 	t->curr = -1;
-	item_count = count_items(r, e);
-	hit_items = (int*)malloc(sizeof(int) * (item_count + 1));
-	items_mod = (int*)malloc(sizeof(int) * (item_count + 1));
-	init_int_tab(hit_items, item_count, 0);
-	init_int_tab(items_mod, item_count, -1);
-	last_hit = get_closest_item(r, e);
-	hit_mod(items_mod, last_hit, hit_items, e);
-	t->t = -1;
-	e->hit[e->item[last_hit].item_type](r, e->item[last_hit], &(t->t));
-	r.start = add(scale(t->t, r.dir), r.start);
-	while (got_out(item_count, hit_items, items_mod, e) != 0)
+	i.item_count = count_items(r, e);
+	negative_firstadvance(&i, &r, e, &last_hit);
+	while (got_out(i.item_count, i.hit_items, i.items_mod, e) != 0)
 	{
-		last_hit = get_closest_item(r, e);
-		if (last_hit == -1)
-			return (last_hit);
-		hit_mod(items_mod, last_hit, hit_items, e);
-		t->t = -1;
-		e->hit[e->item[last_hit].item_type](r, e->item[last_hit], &(t->t));
-		r.start = add(scale(t->t, r.dir), r.start);
+		if ((last_hit = get_closest_item(r, e)) == -1)
+			return (free_nega(last_hit, i.hit_items, i.items_mod));
+		negative_bigadvance(&i, &r, e, &last_hit);
 		if (e->item[last_hit].isnega == 0 &&
-				get_hits(hit_items, items_mod, last_hit) % 2 != 0)
+				get_hits(i.hit_items, i.items_mod, last_hit) % 2 != 0)
 			t->curr = last_hit;
 	}
-	if (is_empty(hit_items, item_count, items_mod, e) == 0)
-	{
-		free(hit_items);
-		free(items_mod);
-		return (find_closest_item(r, e, newstart));
-	}
-	*newstart = r.start;
+	if (is_empty(i.hit_items, i.item_count, i.items_mod, e) == 0)
+		return (free_nega(find_closest_item(r, e, newstart), i.hit_items,
+					i.items_mod));
+		*newstart = r.start;
 	if (e->item[last_hit].isnega == 1)
 		t->curr += ((e->nbs[ITEM] + 1) * (last_hit + 1));
-	free(hit_items);
-	free(items_mod);
-	return (t->curr);
-}
-
-int			is_empty(int *hit, int count, int *mod, t_env *e)
-{
-	int a;
-	int	b;
-
-	a = 0;
-	b = 0;
-	while (a < count && mod[a] != -1)
-	{
-		if (hit[a] % 2 != 0 && e->item[mod[a]].isnega == 0)
-			b++;
-		a++;
-	}
-	return (b);
-}
-
-int			get_hits(int* hit, int *mod, int last)
-{
-	int a;
-
-	a = 0;
-	while (mod[a] != last)
-		a++;
-	return (hit[a]);
-}
-
-void		hit_mod(int* mod, int nb, int* hit, t_env *e)
-{
-	int a;
-
-	if (e->item[nb].item_type == DISK ||
-			e->item[nb].item_type == PLANE)
-		return ;
-	a = 0;
-	while (mod[a] != -1 && mod[a] != nb)
-		a++;
-	mod[a] = nb;
-	hit[a]++;
-}
-
-void		init_int_tab(int* tab, int size, int value)
-{
-	int a;
-
-	a = 0;
-	while (a < size)
-	{
-		tab[a] = value;
-		a++;
-	}
-}
-
-int			got_out(int count, int *nb_hit, int *mod, t_env *e)
-{
-	int		a;
-	int		b;
-
-	a = 0;
-	b = 0;
-	while (a < count && mod[a] > -1)
-	{
-		if (e->item[mod[a]].isnega == 1 && nb_hit[a] % 2 != 0)
-			b++;
-		a++;
-	}
-	return (b);
-}
-
-int			count_items(t_ray r, t_env *e)
-{
-	double	t;
-	int		i;
-	int		count;
-
-	if (!magnitude2(r.dir))
-		return (-1);
-	i = -1;
-	count = 0;
-	while (++i < e->nbs[ITEM])
-	{
-		t = -1;
-		if (e->hit[e->item[i].item_type](r, e->item[i], &t) > 0)
-			count++;
-	}
-	return (count);
-}
-
-int			get_closest_item(t_ray r, t_env *e)
-{
-	double	t;
-	double	before;
-	int		i;
-	int		curr;
-
-	if (!magnitude2(r.dir))
-		return (-1);
-	t = -1;
-	before = -1;
-	curr = -1;
-	i = -1;
-	while (++i < e->nbs[ITEM])
-	{
-		if (e->hit[e->item[i].item_type](r, e->item[i], &t)
-			&& (before == -1 || (t < before && t > 0.001f)))
-		{
-			before = t;
-			curr = i;
-		}
-	}
-	return (curr);
+	return (free_nega(t->curr, i.hit_items, i.items_mod));
 }
 
 /*

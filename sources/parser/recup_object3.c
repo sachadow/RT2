@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 16:45:30 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/17 16:16:07 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/01/08 15:50:29 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,41 @@ int		get_quadric(t_env *e, t_element elem, int i, int nbr_mat)
 	int j;
 
 	j = 0;
-	if (elem.nbr_attr < 4)
+	if (elem.nbr_attr < 4 || elem.nbr_attr > 5)
 		std_err(0);
 	e->item[i].item_type = QUADRIC;
 	get_center(e, elem, i, "center");
 	get_param(e, elem, i, "param");
 	get_material(e, elem, i, nbr_mat);
 	get_isnega(e, elem, i);
+	if (elem.nbr_attr > 4)
+	{
+		j += get_translation(e, elem, i);
+		if (j + 4 != elem.nbr_attr)
+			std_err(0);
+	}
+	return (0);
+}
+
+int		get_tore(t_env *e, t_element elem, int i, int nbr_mat)
+{
+	int j;
+
+	j = 0;
+	if (elem.nbr_attr < 5 || elem.nbr_attr > 7)
+		std_err(0);
+	e->item[i].item_type = TORUS;
+	get_center(e, elem, i, "center");
+	get_dir(e, elem, i, "dir");
+	get_radius(e, elem, i);
+	get_radius2(e, elem, i);
+	get_material(e, elem, i, nbr_mat);
+	if (elem.nbr_attr > 5)
+	{
+		j += get_translation(e, elem, i);
+		j += get_rotation(e, elem, i);
+		if (j + 5 != elem.nbr_attr)
+			std_err(0);
+	}
 	return (0);
 }

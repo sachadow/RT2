@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/23 12:25:37 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/06 12:02:05 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/01/10 15:21:57 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ int		free_all_elem(t_element elem)
 
 t_env	*recup_env(t_env *e, t_element elem)
 {
-	int nbr_mat;
+	t_mat	*mat;
 
 	if (elem.nbr_attr > 0)
 		std_err(0);
 	recup_light(e, elem);
 	recup_camera(e, elem);
-	nbr_mat = recup_mat(e, elem);
-	recup_object(e, elem, nbr_mat);
+	mat = recup_mat(e, elem);
+	recup_object(e, elem, mat);
 	free_all_elem(elem);
 	return (e);
 }

@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 17:04:25 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/19 22:19:54 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/10 20:28:39 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		cursor_shade(int nb, t_env *e)
 	t_rect	r;
 
 	if (e->itf.shade[nb].x >= MARGE
-			&& e->itf.shade[nb].x < SHAD1_XE - IMG_W)
+			&& e->itf.shade[nb].x < g_shad_xe - IMG_W)
 	{
 		pt = init_point(e->itf.shade[nb].x, e->itf.shade[nb].y);
 		e->itf.spec_shade[nb].val = color_picker(RIGHT, pt, e);
@@ -46,7 +46,7 @@ void		cursor_shade(int nb, t_env *e)
 			color.val = BLACK;
 		r = init_rect(pt.x, pt.y, 0, 0);
 		if (nb == 0)
-			r.height = SHAD1_YE + MARGE;
+			r.height = g_shad_ye + MARGE;
 		if (nb == 1)
 			r.height = 3 * MARGE + RIGHT_SPC + MARGE;
 		if (nb == 2)

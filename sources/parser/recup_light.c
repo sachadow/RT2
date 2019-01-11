@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/23 14:30:35 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/03 14:16:12 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/01/08 16:14:35 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@ int		ambiantlight(t_env *e, t_element elem)
 	return (1);
 }
 
-int		sololight2(t_env *e, t_element elem, int i)
+int		sololight2(t_env *e, t_element elem, int i, int j)
 {
-	int j;
-
+	e->light[i].intensity = ft_getcolor(elem.attribut[j].content);
 	j = 0;
 	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "radius"))
 		j++;
@@ -57,8 +56,7 @@ int		sololight(t_env *e, t_element elem, int i)
 		j++;
 	if (j == elem.nbr_attr)
 		std_err(0);
-	e->light[i].intensity = ft_getcolor(elem.attribut[j].content);
-	j = sololight2(e, elem, i);
+	j = sololight2(e, elem, i, j);
 	if (elem.nbr_attr - j == 2)
 		return (1);
 	j = 0;

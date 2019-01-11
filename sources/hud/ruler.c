@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 18:29:43 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/20 16:56:30 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/10 16:59:05 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,36 +73,99 @@ void		bottom_ruler(t_env *e)
 	t_pix	pt;
 	int		x;
 
-	pt = init_point(WIN_W / 5, 0);
-	for (x = -1; x < BOTTOM_SPC; ++x)
+	if (e->itf.onglet == 2)
 	{
-		pt.y = 0  + x;
-		color_point(BOTTOM, pt, WHITE, e);
+		pt = init_point(WIN_W / 6, 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+			pt.y = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
+		}
+		pt = init_point(2 * WIN_W / 6, 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+			pt.y = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
+		}
+		pt = init_point(3 * (WIN_W / 6), 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+			pt.y = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
+		}
+		pt = init_point(4 * (WIN_W / 6), 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+			pt.y = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
+		}
+		pt = init_point(5 * (WIN_W / 6), 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+			pt.y = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
+		}
+		pt = init_point(0, (BOTTOM_SPC) / 2);
+		for (x = -1; x < WIN_W; ++x)
+		{
+			pt.x = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
+		}
 	}
-	pt = init_point(2 * WIN_W / 5, 0);
-	for (x = -1; x < BOTTOM_SPC; ++x)
+/*	if (e->itf.onglet == 1)
 	{
-		pt.y = 0  + x;
+		pt = init_point(WIN_W - RIGHT_SPC / 3, 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+			pt.y = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
+		}
+	}*/
+	/*	if (e->itf.onglet == 3)
+		{
+		pt = init_point(WIN_W / 8, 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+		pt.y = 0 + x;
 		color_point(BOTTOM, pt, WHITE, e);
-	}
-	pt = init_point(3 * (WIN_W / 5), 0);
-	for (x = -1; x < BOTTOM_SPC; ++x)
-	{
-		pt.y = 0  + x;
+		}
+		pt = init_point(2 * WIN_W / 8, 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+		pt.y = 0 + x;
 		color_point(BOTTOM, pt, WHITE, e);
-	}
-	pt = init_point(4 * (WIN_W / 5), 0);
-	for (x = -1; x < BOTTOM_SPC; ++x)
-	{
-		pt.y = 0  + x;
+		}
+		pt = init_point(3 * WIN_W / 8, 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+		pt.y = 0 + x;
 		color_point(BOTTOM, pt, WHITE, e);
-	}
-	pt = init_point(0, (BOTTOM_SPC) / 2);
-	for (x = -1; x < WIN_W; ++x)
-	{
-		pt.x = 0  + x;
+		}
+		pt = init_point(4 * WIN_W / 8, 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+		pt.y = 0 + x;
 		color_point(BOTTOM, pt, WHITE, e);
-	}
+		}
+		pt = init_point(5 * WIN_W / 8, 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+		pt.y = 0 + x;
+		color_point(BOTTOM, pt, WHITE, e);
+		}
+		pt = init_point(6 * WIN_W / 8, 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+		pt.y = 0 + x;
+		color_point(BOTTOM, pt, WHITE, e);
+		}
+		pt = init_point(7 *WIN_W / 8, 0);
+		for (x = -1; x < BOTTOM_SPC; ++x)
+		{
+		pt.y = 0 + x;
+		color_point(BOTTOM, pt, WHITE, e);
+		}
+		}*/
 }
 
 static void	separations(t_env *e)
@@ -128,10 +191,10 @@ void		ui1_bottom_strokes(t_env *e)
 	t_rect	r2;
 
 	separations(e);
-	r1 = init_rect(4 * (WIN_W / 5) + WIN_W / 5 / 3,
+	r1 = init_rect(4 * (WIN_W / 5) + RIGHT_SPC / 3,
 			5 * (BOTTOM_SPC) / 8 + 9, 1, 50);
 	draw_rect(BOTTOM, r1, BLACK, e);
-	r2 = init_rect(4 * (WIN_W / 5) + 2 * WIN_W / 5 / 3 + 12,
+	r2 = init_rect(4 * (WIN_W / 5) + 2 * RIGHT_SPC / 3 + 1,
 			5 * (BOTTOM_SPC) / 8 + 9, 1, 50);
 	draw_rect(BOTTOM, r2, BLACK, e);
 	if (!e->antialiasing)
@@ -143,4 +206,61 @@ void		ui1_bottom_strokes(t_env *e)
 		rect = init_rect(r2.x + 1, r2.y,
 				(4 * (WIN_W / 5) + (WIN_W / 7) / 4 + 144) - r2.x, 50);
 	frame(BOTTOM, rect, C_GREEN, e);
+}
+
+void		param_bar(t_env *e)
+{
+	t_rect	r;
+	int		i;
+
+	i = 0;
+	while (++i < 8)
+	{
+		conv_all_param(e);
+		r = init_rect(i * WIN_W / 8, e->itf.param[i], 9, 5);
+		draw_tri_right(BOTTOM, r, WHITE, e);
+		draw_tri_left(BOTTOM, r, WHITE, e);
+	}
+}
+
+void		ui3_param(t_env *e)
+{
+	t_rect	r;
+
+	r = init_rect(WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
+	draw_rect(BOTTOM, r, BLACK, e);
+	r = init_rect(2 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
+	draw_rect(BOTTOM, r, BLACK, e);
+	r = init_rect(3 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
+	draw_rect(BOTTOM, r, BLACK, e);
+	r = init_rect(4 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
+	draw_rect(BOTTOM, r, BLACK, e);
+	r = init_rect(5 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
+	draw_rect(BOTTOM, r, BLACK, e);
+	r = init_rect(6 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
+	draw_rect(BOTTOM, r, BLACK, e);
+	r = init_rect(7 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
+	draw_rect(BOTTOM, r, BLACK, e);
+	param_bar(e);
+	/*	r = init_rect(WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
+		draw_tri_right(BOTTOM, r, WHITE, e);
+		draw_tri_left(BOTTOM, r, WHITE, e);
+		r = init_rect(2 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
+		draw_tri_right(BOTTOM, r, WHITE, e);
+		draw_tri_left(BOTTOM, r, WHITE, e);
+		r = init_rect(3 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
+		draw_tri_right(BOTTOM, r, WHITE, e);
+		draw_tri_left(BOTTOM, r, WHITE, e);
+		r = init_rect(4 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
+		draw_tri_right(BOTTOM, r, WHITE, e);
+		draw_tri_left(BOTTOM, r, WHITE, e);
+		r = init_rect(5 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
+		draw_tri_right(BOTTOM, r, WHITE, e);
+		draw_tri_left(BOTTOM, r, WHITE, e);
+		r = init_rect(6 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
+		draw_tri_right(BOTTOM, r, WHITE, e);
+		draw_tri_left(BOTTOM, r, WHITE, e);
+		r = init_rect(7 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
+		draw_tri_right(BOTTOM, r, WHITE, e);
+		draw_tri_left(BOTTOM, r, WHITE, e);*/
 }

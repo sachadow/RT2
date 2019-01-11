@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:17:53 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/20 20:07:03 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/10 20:20:53 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ static void		ui1_writting(t_env *e)
 	mlx_string_put(e->mlx, e->win, 4 * WIN_W / 5 + WIN_W / 5 / 6,
 			IMG_H + (BOTTOM_SPC) / 8 + 2, BLACK, "Uniform color");
 	mlx_string_put(e->mlx, e->win, 4 * WIN_W / 5 + WIN_W / 7 / 4 - 10,
-			IMG_H + 4 * (BOTTOM_SPC) / 5 - 13, BLACK, "Off  Middle  On");
+			IMG_H + 4 * (BOTTOM_SPC) / 5 - 13, BLACK, "Off");
+	mlx_string_put(e->mlx, e->win, 4 * WIN_W / 5 + RIGHT_SPC / 3 + 4,
+			IMG_H + 4 * (BOTTOM_SPC) / 5 - 13, BLACK, "Middle");
+	mlx_string_put(e->mlx, e->win, 4 * WIN_W / 5 + 2 * RIGHT_SPC / 3 + 14,
+			IMG_H + 4 * (BOTTOM_SPC) / 5 - 13, BLACK, "On");
 	picked_item(e);
 	color_val(e);
 }
@@ -57,6 +61,8 @@ static void		ui_writting(t_env *e)
 	mlx_string_put(e->mlx, e->win, 961, 2, (color == 3 ? RED : BLACK), "3");
 	if (e->itf.onglet == 1)
 		ui1_writting(e);
+	if (e->itf.onglet == 3)
+		ui3_writting(e);
 }
 
 void			tab(t_env *e)
@@ -66,6 +72,8 @@ void			tab(t_env *e)
 		ui1(e);
 	if (e->itf.onglet == 2)
 		ui2(e);
+	if (e->itf.onglet == 3)
+		ui3(e);
 	if (e->apply)
 		reset_ui(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img[RIGHT], IMG_W, 0);

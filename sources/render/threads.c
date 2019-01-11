@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/21 17:24:54 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/11 18:02:59 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int			debug(t_env *e)
 		p.x = -1;
 		while (++p.x < IMG_W)
 		{
-			e->debug = (p.x == 500 && p.y == 182) ? 1 : 0;
+			e->debug = (p.x == 487 && p.y == 237) ? 1 : 0;
 			if (((t_env*)e)->antialiasing == 0)
 				aliasing(10, p, (t_env*)e);
 			else if (((t_env*)e)->antialiasing == 1)

@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 15:02:34 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/03 15:20:10 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/11 18:55:34 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,17 @@ int		hitplane(t_ray r, t_item p, double *t)
 		return (0);
 }
 
+int		closest_disk(t_ray r, t_item cy, double *t)
+{
+	int ret;
+
+	ret = (hitdisk(r, newdisk(cy.dir, cy.center, cy.radius, cy.mat), t));
+	if (ret == 0)
+		return (hitdisk(r, newdisk(cy.dir, add(cy.center, scale(cy.height,
+								cy.dir)), cy.radius, cy.mat), t));
+	return (ret);
+}
+
 int		hitfcylinder(t_ray r, t_item cy, double *t)
 {
 	double	hit;
@@ -149,7 +160,7 @@ int		hitfcylinder(t_ray r, t_item cy, double *t)
 
 	hit = *t;
 	if (!hitcylinder(r, cy, &hit))
-		return (0);
+		return (closest_disk(r, cy, t));
 	intersection = add(r.start, scale(hit, r.dir));
 	sign = dotproduct(cy.dir, sub(intersection, cy.center)) /
 		magnitude2(cy.dir);

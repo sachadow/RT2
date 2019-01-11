@@ -6,12 +6,29 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:50:52 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/20 20:46:15 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/10 19:59:51 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hud.h"
 #include "rt.h"
+
+const int	g_filter1_xs = WIN_W / 5 / 4;
+const int	g_filter2_xs = WIN_W / 5 + WIN_W / 5 / 4;
+const int	g_filter3_xs = 2 * WIN_W / 5 + WIN_W / 5 / 4;
+
+const int	g_filter1_ys = IMG_H + BOTTOM_SPC / 8;
+const int	g_filter2_ys = IMG_H + 3 * BOTTOM_SPC / 5;
+
+const int	g_text1_xs = 3 * WIN_W / 5 + WIN_W / 5 / 10;
+const int	g_text1_xe = g_text1_xs + 64;
+const int	g_text1_ys = IMG_H + 20;
+const int	g_text1_ye = IMG_H + 84;
+
+const int	g_text2_xs = 3 * WIN_W / 5 + WIN_W / 5 / 10 * 6;
+const int	g_text2_xe = g_text2_xs + 64;
+const int	g_text2_ys = IMG_H + BOTTOM_SPC / 2 + 20;
+const int	g_text2_ye = IMG_H + BOTTOM_SPC / 2 + 84;
 
 static void	texture_frame(t_rect *r, t_env *e)
 {
@@ -23,31 +40,26 @@ static void	texture_frame(t_rect *r, t_env *e)
 		frame(BOTTOM, r[8], C_GREEN, e);
 	if (e->itf.nb_texture == 4)
 		frame(BOTTOM, r[9], C_GREEN, e);
-	if (e->itf.item.mat == 0)
+	if (e->itf.mat.type == UNIFORM && e->itf.pick.button > -1)
 		frame(BOTTOM, r[10], C_GREEN, e);
 }
 
 static void	set_frames(t_rect *r)
 {
 	r[0] = init_rect(0, 0, 0, 0);
-	r[1] = init_rect(SEPIA_XS, (SEPIA_YS) - IMG_H, (SEPIA_XE) - (SEPIA_XS),
-			(SEPIA_YE - IMG_H) - (SEPIA_YS - IMG_H));
-	r[2] = init_rect(GSCAL_XS, (GSCAL_YS) - IMG_H, (GSCAL_XE) - (GSCAL_XS),
-			(GSCAL_YE - IMG_H) - (GSCAL_YS - IMG_H));
-	r[3] = init_rect(REVER_XS, (REVER_YS) - IMG_H, (REVER_XE) - (REVER_XS),
-			(REVER_YE - IMG_H) - (REVER_YS - IMG_H));
-	r[4] = init_rect(SATUR_XS, (SATUR_YS) - IMG_H, (SATUR_XE) - (SATUR_XS),
-			(SATUR_YE - IMG_H) - (SATUR_YS - IMG_H));
-	r[5] = init_rect(CARTO_XS, (CARTO_YS) - IMG_H, (CARTO_XE) - (CARTO_XS),
-			(CARTO_YE - IMG_H) - (CARTO_YS - IMG_H));
-	r[6] = init_rect(TEXT1_XS, (TEXT1_YS) - IMG_H, (TEXT1_XE) - (TEXT1_XS),
-			(TEXT1_YE - IMG_H) - (TEXT1_YS - IMG_H));
-	r[7] = init_rect(TEXT2_XS, (TEXT1_YS) - IMG_H, (TEXT2_XE) - (TEXT2_XS),
-			(TEXT1_YE - IMG_H) - (TEXT1_YS - IMG_H));
-	r[8] = init_rect(TEXT1_XS, (TEXT2_YS) - IMG_H, (TEXT1_XE) - (TEXT1_XS),
-			(TEXT2_YE - IMG_H) - (TEXT2_YS - IMG_H));
-	r[9] = init_rect(TEXT2_XS, (TEXT2_YS) - IMG_H, (TEXT2_XE) - (TEXT2_XS),
-			(TEXT2_YE - IMG_H) - (TEXT2_YS - IMG_H));
+	r[1] = init_rect(g_filter2_xs, g_filter1_ys - IMG_H, 100, 60);
+	r[2] = init_rect(g_filter3_xs, g_filter1_ys - IMG_H, 100, 60);
+	r[3] = init_rect(g_filter2_xs, g_filter2_ys - IMG_H, 100, 60);
+	r[4] = init_rect(g_filter1_xs, g_filter2_ys - IMG_H, 100, 60);
+	r[5] = init_rect(g_filter3_xs, g_filter2_ys - IMG_H, 100, 60);
+	r[6] = init_rect(g_text1_xs, g_text1_ys - IMG_H, g_text1_xe - g_text1_xs,
+			(g_text1_ye - IMG_H) - (g_text1_ys - IMG_H));
+	r[7] = init_rect(g_text2_xs, g_text1_ys - IMG_H, g_text2_xe - g_text2_xs,
+			(g_text1_ye - IMG_H) - (g_text1_ys - IMG_H));
+	r[8] = init_rect(g_text1_xs, g_text2_ys - IMG_H, g_text1_xe - g_text1_xs,
+			(g_text2_ye - IMG_H) - (g_text2_ys - IMG_H));
+	r[9] = init_rect(g_text2_xs, g_text2_ys - IMG_H, g_text2_xe - g_text2_xs,
+			(g_text2_ye - IMG_H) - (g_text2_ys - IMG_H));
 	r[10] = init_rect(UNIF_XS, (UNIF_YS) - IMG_H, (UNIF_XE) - (UNIF_XS),
 			(UNIF_YE - IMG_H) - (UNIF_YS - IMG_H));
 }
@@ -89,9 +101,9 @@ static void	ui1_bottom_xpm(t_env *e)
 	insert_xpm(BOTTOM, pt, "textures/bluestone.xpm", e);
 	pt = init_point(3 * WIN_W / 5 + ((WIN_W / 5) / 10) * 6,
 			(BOTTOM_SPC) / 2 + 20);
-	insert_xpm(BOTTOM, pt, "textures/colorstone.xpm", e);
-	pt = init_point(3 * WIN_W / 5 + (WIN_W / 5) / 10, (BOTTOM_SPC) / 2 + 20);
 	insert_xpm(BOTTOM, pt, "textures/wood.xpm", e);
+	pt = init_point(3 * WIN_W / 5 + (WIN_W / 5) / 10, (BOTTOM_SPC) / 2 + 20);
+	insert_xpm(BOTTOM, pt, "textures/colorstone.xpm", e);
 }
 
 void		ui1_bottom(t_env *e)
@@ -108,21 +120,5 @@ void		ui1_bottom(t_env *e)
 	ui1_bottom_strokes(e);
 	set_frames(rect);
 	ui1_frame(rect, e);
-	if (e->itf.nb_texture || e->itf.item.mat == 0)
-		texture_frame(rect, e);
-	//bottom_ruler(e);
-
-	//	rect = init_rect(WIN_W / 5 / 4, 3 * (BOTTOM_SPC) / 5, 100, 60);
-	//	draw_rect(BOTTOM, rect, WHITE, e);
-	//	rect = init_rect((WIN_W / 5) + WIN_W / 5 / 4, 3 * (BOTTOM_SPC) / 5, 100,
-	//			60);
-	//	draw_rect(BOTTOM, rect, WHITE, e);
-	//	rect = init_rect((WIN_W / 5) + WIN_W / 5 / 4, (BOTTOM_SPC) / 8, 100, 60);
-	//	draw_rect(BOTTOM, rect, WHITE, e);
-	//	rect = init_rect(2 * (WIN_W / 5) + WIN_W / 5 / 4, 3 * (BOTTOM_SPC) / 5, 100,
-	//			60);
-	//	draw_rect(BOTTOM, rect, WHITE, e);
-	//	rect = init_rect(2 * (WIN_W / 5) + WIN_W / 5 / 4, (BOTTOM_SPC) / 8, 100,
-	//			60);
-	//	draw_rect(BOTTOM, rect, WHITE, e);
+	texture_frame(rect, e);
 }

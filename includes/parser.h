@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 17:25:35 by asarasy           #+#    #+#             */
-/*   Updated: 2018/12/17 16:09:11 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/01/10 16:57:16 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ t_element				find_nbr_elem2(char *xml, t_element element, int count);
 t_env					*recup_env(t_env *e, t_element elem);
 t_env					*recup_light(t_env *e, t_element elem);
 t_env					*recup_camera(t_env *e, t_element elem);
-int						recup_mat(t_env *e, t_element elem);
-t_env					*recup_object(t_env *e, t_element elem, int nbr_mat);
+t_mat					*recup_mat(t_env *e, t_element elem);
+t_env					*recup_object(t_env *e, t_element elem, t_mat *mat);
 
 int						get_sphere(t_env *e,\
 		t_element elem, int i, int nbr_mat);
@@ -64,6 +64,7 @@ int						get_fcone(t_env *e, t_element elem, int i, int nbr_mat);
 int						get_box(t_env *e, t_element elem, int i, int nbr_mat);
 int						get_quadric(t_env *e, t_element elem, int i, \
 		int nbr_mat);
+int						get_tore(t_env *e, t_element elem, int i, int nbr_mat);
 
 int						get_center(t_env *e, t_element elem, int i, char *name);
 int						get_radius(t_env *e, t_element elem, int i);
@@ -76,17 +77,21 @@ int						get_height(t_env *e, t_element elem, int i);
 int						get_translation(t_env *e, t_element elem, int i);
 int						get_rotation(t_env *e, t_element elem, int i);
 int						get_end(t_env *e, t_element elem, int i, char *name);
-int						recup_value_mat(t_env *e, t_element elem, int i);
-int						recup_value_text(t_env *e, t_element elem, int i);
-int						get_bump(t_env *e, t_element elem, int i);
+int						recup_value_mat(t_mat *mat, t_element elem, int i);
+int						recup_value_text(t_mat *mat, t_element elem, int i);
+int						get_bump(t_mat *mat, t_element elem, int i);
 int						get_isnega(t_env *e, t_element elem, int i);
 int						get_param(t_env *e, t_element elem, int i, char *name);
-int						recup_value_checker(t_env *e, t_element elem, int i);
-void					clean_value_mat(t_env *e);
+int						recup_value_checker(t_mat *mat, t_element elem, int i);
+void					clean_value_mat(t_mat *mat, int j);
+int						get_radius2(t_env *e, t_element elem, int i);
+int						recup_checker_mat(t_mat *mat, t_element elem, int i,\
+		char *name);
 
 t_vec					ft_getpos(char *pos);
 t_color					ft_getcolor(char *color);
 double					ft_posatoi(char *nbr);
+t_mat					cut_struct(t_mat *mat, int i);
 
 void					open_textures_mat(t_env *e);
 

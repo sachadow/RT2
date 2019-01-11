@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 17:07:15 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/21 17:17:57 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/11 18:41:24 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	init(t_env *e)
 	e->hit[F_CONE] = &hitfcone;
 	e->hit[BOX] = &hitbox;
 	e->hit[QUADRIC] = &hitquadric;
+	e->hit[TORUS] = &hittore;
 	e->backgroundcolor = multiply_color(e->backgroundcolor, 0.00392156862);
 	e->lvl = 4;
 	e->antialiasing = 1;

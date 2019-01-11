@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:09:49 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/21 15:54:25 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/11 17:33:54 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 # define IMG_H		600
 # define IMG_W		800
 # define M_IMG_W	400
-# define M_IMG_H	IMG_H / 2
-# define RIGHT_SPC	WIN_W - IMG_W
-# define BOTTOM_SPC	WIN_H - IMG_H
+# define M_IMG_H	300
+# define RIGHT_SPC	200
+# define BOTTOM_SPC	200
 # define NB_THR		8
 # define FOV		2.0
 # define REFRINCL	4
@@ -47,6 +47,7 @@
 # define F_CONE		7
 # define BOX		8
 # define QUADRIC	9
+# define TORUS		10
 
 # define UNIFORM	0
 # define TEXTURE	1
@@ -198,6 +199,7 @@ typedef struct		s_item
 	double			d;
 	double			height;
 	double			radius;
+	double			radius2;
 	double			angle;
 	t_vec			param;
 	int				paraboloid;
@@ -221,13 +223,22 @@ typedef struct		s_interface
 	int				onglet;
 	t_colo			spec[3];
 	t_colo			spec_shade[3];
+	t_mouse			mouse;
 	t_mouse			spectrum[3];
 	t_mouse			shade[3];
 	t_mouse			pick;
 	t_mat			mat;
 	t_item			item;
 	int				nb_texture;
+	int				param[8];
 }					t_interface;
+
+typedef struct		s_hititem
+{
+	int 			*hit_items;
+	int				*items_mod;
+	int				item_count;
+}					t_hititem;
 
 typedef struct		s_perlin
 {
@@ -256,7 +267,7 @@ typedef struct		s_env
 	int				ed[3];
 	int				nbs[4];
 	int				key[300];
-	int				(*hit[10])(t_ray, t_item, double *);
+	int				(*hit[11])(t_ray, t_item, double *);
 	int				hit_negative;
 	int				curr;
 	int				ncurr;
@@ -303,6 +314,7 @@ int					hitcone(t_ray r, t_item c, double *t);
 int					hitfcylinder(t_ray r, t_item cy, double *t);
 int					hitfcone(t_ray r, t_item cy, double *t);
 int					hitbox(t_ray r, t_item bo, double *t);
+int					hittore(t_ray r, t_item tor, double *t);
 int					calc_discr(double a, double b, double c, double *t);
 
 t_vec				calc_h1(t_ray r, t_vec dir);
@@ -325,6 +337,11 @@ int					find_closest_item(t_ray r, t_env *e, t_vec *newstart);
 int					get_closest_item(t_ray r, t_env *e);
 int					find_post_nega(t_ray r, t_env *e, t_vec *newstart,
 					t_curr *t);
+void				negative_advance(t_env *e, int last_hit, t_ray *r);
+void				init_all_nega(t_hititem *i);
+int					free_nega(int ret, int *hit_items, int *items_mod);
+void				negative_firstadvance(t_hititem *i, t_ray *r, t_env *e, int *last_hit);
+void				negative_bigadvance(t_hititem *i, t_ray *r, t_env *e, int *last_hit);
 int					is_empty(int *hit, int count, int *id, t_env *e);
 int					get_hits(int* hit, int *id, int last);
 void				hit_mod(int* id, int nb, int* hit, t_env *e);
@@ -447,6 +464,8 @@ void				add_cartoon_effect(t_env *e);
 int					hitquadric(t_ray r, t_item q, double *t);
 t_vec				find_quadric_normal(t_vec impact, t_item q);
 
+int					cubic_polynom(double *c, double *s);
+int					quartic_polynom(double *c, double *s);
 void				hud(t_env *e);
 void				new_image(int num, int width, int height, t_env *e);
 
