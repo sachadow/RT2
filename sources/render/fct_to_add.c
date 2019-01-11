@@ -26,8 +26,8 @@ t_color			ft_resolve(t_env *e, t_work w, int lvl)
 	w.item_hit = find_closest_item(w.r, e, &newstart);
 	if (w.item_hit == EMPTY || lvl > e->lvl)
 		return (add_2colors(lens_flaring(w.r, e), e->backgroundcolor));
-	mat = find_material(w.item_hit, e);
-	nrefr = find_nrefr(w, mat, w.item_hit, e);
+	mat = find_material(w.item_hit % (e->nbs[ITEM] + 1), e);
+	nrefr = find_nrefr(w, mat, w.item_hit % (e->nbs[ITEM] + 1), e);
 	w.n_vec = find_normal_vec(w.r, w.item_hit, e);
 	w.item_hit %= (e->nbs[ITEM] + 1);
 	if (mat.n)

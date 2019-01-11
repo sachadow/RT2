@@ -98,7 +98,7 @@ int			debug(t_env *e)
 		p.x = -1;
 		while (++p.x < IMG_W)
 		{
-			e->debug = (p.x == 510 && p.y == 240) ? 1 : 0;
+			e->debug = (p.x == 500 && p.y == 182) ? 1 : 0;
 			if (((t_env*)e)->antialiasing == 0)
 				aliasing(10, p, (t_env*)e);
 			else if (((t_env*)e)->antialiasing == 1)

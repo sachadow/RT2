@@ -57,20 +57,12 @@ int			find_post_nega(t_ray r, t_env *e, t_vec *newstart, t_curr *t)
 	while (got_out(item_count, hit_items, items_mod, e) != 0)
 	{
 		last_hit = get_closest_item(r, e);
-		if (e->debug)
-			printf("-------------last_hit %d--------------\n", last_hit);
-		if (e->debug)
-			printf("r.dir %f %f %f\nr.start %f %f %f\n", r.dir.x, r.dir.y, r.dir.z, r.start.x, r.start.y, r.start.z);
 		if (last_hit == -1)
 			return (last_hit);
 		hit_mod(items_mod, last_hit, hit_items, e);
 		t->t = -1;
 		e->hit[e->item[last_hit].item_type](r, e->item[last_hit], &(t->t));
-		if (e->debug)
-			printf("distance %f\n", t->t);
 		r.start = add(scale(t->t, r.dir), r.start);
-		if (e->debug)
-			printf("r.dir %f %f %f\nr.start %f %f %f\n", r.dir.x, r.dir.y, r.dir.z, r.start.x, r.start.y, r.start.z);
 		if (e->item[last_hit].isnega == 0 &&
 				get_hits(hit_items, items_mod, last_hit) % 2 != 0)
 			t->curr = last_hit;

@@ -91,8 +91,8 @@ int			main(int ac, char **av)
 	init(e);
 	e->win = mlx_new_window(e->mlx, WIN_W, WIN_H, "RT");
 	mlx_centertop_window(e->win);
-	mlx_expose_hook(e->win, debug, e);
-	//mlx_loop_hook(e->mlx, reload, e);
+//	mlx_expose_hook(e->win, debug, e);
+	mlx_loop_hook(e->mlx, reload, e);
 	mlx_hook(e->win, KPRESS, KPRESSMASK, keypress, e);
 	mlx_hook(e->win, KRELEASE, KRELEASEMASK, keyrelease, e);
 	mlx_hook(e->win, MOTION_NOTIFY, PTR_MOTION_MASK, mousemove, e);

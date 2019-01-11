@@ -71,7 +71,9 @@ int			pick_item(t_mouse mouse, t_env *e)
 	{
 		r.start = e->cam->pos;
 		r.dir = set_ray_dir(mouse.x, mouse.y, e);
-		nb = find_closest_item(r, e, &impact);
+		nb = find_closest_item(r, e, &impact) % (e->nbs[ITEM] + 1);
+		if (e->debug)
+			printf("hud\n");
 		if (nb > -1)
 		{
 			e->itf.pick.button = nb;
