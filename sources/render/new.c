@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 15:19:32 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/11 12:16:55 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/01/15 16:48:55 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,50 +73,6 @@ t_item		newplane(t_vec dir, double d, int mat)
 	return (p);
 }
 
-/*
-**	NEWCYL function:
-**	Create a new cylinder with 4 parameters
-*/
-
-t_item		newcyl(t_vec dir, t_vec center, double radius, int mat, int isnega)
-{
-	t_item	cy;
-
-	if (radius <= 0 || mat < 0)
-		ft_printerror("Wrong value for cylinder");
-	cy.item_type = I_CYL;
-	cy.dir = dir;
-	cy.isnega = isnega;
-	cy.center = center;
-	cy.radius = radius;
-	cy.mat = mat;
-	cy.d = 0;
-	cy.angle = 0;
-	return (cy);
-}
-
-/*
-**	NEWCONE function:
-**	Create a new cone with 4 parameters
-*/
-
-t_item		newcone(t_vec dir, t_vec center, double angle, int mat, int isnega)
-{
-	t_item	co;
-
-	if (angle <= 0 || angle >= 70 || mat < 0)
-		ft_printerror("Wrong value for cone");
-	co.item_type = I_CONE;
-	co.dir = dir;
-	co.center = center;
-	co.isnega = isnega;
-	co.radius = 0;
-	co.mat = mat;
-	co.d = 0;
-	co.angle = angle;
-	return (co);
-}
-
 t_item		newdisk(t_vec dir, t_vec center, double radius, int mat)
 {
 	t_item	cy;
@@ -132,40 +88,6 @@ t_item		newdisk(t_vec dir, t_vec center, double radius, int mat)
 	cy.d = 0;
 	cy.angle = 0;
 	return (cy);
-}
-
-t_item		newfcyl(t_vec dir, t_vec center, double radius, int mat, double height, int isnega)
-{
-	t_item	cy;
-
-	cy.item_type = F_CYL;
-	cy.dir = dir;
-	cy.center = center;
-	cy.radius = radius;
-	cy.mat = mat;
-	cy.isnega = isnega;
-	cy.height = height;
-	cy.d = 0;
-	cy.angle = 0;
-	return (cy);
-}
-
-t_item		newfcone(t_vec dir, t_vec center, double angle, int mat, double height, int isnega)
-{
-	t_item	co;
-
-	if (angle <= 0 || angle >= 70 || mat < 0)
-		ft_printerror("Wrong value for cone");
-	co.item_type = F_CONE;
-	co.dir = dir;
-	co.center = center;
-	co.radius = 0;
-	co.mat = mat;
-	co.isnega = isnega;
-	co.height = height;
-	co.d = 0;
-	co.angle = angle;
-	return (co);
 }
 
 t_item		newbox(t_vec center, t_vec end, int mat)

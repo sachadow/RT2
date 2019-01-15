@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 17:17:02 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/10 20:31:23 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/11 21:05:55 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,6 @@
 # define MARGE		15
 # define CIRCLE		170
 
-# define UNIF_XS	4 * WIN_W / 5 + (WIN_W / 5) / 6 - 7
-# define UNIF_XE	4 * WIN_W / 5 + (WIN_W / 5) / 6 + 133
-# define UNIF_YS	IMG_H + (BOTTOM_SPC) / 8
-# define UNIF_YE	IMG_H + (BOTTOM_SPC) / 8 + 2 * MARGE
-
 const int			g_shad_xs;
 const int			g_shad_xe;
 const int			g_shad_ys;
@@ -73,6 +68,19 @@ const int			g_text2_xs;
 const int			g_text2_xe;
 const int			g_text2_ys;
 const int			g_text2_ye;
+
+const int			g_unif_xs;
+const int			g_unif_xe;
+const int			g_unif_ys;
+const int			g_unif_ye;
+
+const int			g_checker_xs;
+const int			g_marble_xs;
+const int			g_perturb_xs;
+const int			g_wood_xs;
+const int			g_waves_xs;
+
+const int			g_mat_ys;
 
 typedef struct		s_size
 {

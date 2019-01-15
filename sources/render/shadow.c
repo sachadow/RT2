@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 19:41:27 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/11 18:27:09 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/15 16:31:09 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ int			in_shadow(t_ray lightray, t_env *e, double t)
 	int		x;
 	t_ray	r;
 
-	if (e->debug)
-		;
 	k = -1;
 	r.dir = lightray.dir;
-    r.start = sub(lightray.start, scale(1, lightray.dir));
-    k = get_closest_item(r, e);
+	r.start = sub(lightray.start, scale(1, lightray.dir));
+	k = get_closest_item(r, e);
 	if (k != -1 && e->item[k].isnega == 1)
 		return (negative_shadow(k, r, e));
 	k = -1;

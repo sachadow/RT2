@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:50:52 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/10 19:59:51 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/14 17:42:32 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,20 @@ const int	g_text2_xe = g_text2_xs + 64;
 const int	g_text2_ys = IMG_H + BOTTOM_SPC / 2 + 20;
 const int	g_text2_ye = IMG_H + BOTTOM_SPC / 2 + 84;
 
+const int	g_unif_xs = 4 * WIN_W / 5 + WIN_W / 5 / 6 - 7;
+const int	g_unif_xe = 4 * WIN_W / 5 + WIN_W / 5 / 6 + 133;
+const int	g_unif_ys = IMG_H + BOTTOM_SPC / 8;
+const int	g_unif_ye = IMG_H + BOTTOM_SPC / 8 + 2 * MARGE;
+
 static void	texture_frame(t_rect *r, t_env *e)
 {
 	if (e->itf.nb_texture == 1)
 		frame(BOTTOM, r[6], C_GREEN, e);
-	if (e->itf.nb_texture == 2)
+	else if (e->itf.nb_texture == 2)
 		frame(BOTTOM, r[7], C_GREEN, e);
-	if (e->itf.nb_texture == 3)
+	else if (e->itf.nb_texture == 3)
 		frame(BOTTOM, r[8], C_GREEN, e);
-	if (e->itf.nb_texture == 4)
+	else if (e->itf.nb_texture == 4)
 		frame(BOTTOM, r[9], C_GREEN, e);
 	if (e->itf.mat.type == UNIFORM && e->itf.pick.button > -1)
 		frame(BOTTOM, r[10], C_GREEN, e);
@@ -60,8 +65,8 @@ static void	set_frames(t_rect *r)
 			(g_text2_ye - IMG_H) - (g_text2_ys - IMG_H));
 	r[9] = init_rect(g_text2_xs, g_text2_ys - IMG_H, g_text2_xe - g_text2_xs,
 			(g_text2_ye - IMG_H) - (g_text2_ys - IMG_H));
-	r[10] = init_rect(UNIF_XS, (UNIF_YS) - IMG_H, (UNIF_XE) - (UNIF_XS),
-			(UNIF_YE - IMG_H) - (UNIF_YS - IMG_H));
+	r[10] = init_rect(g_unif_xs, g_unif_ys - IMG_H, g_unif_xe - g_unif_xs,
+			(g_unif_ye - IMG_H) - (g_unif_ys - IMG_H));
 }
 
 static void	ui1_frame(t_rect *r, t_env *e)
@@ -85,25 +90,24 @@ static void	ui1_bottom_xpm(t_env *e)
 {
 	t_pix	pt;
 
-	pt = init_point((WIN_W / 5) + WIN_W / 5 / 4, (BOTTOM_SPC) / 8);
+	pt = init_point(g_filter2_xs, g_filter1_ys - IMG_H);
 	insert_xpm(BOTTOM, pt, "resources/lil-sepia.xpm", e);
-	pt = init_point(2 * (WIN_W / 5) + WIN_W / 5 / 4, (BOTTOM_SPC) / 8);
+	pt = init_point(g_filter3_xs, g_filter1_ys - IMG_H);
 	insert_xpm(BOTTOM, pt, "resources/lil-greyscale.xpm", e);
-	pt = init_point(WIN_W / 5 / 4, 3 * (BOTTOM_SPC) / 5);
+	pt = init_point(g_filter1_xs, g_filter2_ys - IMG_H);
 	insert_xpm(BOTTOM, pt, "resources/lil-saturate.xpm", e);
-	pt = init_point((WIN_W / 5) + WIN_W / 5 / 4, 3 * (BOTTOM_SPC) / 5);
+	pt = init_point(g_filter2_xs, g_filter2_ys - IMG_H);
 	insert_xpm(BOTTOM, pt, "resources/lil-reverse.xpm", e);
-	pt = init_point(2 * (WIN_W / 5) + WIN_W / 5 / 4, 3 * (BOTTOM_SPC) / 5);
+	pt = init_point(g_filter3_xs, g_filter2_ys - IMG_H);
 	insert_xpm(BOTTOM, pt, "resources/lil-cartoon.xpm", e);
-	pt = init_point(3 * WIN_W / 5 + (WIN_W / 5) / 10, 20);
+	pt = init_point(g_text1_xs, g_text1_ys - IMG_H);
 	insert_xpm(BOTTOM, pt, "textures/redbrick.xpm", e);
-	pt = init_point(3 * WIN_W / 5 + ((WIN_W / 5) / 10) * 6, 20);
+	pt = init_point(g_text2_xs, g_text1_ys - IMG_H);
 	insert_xpm(BOTTOM, pt, "textures/bluestone.xpm", e);
-	pt = init_point(3 * WIN_W / 5 + ((WIN_W / 5) / 10) * 6,
-			(BOTTOM_SPC) / 2 + 20);
-	insert_xpm(BOTTOM, pt, "textures/wood.xpm", e);
-	pt = init_point(3 * WIN_W / 5 + (WIN_W / 5) / 10, (BOTTOM_SPC) / 2 + 20);
+	pt = init_point(g_text1_xs, g_text2_ys - IMG_H);
 	insert_xpm(BOTTOM, pt, "textures/colorstone.xpm", e);
+	pt = init_point(g_text2_xs, g_text2_ys - IMG_H);
+	insert_xpm(BOTTOM, pt, "textures/wood.xpm", e);
 }
 
 void		ui1_bottom(t_env *e)

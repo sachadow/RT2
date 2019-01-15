@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 15:12:07 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/11 12:28:51 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/01/15 15:29:28 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_color	find_texture_color(t_vec impact, t_work w, t_env *e)
 	else if (m.type == PERTURB)
 		return (color_turbulence(m.diffuse, m.diffuse2, impact, m.scale));
 	else
-		return (color_wood(m.diffuse, m.diffuse2, impact, m.scale));
+		return (color_wood(m.diffuse, m.diffuse2, impact, m.scale / 2));
 }
 
 t_color	texture_plane(t_img tex, t_item item, t_vec impact)

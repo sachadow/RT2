@@ -6,7 +6,7 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/23 19:01:27 by squiquem          #+#    #+#              #
-#    Updated: 2019/01/11 18:30:09 by sderet           ###   ########.fr        #
+#    Updated: 2019/01/15 16:42:39 by sderet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,6 +100,9 @@ SRC_FILES		=	main.c \
 					render/negative_calc.c \
 					render/negative_calc2.c \
 					render/negative_calc3.c \
+					render/find_normal_plus.c \
+					render/hit_items_plus.c \
+					render/hit_box.c \
 
 SUB_FOLDERS		=	parser render hud handle maths
 

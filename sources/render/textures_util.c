@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 15:12:07 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/11 12:03:47 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/01/15 15:12:02 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_pix	rotate_pix(t_pix p, int w, int h, double angle)
 {
 	t_pix	res;
 
-	p = adjust_pix(p, w, h);
 	if (angle != 0)
 	{
 		angle = angle * M_PI / 180;

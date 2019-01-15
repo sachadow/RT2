@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:27:08 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/13 19:27:24 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/15 16:17:34 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ void		ui3_writting(t_env *e)
 			IMG_H, BLACK, s[4]);
 		mlx_string_put(e->mlx, e->win, 6 * WIN_W / 8 - WIN_W / 8 / 4 + 10,
 			IMG_H + 5 * (BOTTOM_SPC) / 6, BLACK, s[5]);
-		mlx_string_put(e->mlx, e->win, 7 * WIN_W / 8 - WIN_W / 8 / 4 + 10,
-			IMG_H, BLACK, s[6]);
+		if (e->itf.mat.type == MARBLE || e->itf.mat.type == PERTURB
+				|| e->itf.mat.type == WOOD)
+			mlx_string_put(e->mlx, e->win, 7 * WIN_W / 8 - WIN_W / 8 / 4 + 10,
+				IMG_H, BLACK, s[6]);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 11:17:57 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/08 15:51:01 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/01/15 15:24:58 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ int		get_param(t_env *e, t_element elem, int i, char *name)
 	if (j == elem.nbr_attr)
 		std_err(0);
 	e->item[i].param = ft_getpos(elem.attribut[j].content);
+	e->item[i].param.x /= 1000000000;
+	e->item[i].param.y /= 1000000000;
+	e->item[i].param.z /= 1000000000;
 	return (0);
 }
 

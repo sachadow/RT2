@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:09:49 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/11 17:33:54 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/15 16:25:43 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,6 +356,8 @@ t_vec				find_normal_vec_if_not_plane(int curr, t_vec newstart,
 t_vec				find_cone_normal(t_vec newstart, t_item cone);
 t_vec				find_cylinder_normal(t_vec newstart, t_item cyl);
 t_vec				find_h(t_vec cd, t_vec cc, t_vec n);
+t_vec				find_normal_plus(t_vec newstart, t_ray r, t_env *e, int id);
+t_vec				find_box_normal(t_vec newstart, int id, t_env *e);
 t_vec				find_normal_vec(t_ray r, int curr, t_env *e);
 
 t_vec				rotate_x(t_vec u, double angle);

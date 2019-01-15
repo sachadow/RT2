@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 16:19:16 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/06 20:18:04 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/14 16:43:29 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		keypress(int keycode, t_env *e)
 	}
 	move_cam(e);
 	show_mouse(e);
-	return (keycode);
+	return (0);
 }
 
 int		keyrelease(int keycode, t_env *e)
@@ -36,7 +36,7 @@ int		keyrelease(int keycode, t_env *e)
 	if (keycode == KEY_TAB || keycode == KEY_SPC)
 		return (keycode);
 	e->key[keycode] = 0;
-	return (keycode);
+	return (0);
 }
 
 void	key_hook(t_env *e)

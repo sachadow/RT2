@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 18:29:43 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/10 16:59:05 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/15 16:19:58 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,15 +112,15 @@ void		bottom_ruler(t_env *e)
 			color_point(BOTTOM, pt, WHITE, e);
 		}
 	}
-/*	if (e->itf.onglet == 1)
-	{
+	/*	if (e->itf.onglet == 1)
+		{
 		pt = init_point(WIN_W - RIGHT_SPC / 3, 0);
 		for (x = -1; x < BOTTOM_SPC; ++x)
 		{
-			pt.y = 0 + x;
-			color_point(BOTTOM, pt, WHITE, e);
+		pt.y = 0 + x;
+		color_point(BOTTOM, pt, WHITE, e);
 		}
-	}*/
+		}*/
 	/*	if (e->itf.onglet == 3)
 		{
 		pt = init_point(WIN_W / 8, 0);
@@ -214,9 +214,16 @@ void		param_bar(t_env *e)
 	int		i;
 
 	i = 0;
-	while (++i < 8)
+	conv_all_param(e);
+	while (++i < 7)
 	{
-		conv_all_param(e);
+		r = init_rect(i * WIN_W / 8, e->itf.param[i], 9, 5);
+		draw_tri_right(BOTTOM, r, WHITE, e);
+		draw_tri_left(BOTTOM, r, WHITE, e);
+	}
+	if (e->itf.mat.type != UNIFORM && e->itf.mat.type != TEXTURE
+			&& e->itf.mat.type != CHECKER && e->itf.mat.type != WAVES)
+	{
 		r = init_rect(i * WIN_W / 8, e->itf.param[i], 9, 5);
 		draw_tri_right(BOTTOM, r, WHITE, e);
 		draw_tri_left(BOTTOM, r, WHITE, e);
@@ -239,8 +246,12 @@ void		ui3_param(t_env *e)
 	draw_rect(BOTTOM, r, BLACK, e);
 	r = init_rect(6 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
 	draw_rect(BOTTOM, r, BLACK, e);
-	r = init_rect(7 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
-	draw_rect(BOTTOM, r, BLACK, e);
+	if (e->itf.mat.type != UNIFORM && e->itf.mat.type != TEXTURE
+			&& e->itf.mat.type != WAVES)
+	{
+		r = init_rect(7 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
+		draw_rect(BOTTOM, r, BLACK, e);
+	}
 	param_bar(e);
 	/*	r = init_rect(WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
 		draw_tri_right(BOTTOM, r, WHITE, e);

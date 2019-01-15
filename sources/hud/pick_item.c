@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 18:27:07 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/09 14:05:42 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/11 17:28:21 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,40 @@ static void	find_texture(t_env *e)
 	}
 }
 
-static void	item_selector(t_env *e)
+static void	write_item(char *s, t_env *e)
 {
-	char	*s;
-
-	if (e->itf.item.item_type == 1)
-		s = ft_strdup("Sphere");
-	if (e->itf.item.item_type == 2)
-		s = ft_strdup("Plane");
-	if (e->itf.item.item_type == 3)
-		s = ft_strdup("Inf. Cone");
-	if (e->itf.item.item_type == 4)
-		s = ft_strdup("Inf. Cylinder");
-	if (e->itf.item.item_type == 5)
-		s = ft_strdup("Disk");
-	if (e->itf.item.item_type == 6)
-		s = ft_strdup("Fin. Cylinder");
-	if (e->itf.item.item_type == 7)
-		s = ft_strdup("Fin. Cone");
-	if (e->itf.item.item_type == 8)
-		s = ft_strdup("Box");
 	mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, 50, BLACK, s);
 	free(s);
 	s = ft_itoa(e->itf.item.mat);
 	mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, 100, BLACK, s);
 	free(s);
+}
+
+static void	item_selector(t_env *e)
+{
+	char	*s;
+
+	if (e->itf.item.item_type == SPHERE)
+		s = ft_strdup("Sphere");
+	if (e->itf.item.item_type == PLANE)
+		s = ft_strdup("Plane");
+	if (e->itf.item.item_type == I_CONE)
+		s = ft_strdup("Inf. Cone");
+	if (e->itf.item.item_type == I_CYL)
+		s = ft_strdup("Inf. Cylinder");
+	if (e->itf.item.item_type == DISK)
+		s = ft_strdup("Disk");
+	if (e->itf.item.item_type == F_CYL)
+		s = ft_strdup("Fin. Cylinder");
+	if (e->itf.item.item_type == F_CONE)
+		s = ft_strdup("Fin. Cone");
+	if (e->itf.item.item_type == BOX)
+		s = ft_strdup("Box");
+	if (e->itf.item.item_type == QUADRIC)
+		s = ft_strdup("Quadric");
+	if (e->itf.item.item_type == TORUS)
+		s = ft_strdup("Torus");
+	write_item(s, e);
 }
 
 void		picked_item(t_env *e)
@@ -87,7 +96,7 @@ int			pick_item(t_mouse mouse, t_env *e)
 		r.start = e->cam->pos;
 		r.dir = set_ray_dir(mouse.x, mouse.y, e);
 		nb = find_closest_item(r, e, &impact) % (e->nbs[ITEM] + 1);
-		if (nb > -1)
+		if (nb != e->itf.pick.button)
 		{
 			e->itf.pick.button = nb;
 			e->itf.pick.x = mouse.x;

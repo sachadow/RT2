@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/21 17:11:24 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/15 16:27:24 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,8 @@ t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 {
 	t_vec	newstart;
 	t_vec	n;
-	double	finite;
 	int		type;
-	int     negative;
+	int		negative;
 
 	negative = 0;
 	if (id > e->nbs[ITEM])
@@ -120,33 +119,7 @@ t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 		return (n);
 	type = itemtype(id, e);
 	newstart = find_newstart(e, r);
-	finite = dotproduct(e->item[id].dir, sub(newstart, e->item[id].center))
-			/ magnitude2(e->item[id].dir);
-	if (type == PLANE || type == DISK || (type == F_CYL
-				&& (finite <= 0.001 || finite >= e->item[id].height - 0.001)) ||
-				(type == F_CONE && (finite >= e->item[id].height - 0.001)))
-		n = (dotproduct(r.dir, e->item[id].dir) < 0 ? e->item[id].dir
-			: opposite(e->item[id].dir));
-	else if (type == BOX)
-	{
-		if ((newstart.x > e->item[id].center.x - 0.001 && newstart.x <
-					e->item[id].center.x + 0.001) || (newstart.x >
-					e->item[id].end.x - 0.001 && newstart.x <
-					e->item[id].end.x + 0.001))
-			n = (newstart.x > e->item[id].center.x + 0.001 ? newvec(1, 0, 0)
-					: opposite(newvec(1, 0, 0)));
-		if ((newstart.y > e->item[id].center.y - 0.001 && newstart.y <
-					e->item[id].center.y + 0.001) || (newstart.y >
-					e->item[id].end.y - 0.001 && newstart.y <
-					e->item[id].end.y + 0.001))
-			n = (newstart.y > e->item[id].center.y + 0.001 ? newvec(0, 1, 0)
-					: opposite(newvec(0, 1, 0)));
-		else
-			n = (newstart.z > e->item[id].center.z + 0.001 ? newvec(0, 0, 1)
-					: opposite(newvec(0, 0, 1)));
-	}
-	else
-		n = find_normal_vec_if_not_plane(id, newstart, e);
+	n = find_normal_plus(newstart, r, e, id);
 	if (negative)
 		n = opposite(n);
 	if (!magnitude2(n))

@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 21:51:34 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/10 20:04:14 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/14 16:04:19 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,49 +25,76 @@ static const int	g_alias2_xe = g_alias0_xs + 159;
 static const int	g_alias_ys = IMG_H + 5 * BOTTOM_SPC / 8 + 9;
 static const int	g_alias_ye = IMG_H + 5 * BOTTOM_SPC / 8 + 59;
 
+static void	ui_mat_type(t_mouse m, t_env *e)
+{
+	if (m.x >= g_checker_xs && m.x < g_checker_xs + WIN_W / 8
+			&& m.y >= g_mat_ys && m.y < g_mat_ys + 100)
+		e->itf.mat.type = CHECKER;
+	else if (m.x >= g_marble_xs && m.x < g_marble_xs + WIN_W / 8
+			&& m.y >= g_mat_ys && m.y < g_mat_ys + 100)
+		e->itf.mat.type = MARBLE;
+	else if (m.x >= g_perturb_xs && m.x < g_perturb_xs + WIN_W / 8
+			&& m.y >= g_mat_ys && m.y < g_mat_ys + 100)
+		e->itf.mat.type = PERTURB;
+	else if (m.x >= g_wood_xs && m.x < g_wood_xs + WIN_W / 8
+			&& m.y >= g_mat_ys && m.y < g_mat_ys + 100)
+		e->itf.mat.type = WOOD;
+	else if (m.x >= g_waves_xs && m.x < g_waves_xs + WIN_W / 8
+			&& m.y >= g_mat_ys && m.y < g_mat_ys + 100)
+		e->itf.mat.type = WAVES;
+	if (e->itf.mat.type != TEXTURE)
+		e->itf.nb_texture = 0;
+}
+
 static void	ui_texture(t_mouse m, t_env *e)
 {
 	if (m.x >= g_text1_xs && m.x < g_text1_xe && m.y >= g_text1_ys
 			&& m.y < g_text1_ye)
 		e->itf.nb_texture = (e->itf.nb_texture == 1 ? 0 : 1);
-	if (m.x >= g_text2_xs && m.x < g_text2_xe && m.y >= g_text1_ys
+	else if (m.x >= g_text2_xs && m.x < g_text2_xe && m.y >= g_text1_ys
 			&& m.y < g_text1_ye)
 		e->itf.nb_texture = (e->itf.nb_texture == 2 ? 0 : 2);
-	if (m.x >= g_text1_xs && m.x < g_text1_xe && m.y >= g_text2_ys
+	else if (m.x >= g_text1_xs && m.x < g_text1_xe && m.y >= g_text2_ys
 			&& m.y < g_text2_ye)
 		e->itf.nb_texture = (e->itf.nb_texture == 3 ? 0 : 3);
-	if (m.x >= g_text2_xs && m.x < g_text2_xe && m.y >= g_text2_ys
+	else if (m.x >= g_text2_xs && m.x < g_text2_xe && m.y >= g_text2_ys
 			&& m.y < g_text2_ye)
 		e->itf.nb_texture = (e->itf.nb_texture == 4 ? 0 : 4);
-	if (m.x >= UNIF_XS && m.x < UNIF_XE && m.y >= UNIF_YS && m.y < UNIF_YE)
-		ft_putendl("unif");
+	else if (m.x >= g_unif_xs && m.x < g_unif_xe && m.y >= g_unif_ys
+			&& m.y < g_unif_ye)
+	{
+		e->itf.mat.type = UNIFORM;
+		e->itf.nb_texture = 0;
+	}
+	if (e->itf.nb_texture)
+		e->itf.mat.type = TEXTURE;
 }
 
 static void	filters(t_mouse m, t_env *e)
 {
-	if (m.x >= g_filter2_xs && m.x < g_filter2_xs + 100 && m.y >= g_filter1_ys
-			&& m.y < g_filter1_ys + 60)
+	if (m.x >= g_filter2_xs && m.x < g_filter2_xs + 100
+			&& m.y >= g_filter1_ys && m.y < g_filter1_ys + 60)
 		e->filter = (e->filter == SEPIA ? 0 : SEPIA);
-	if (m.x >= g_filter3_xs && m.x < g_filter3_xs + 100 && m.y >= g_filter1_ys
-			&& m.y < g_filter1_ys + 60)
+	else if (m.x >= g_filter3_xs && m.x < g_filter3_xs + 100
+			&& m.y >= g_filter1_ys && m.y < g_filter1_ys + 60)
 		e->filter = (e->filter == GREYSCALE ? 0 : GREYSCALE);
-	if (m.x >= g_filter1_xs && m.x < g_filter1_xs + 100 && m.y >= g_filter2_ys
-			&& m.y < g_filter2_ys + 60)
+	else if (m.x >= g_filter1_xs && m.x < g_filter1_xs + 100
+			&& m.y >= g_filter2_ys && m.y < g_filter2_ys + 60)
 		e->filter = (e->filter == SATURATE ? 0 : SATURATE);
-	if (m.x >= g_filter2_xs && m.x < g_filter2_xs + 100 && m.y >= g_filter2_ys
-			&& m.y < g_filter2_ys + 60)
+	else if (m.x >= g_filter2_xs && m.x < g_filter2_xs + 100
+			&& m.y >= g_filter2_ys && m.y < g_filter2_ys + 60)
 		e->filter = (e->filter == REVERSE ? 0 : REVERSE);
-	if (m.x >= g_filter3_xs && m.x < g_filter3_xs + 100 && m.y >= g_filter2_ys
-			&& m.y < g_filter2_ys + 60)
+	else if (m.x >= g_filter3_xs && m.x < g_filter3_xs + 100 
+			&& m.y >= g_filter2_ys && m.y < g_filter2_ys + 60)
 		e->cartoon = (e->cartoon == 1 ? 0 : 1);
-	if (m.x >= g_alias0_xs && m.x < g_alias0_xe && m.y >= g_alias_ys
-			&& m.y < g_alias_ye)
+	else if (m.x >= g_alias0_xs && m.x < g_alias0_xe
+			&& m.y >= g_alias_ys && m.y < g_alias_ye)
 		e->antialiasing = 0;
-	if (m.x >= g_alias0_xe + 1 && m.x < g_alias1_xe && m.y >= g_alias_ys
-			&& m.y < g_alias_ye)
+	else if (m.x >= g_alias0_xe + 1 && m.x < g_alias1_xe
+			&& m.y >= g_alias_ys && m.y < g_alias_ye)
 		e->antialiasing = 1;
-	if (m.x >= g_alias1_xe + 1 && m.x < g_alias2_xe && m.y >= g_alias_ys
-			&& m.y < g_alias_ye)
+	else if (m.x >= g_alias1_xe + 1 && m.x < g_alias2_xe
+			&& m.y >= g_alias_ys && m.y < g_alias_ye)
 		e->antialiasing = 2;
 }
 
@@ -85,6 +112,8 @@ void		ui_zones(int nb, t_mouse mouse, t_env *e)
 		filters(mouse, e);
 		ui_texture(mouse, e);
 	}
-	if (nb == 3)
+	else if (nb == 2)
+		ui_mat_type(mouse, e);
+	else if (nb == 3)
 		param_zone(mouse, e);
 }

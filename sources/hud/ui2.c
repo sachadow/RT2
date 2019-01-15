@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:28:45 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/20 16:55:57 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/14 17:50:51 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,13 @@ void		ui2(t_env *e)
 	pt = init_point(MARGE, 3 * MARGE);
 	insert_xpm(RIGHT, pt, "resources/little-color-wheel.xpm", e);
 	shade_bar(pt.y + RIGHT_SPC - MARGE, e->itf.spec[1].val, e);
-	pt = init_point(MARGE, M_IMG_H + 35);
-	insert_xpm(RIGHT, pt, "resources/little-color-wheel.xpm", e);
-	shade_bar(pt.y + RIGHT_SPC - MARGE, e->itf.spec[2].val, e);
+//	if (e->itf.mat.type == CHECKER || e->itf.mat.type == MARBLE
+//			|| e->itf.mat.type == PERTURB || e->itf.mat.type == WOOD)
+//	{
+		pt = init_point(MARGE, M_IMG_H + 35);
+		insert_xpm(RIGHT, pt, "resources/little-color-wheel.xpm", e);
+		shade_bar(pt.y + RIGHT_SPC - MARGE, e->itf.spec[2].val, e);
+//	}
 	cursor_spectrum(1, e);
 	cursor_spectrum(2, e);
 	cursor_shade(1, e);
@@ -31,6 +35,6 @@ void		ui2(t_env *e)
 //	t_size box;
 //	box = init_size((RIGHT_SPC) - 2 * MARGE, 60);
 //	draw_rect(RIGHT, pt, box, WHITE, e);
-	right_ruler(e);
+//	right_ruler(e);
 	bottom_ruler(e);
 }

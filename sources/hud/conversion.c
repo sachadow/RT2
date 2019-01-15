@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   conversion.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/14 15:29:59 by qsebasti          #+#    #+#             */
+/*   Updated: 2019/01/14 15:31:09 by qsebasti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rt.h"
 #include "hud.h"
 
@@ -30,9 +42,11 @@ void		conv_all_param(t_env *e)
 	while (++i < 8)
 	{
 		if (i == REFLECTION)
-			e->itf.param[i] = int_to_pos((int)(e->itf.mat.reflection * 1000), 0, 1000);
+			e->itf.param[i] = int_to_pos((int)(e->itf.mat.reflection * 1000),
+					0, 1000);
 		if (i == TRANSPARENCY)
-			e->itf.param[i] = int_to_pos((int)(e->itf.mat.transparency * 1000), 0, 1000);
+			e->itf.param[i] = int_to_pos((int)(e->itf.mat.transparency * 1000),
+					0, 1000);
 		if (i == SPECVALUE)
 			e->itf.param[i] = int_to_pos((int)e->itf.mat.specvalue, 0, 1000);
 		if (i == SPECPOWER)
@@ -40,7 +54,8 @@ void		conv_all_param(t_env *e)
 		if (i == N)
 			e->itf.param[i] = int_to_pos((int)(e->itf.mat.n * 1000), 0, 5000);
 		if (i == BUMP)
-			e->itf.param[i] = int_to_pos((int)(e->itf.mat.bump * 1000), 0, 1000);
+			e->itf.param[i] = int_to_pos((int)(e->itf.mat.bump * 1000),
+					0, 1000);
 		if (i == SCALE)
 			e->itf.param[i] = int_to_pos((int)e->itf.mat.scale, 1, 1000);
 	}

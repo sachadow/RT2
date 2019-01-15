@@ -6,7 +6,7 @@
 /*   By: sderet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:19:51 by sderet            #+#    #+#             */
-/*   Updated: 2019/01/11 16:22:28 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/15 16:28:27 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			is_empty(int *hit, int count, int *mod, t_env *e)
 	return (b);
 }
 
-int			get_hits(int* hit, int *mod, int last)
+int			get_hits(int *hit, int *mod, int last)
 {
 	int a;
 
@@ -38,7 +38,7 @@ int			get_hits(int* hit, int *mod, int last)
 	return (hit[a]);
 }
 
-void		hit_mod(int* mod, int nb, int* hit, t_env *e)
+void		hit_mod(int *mod, int nb, int *hit, t_env *e)
 {
 	int a;
 
@@ -52,7 +52,7 @@ void		hit_mod(int* mod, int nb, int* hit, t_env *e)
 	hit[a]++;
 }
 
-void		init_int_tab(int* tab, int size, int value)
+void		init_int_tab(int *tab, int size, int value)
 {
 	int a;
 
