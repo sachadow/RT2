@@ -6,13 +6,18 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:19:26 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/13 21:04:28 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 19:08:48 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "hud.h"
-#include <stdio.h>
+
+/*
+**	COLOR_SMOOTH function:
+**	Return the color to draw between 2 colors from the percentage between both
+*/
+
 
 static int	color_smooth(t_colo start, t_colo end, double k)
 {
@@ -24,6 +29,11 @@ static int	color_smooth(t_colo start, t_colo end, double k)
 		ret.argb[i] = start.argb[i] + (end.argb[i] - start.argb[i]) * k;
 	return (ret.val);
 }
+
+/*
+**	SHADE_RECT function:
+**	Draw a shade rectangle
+*/
 
 static void	shade_rect(int tab[2], t_rect rect, t_env *e)
 {
@@ -48,6 +58,11 @@ static void	shade_rect(int tab[2], t_rect rect, t_env *e)
 		}
 	}
 }
+
+/*
+**	SHADE_BAR function:
+**	Call the functions to draw the entire shade bar from 2 joined shade bar
+*/
 
 void		shade_bar(int y, int color, t_env *e)
 {

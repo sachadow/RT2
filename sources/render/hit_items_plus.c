@@ -6,7 +6,7 @@
 /*   By: sderet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 16:32:50 by sderet            #+#    #+#             */
-/*   Updated: 2019/01/15 17:07:09 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/15 16:34:19 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,13 @@ int		hitplane(t_ray r, t_item p, double *t)
 
 int		closest_disk(t_ray r, t_item cy, double *t)
 {
-	int		ret;
-	double	hit;
-	double	hit2;
+	int ret;
 
-	hit = -1;
-	hit2 = -1;
-	ret = (hitdisk(r, newdisk(cy.dir, cy.center, cy.radius, cy.mat), &hit));
+	ret = (hitdisk(r, newdisk(cy.dir, cy.center, cy.radius, cy.mat), t));
 	if (ret == 0)
-		ret = (hitdisk(r, newdisk(cy.dir, add(cy.center, scale(cy.height,
-								cy.dir)), cy.radius, cy.mat), &hit2));
-	if ((hit > hit2 && hit2 > -1) || (hit == -1 && hit2 != -1))
-	{
-		*t = hit2;
-		return (1);
-	}
-	else if ((hit2 > hit && hit > -1) || (hit2 == -1 && hit != -1))
-	{
-		*t = hit;
-		return (1);
-	}
-	else
-		return (0);
+		return (hitdisk(r, newdisk(cy.dir, add(cy.center, scale(cy.height,
+								cy.dir)), cy.radius, cy.mat), t));
+		return (ret);
 }
 
 int		hitfcylinder(t_ray r, t_item cy, double *t)
@@ -71,7 +56,7 @@ int		hitfcylinder(t_ray r, t_item cy, double *t)
 
 	hit = *t;
 	if (!hitcylinder(r, cy, &hit))
-		return (0);
+		return (closest_disk(r, cy, t));
 	intersection = add(r.start, scale(hit, r.dir));
 	sign = dotproduct(cy.dir, sub(intersection, cy.center)) /
 		magnitude2(cy.dir);

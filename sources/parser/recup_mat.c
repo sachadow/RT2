@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 13:14:56 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/10 17:14:29 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/01/29 17:04:01 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ t_mat		*get_mat(t_element elem, t_env *e)
 			recup_texture_mat(mat, elem.elem[i], i);
 		else
 			recup_last_mat(mat, elem.elem[i], i, elem.elem[i].object);
-		if (mat[i].reflection > 100 || mat[i].transparency > 100 ||\
-				mat[i].n > 2000)
+		if (mat[i].reflection > 100 || mat[i].transparency > 100
+				|| mat[i].n > 2000)
 			std_err(0);
 		i++;
 	}

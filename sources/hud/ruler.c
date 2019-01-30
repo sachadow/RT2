@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 18:29:43 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/15 16:19:58 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 18:39:26 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,12 @@ void		bottom_ruler(t_env *e)
 			pt.y = 0 + x;
 			color_point(BOTTOM, pt, WHITE, e);
 		}
-		pt = init_point(0, (BOTTOM_SPC) / 2);
-		for (x = -1; x < WIN_W; ++x)
-		{
-			pt.x = 0 + x;
-			color_point(BOTTOM, pt, WHITE, e);
-		}
+		//		pt = init_point(0, (BOTTOM_SPC) / 2);
+		//		for (x = -1; x < WIN_W; ++x)
+		//		{
+		//			pt.x = 0 + x;
+		//			color_point(BOTTOM, pt, WHITE, e);
+		//		}
 	}
 	/*	if (e->itf.onglet == 1)
 		{
@@ -121,52 +121,99 @@ void		bottom_ruler(t_env *e)
 		color_point(BOTTOM, pt, WHITE, e);
 		}
 		}*/
-	/*	if (e->itf.onglet == 3)
+	if (e->itf.onglet == 3)
+	{
+		pt = init_point(0, (BOTTOM_SPC) / 8);
+		for (x = -1; x < WIN_W; ++x)
 		{
-		pt = init_point(WIN_W / 8, 0);
-		for (x = -1; x < BOTTOM_SPC; ++x)
-		{
-		pt.y = 0 + x;
-		color_point(BOTTOM, pt, WHITE, e);
+			pt.x = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
 		}
-		pt = init_point(2 * WIN_W / 8, 0);
-		for (x = -1; x < BOTTOM_SPC; ++x)
+		pt = init_point(0, 2 * (BOTTOM_SPC) / 8);
+		for (x = -1; x < WIN_W; ++x)
 		{
-		pt.y = 0 + x;
-		color_point(BOTTOM, pt, WHITE, e);
+			pt.x = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
 		}
-		pt = init_point(3 * WIN_W / 8, 0);
-		for (x = -1; x < BOTTOM_SPC; ++x)
+		pt = init_point(0, 3 * (BOTTOM_SPC) / 8);
+		for (x = -1; x < WIN_W; ++x)
 		{
-		pt.y = 0 + x;
-		color_point(BOTTOM, pt, WHITE, e);
+			pt.x = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
 		}
-		pt = init_point(4 * WIN_W / 8, 0);
-		for (x = -1; x < BOTTOM_SPC; ++x)
+		pt = init_point(0, 4 * (BOTTOM_SPC) / 8);
+		for (x = -1; x < WIN_W; ++x)
 		{
-		pt.y = 0 + x;
-		color_point(BOTTOM, pt, WHITE, e);
+			pt.x = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
 		}
-		pt = init_point(5 * WIN_W / 8, 0);
-		for (x = -1; x < BOTTOM_SPC; ++x)
+		pt = init_point(0, 5 * (BOTTOM_SPC) / 8);
+		for (x = -1; x < WIN_W; ++x)
 		{
-		pt.y = 0 + x;
-		color_point(BOTTOM, pt, WHITE, e);
+			pt.x = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
 		}
-		pt = init_point(6 * WIN_W / 8, 0);
-		for (x = -1; x < BOTTOM_SPC; ++x)
+		pt = init_point(0, 6 * (BOTTOM_SPC) / 8);
+		for (x = -1; x < WIN_W; ++x)
 		{
-		pt.y = 0 + x;
-		color_point(BOTTOM, pt, WHITE, e);
+			pt.x = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
 		}
-		pt = init_point(7 *WIN_W / 8, 0);
-		for (x = -1; x < BOTTOM_SPC; ++x)
+		pt = init_point(0, 7 * (BOTTOM_SPC) / 8);
+		for (x = -1; x < WIN_W; ++x)
 		{
-		pt.y = 0 + x;
-		color_point(BOTTOM, pt, WHITE, e);
+			pt.x = 0 + x;
+			color_point(BOTTOM, pt, WHITE, e);
 		}
-		}*/
+		pt = init_point(WIN_W / 5, 0);
+		  for (x = -1; x < BOTTOM_SPC; ++x)
+		  {
+		  pt.y = 0 + x;
+		  color_point(BOTTOM, pt, WHITE, e);
+		  }
+		  /*pt = init_point(2 * WIN_W / 8, 0);
+		  for (x = -1; x < BOTTOM_SPC; ++x)
+		  {
+		  pt.y = 0 + x;
+		  color_point(BOTTOM, pt, WHITE, e);
+		  }
+		  pt = init_point(3 * WIN_W / 8, 0);
+		  for (x = -1; x < BOTTOM_SPC; ++x)
+		  {
+		  pt.y = 0 + x;
+		  color_point(BOTTOM, pt, WHITE, e);
+		  }
+		  pt = init_point(4 * WIN_W / 8, 0);
+		  for (x = -1; x < BOTTOM_SPC; ++x)
+		  {
+		  pt.y = 0 + x;
+		  color_point(BOTTOM, pt, WHITE, e);
+		  }
+		  pt = init_point(5 * WIN_W / 8, 0);
+		  for (x = -1; x < BOTTOM_SPC; ++x)
+		  {
+		  pt.y = 0 + x;
+		  color_point(BOTTOM, pt, WHITE, e);
+		  }
+		  pt = init_point(6 * WIN_W / 8, 0);
+		  for (x = -1; x < BOTTOM_SPC; ++x)
+		  {
+		  pt.y = 0 + x;
+		  color_point(BOTTOM, pt, WHITE, e);
+		  }
+		  pt = init_point(7 *WIN_W / 8, 0);
+		  for (x = -1; x < BOTTOM_SPC; ++x)
+		  {
+		  pt.y = 0 + x;
+		  color_point(BOTTOM, pt, WHITE, e);
+		  }*/
+	}
 }
+
+/*
+**	SEPARATIONS function:
+**	With the function above, draw the strokes from tab 1
+*/
 
 static void	separations(t_env *e)
 {
@@ -183,6 +230,11 @@ static void	separations(t_env *e)
 	rect = init_rect(4 * (WIN_W / 5), (BOTTOM_SPC) / 2, WIN_W / 5, 1);
 	draw_rect(BOTTOM, rect, BLACK, e);
 }
+
+/*
+**	UI1_BOTTOM_STROKES function:
+**	Draw the strokes from tab 1
+*/
 
 void		ui1_bottom_strokes(t_env *e)
 {
@@ -207,15 +259,15 @@ void		ui1_bottom_strokes(t_env *e)
 				(4 * (WIN_W / 5) + (WIN_W / 7) / 4 + 144) - r2.x, 50);
 	frame(BOTTOM, rect, C_GREEN, e);
 }
-
+/*
 void		param_bar(t_env *e)
 {
 	t_rect	r;
 	int		i;
 
-	i = 0;
+	i = -1;
 	conv_all_param(e);
-	while (++i < 7)
+	while (++i < 6)
 	{
 		r = init_rect(i * WIN_W / 8, e->itf.param[i], 9, 5);
 		draw_tri_right(BOTTOM, r, WHITE, e);
@@ -234,44 +286,10 @@ void		ui3_param(t_env *e)
 {
 	t_rect	r;
 
-	r = init_rect(WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
-	draw_rect(BOTTOM, r, BLACK, e);
-	r = init_rect(2 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
-	draw_rect(BOTTOM, r, BLACK, e);
-	r = init_rect(3 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
-	draw_rect(BOTTOM, r, BLACK, e);
-	r = init_rect(4 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
-	draw_rect(BOTTOM, r, BLACK, e);
-	r = init_rect(5 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
-	draw_rect(BOTTOM, r, BLACK, e);
-	r = init_rect(6 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
-	draw_rect(BOTTOM, r, BLACK, e);
 	if (e->itf.mat.type != UNIFORM && e->itf.mat.type != TEXTURE
 			&& e->itf.mat.type != WAVES)
 	{
 		r = init_rect(7 * WIN_W / 8, (BOTTOM_SPC) / 6, 1, 4 * (BOTTOM_SPC) / 6);
 		draw_rect(BOTTOM, r, BLACK, e);
 	}
-	param_bar(e);
-	/*	r = init_rect(WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
-		draw_tri_right(BOTTOM, r, WHITE, e);
-		draw_tri_left(BOTTOM, r, WHITE, e);
-		r = init_rect(2 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
-		draw_tri_right(BOTTOM, r, WHITE, e);
-		draw_tri_left(BOTTOM, r, WHITE, e);
-		r = init_rect(3 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
-		draw_tri_right(BOTTOM, r, WHITE, e);
-		draw_tri_left(BOTTOM, r, WHITE, e);
-		r = init_rect(4 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
-		draw_tri_right(BOTTOM, r, WHITE, e);
-		draw_tri_left(BOTTOM, r, WHITE, e);
-		r = init_rect(5 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
-		draw_tri_right(BOTTOM, r, WHITE, e);
-		draw_tri_left(BOTTOM, r, WHITE, e);
-		r = init_rect(6 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
-		draw_tri_right(BOTTOM, r, WHITE, e);
-		draw_tri_left(BOTTOM, r, WHITE, e);
-		r = init_rect(7 * WIN_W / 8, (BOTTOM_SPC) / 2, 9, 5);
-		draw_tri_right(BOTTOM, r, WHITE, e);
-		draw_tri_left(BOTTOM, r, WHITE, e);*/
-}
+}*/

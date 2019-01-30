@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/11 17:57:24 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/15 17:01:17 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int			find_post_nega(t_ray r, t_env *e, t_vec *newstart, t_curr *t)
 		if ((last_hit = get_closest_item(r, e)) == -1)
 			return (free_nega(last_hit, i.hit_items, i.items_mod));
 		negative_bigadvance(&i, &r, e, &last_hit);
-		if (e->item[last_hit].isnega == 0 &&
-				get_hits(i.hit_items, i.items_mod, last_hit) % 2 != 0)
+		if (e->item[last_hit].isnega == 0
+				&& get_hits(i.hit_items, i.items_mod, last_hit) % 2 != 0)
 			t->curr = last_hit;
 	}
 	if (is_empty(i.hit_items, i.item_count, i.items_mod, e) == 0)

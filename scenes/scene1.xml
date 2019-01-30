@@ -17,7 +17,7 @@
 		<waves diffusion="255,0,0" diffusionbis="0,255,0" angle="0" width="100" height="100" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
 	</material>
 	<objects>
-		<fcyl dir="1,0,1" axispoint="500,600,0" radius="100" mat="0" height="100" isneg="0"/>
+		<fcyl dir="2,0,1" axispoint="400,600,0" radius="100" mat="0" height="100" isneg="0"/>
 		<icyl dir="1,0,0" axispoint="500,0,0" radius="100" mat="7" isneg="0"/>
 		<icyl dir="1,0,0" axispoint="500,-400,0" radius="100" mat="5" isneg="0"/>
 		<sphere center="233,290,0" radius="100" mat="5" isneg="0"/>

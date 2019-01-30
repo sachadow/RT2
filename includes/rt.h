@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:09:49 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/15 16:25:43 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/24 19:51:41 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@
 # define F_CONE		7
 # define BOX		8
 # define QUADRIC	9
-# define TORUS		10
 
 # define UNIFORM	0
 # define TEXTURE	1
@@ -120,9 +119,9 @@ typedef struct		s_vec
 
 typedef struct		s_matrix
 {
-	t_vec			colvec1;
-	t_vec			colvec2;
-	t_vec			colvec3;
+	t_vec			col1;
+	t_vec			col2;
+	t_vec			col3;
 }					t_matrix;
 
 typedef struct		s_color
@@ -201,10 +200,12 @@ typedef struct		s_item
 	double			radius;
 	double			radius2;
 	double			angle;
-	t_vec			param;
-	int				paraboloid;
+	t_vec			quadric;
+	int				sizequadric;
 	int				mat;
 	int				isnega;
+	t_vec			translation;
+	t_vec			rotation;
 }					t_item;
 
 typedef struct		s_work
@@ -230,12 +231,12 @@ typedef struct		s_interface
 	t_mat			mat;
 	t_item			item;
 	int				nb_texture;
-	int				param[8];
+	double			param[7];
 }					t_interface;
 
 typedef struct		s_hititem
 {
-	int 			*hit_items;
+	int				*hit_items;
 	int				*items_mod;
 	int				item_count;
 }					t_hititem;
@@ -289,6 +290,12 @@ typedef struct		s_env
 	t_interface		itf;
 }					t_env;
 
+typedef struct		s_th
+{
+	int				nb;
+	t_env			*env;
+}					t_th;
+
 int					reload(t_env *e);
 int					debug(t_env *e);
 
@@ -306,6 +313,10 @@ t_vec				scale(double k, t_vec u);
 t_vec				opposite(t_vec v);
 t_vec				newvec(double x, double y, double z);
 
+t_matrix			matrix_mult(t_matrix a, t_matrix b);
+t_matrix			matrix_transp(t_matrix a);
+t_matrix			matrix_rot(t_vec angle);
+
 int					hitplane(t_ray r, t_item p, double *t);
 int					hitdisk(t_ray r, t_item p, double *t);
 int					hitsphere(t_ray r, t_item s, double *t);
@@ -314,7 +325,6 @@ int					hitcone(t_ray r, t_item c, double *t);
 int					hitfcylinder(t_ray r, t_item cy, double *t);
 int					hitfcone(t_ray r, t_item cy, double *t);
 int					hitbox(t_ray r, t_item bo, double *t);
-int					hittore(t_ray r, t_item tor, double *t);
 int					calc_discr(double a, double b, double c, double *t);
 
 t_vec				calc_h1(t_ray r, t_vec dir);
@@ -340,12 +350,14 @@ int					find_post_nega(t_ray r, t_env *e, t_vec *newstart,
 void				negative_advance(t_env *e, int last_hit, t_ray *r);
 void				init_all_nega(t_hititem *i);
 int					free_nega(int ret, int *hit_items, int *items_mod);
-void				negative_firstadvance(t_hititem *i, t_ray *r, t_env *e, int *last_hit);
-void				negative_bigadvance(t_hititem *i, t_ray *r, t_env *e, int *last_hit);
+void				negative_firstadvance(t_hititem *i, t_ray *r, t_env *e,
+					int *last_hit);
+void				negative_bigadvance(t_hititem *i, t_ray *r, t_env *e,
+					int *last_hit);
 int					is_empty(int *hit, int count, int *id, t_env *e);
-int					get_hits(int* hit, int *id, int last);
-void				hit_mod(int* id, int nb, int* hit, t_env *e);
-void				init_int_tab(int* tab, int size, int value);
+int					get_hits(int *hit, int *id, int last);
+void				hit_mod(int *id, int nb, int *hit, t_env *e);
+void				init_int_tab(int *tab, int size, int value);
 int					got_out(int count, int *nb_hit, int *id, t_env *e);
 int					count_items(t_ray r, t_env *e);
 t_vec				find_newstart(t_env *e, t_ray r);
@@ -426,6 +438,7 @@ t_color				texture_cone(t_img tex, t_item item, t_vec impact);
 
 void				checker_tex_build(t_img *tex, t_color c1, t_color c2);
 void				waves_tex_build(t_img *tex, t_color c);
+int					mat_used(t_env *e, int i);
 
 double				grad(int hash, double x, double y, double z);
 void				perlin(int *p, int *permutation);

@@ -6,56 +6,53 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:27:08 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/15 16:17:34 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 19:54:01 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "hud.h"
 
-static void	init_str(char **s)
+/*
+**	DRAW_LVL_BAR function:
+**	Draw the lvl bar for the scene from the e->lvl variable
+*/
+
+static void	draw_lvl_bar(t_env *e)
 {
-	s[0] = "Reflection";
-	s[1] = "Transparency";
-	s[2] = "Spec. value";
-	s[3] = "Spec. power";
-	s[4] = "Refractive index";
-	s[5] = "Bump";
-	s[6] = "Scale";
-	s[7] = NULL;
+	t_rect	r;
+
+	r = init_rect(RIGHT_SPC / 2 - 45, IMG_H / 2, 90, 1);
+	draw_rect(RIGHT, r, BLACK, e);
+	r = init_rect(RIGHT_SPC / 2 - 45 + e->lvl * 3, M_IMG_H - 5, 9, 5);
+	draw_rev_tri(RIGHT, r, WHITE, e);
+	r = init_rect(RIGHT_SPC / 2 - 45 + e->lvl * 3, M_IMG_H + 5, 9, 5);
+	draw_tri(RIGHT, r, WHITE, e);
 }
 
-void		ui3_writting(t_env *e)
-{
-	char	*s[8];
-
-	if (e->itf.pick.button != -1)
-	{
-		init_str(s);
-		mlx_string_put(e->mlx, e->win, WIN_W / 8 - WIN_W / 8 / 3, IMG_H, BLACK,
-			s[0]);
-		mlx_string_put(e->mlx, e->win, 2 * WIN_W / 8 - WIN_W / 8 / 2,
-			IMG_H + 5 * (BOTTOM_SPC) / 6, BLACK, s[1]);
-		mlx_string_put(e->mlx, e->win, 3 * WIN_W / 8 - WIN_W / 8 / 2 + 10,
-			IMG_H, BLACK, s[2]);
-		mlx_string_put(e->mlx, e->win, 4 * WIN_W / 8 - WIN_W / 8 / 2 + 10,
-			IMG_H + 5 * (BOTTOM_SPC) / 6, BLACK, s[3]);
-		mlx_string_put(e->mlx, e->win, 5 * WIN_W / 8 - 2 * WIN_W / 8 / 3 + 10,
-			IMG_H, BLACK, s[4]);
-		mlx_string_put(e->mlx, e->win, 6 * WIN_W / 8 - WIN_W / 8 / 4 + 10,
-			IMG_H + 5 * (BOTTOM_SPC) / 6, BLACK, s[5]);
-		if (e->itf.mat.type == MARBLE || e->itf.mat.type == PERTURB
-				|| e->itf.mat.type == WOOD)
-			mlx_string_put(e->mlx, e->win, 7 * WIN_W / 8 - WIN_W / 8 / 4 + 10,
-				IMG_H, BLACK, s[6]);
-	}
-}
+/*
+**	UI3 function
+**	Centralize the functions calls for the tab 3, insert shadow blur image,
+**	draw shadow blur frame if needed
+*/
 
 void		ui3(t_env *e)
 {
 	t_rect	r;
+	t_pix	pt;
 
-	r = init_rect(MARGE, CIRCLE, BOTTOM_SPC - 2 * MARGE, 4 * MARGE);
-	draw_rect(RIGHT, r, WHITE, e);
-	ui3_bottom(e);
+	pt = init_point(MARGE, CIRCLE);
+	insert_xpm(RIGHT, pt, "resources/lil-ombre.xpm", e);
+	draw_lvl_bar(e);
+	r = init_rect(27, M_IMG_H + 50, 146, 26);
+	draw_rect(RIGHT, r, LIGHT_GREY, e);
+	//	r = init_rect(MARGE, CIRCLE, BOTTOM_SPC - 2 * MARGE, 4 * MARGE);
+	//	draw_rect(RIGHT, r, WHITE, e);
+	if (e->itf.mat.type != TEXTURE)
+		ui3_bottom(e);
+	r = init_rect(pt.x, pt.y, CIRCLE, 4 * MARGE);
+	if (e->light[0].radius == 100)
+		frame(RIGHT, r, C_GREEN, e);
+	else if (e->light[0].radius == 0)
+		frame(RIGHT, r, DARK_GREY, e);
 }

@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 17:25:35 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/10 16:57:16 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/01/24 14:25:28 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int						get_fcone(t_env *e, t_element elem, int i, int nbr_mat);
 int						get_box(t_env *e, t_element elem, int i, int nbr_mat);
 int						get_quadric(t_env *e, t_element elem, int i, \
 		int nbr_mat);
-int						get_tore(t_env *e, t_element elem, int i, int nbr_mat);
 
 int						get_center(t_env *e, t_element elem, int i, char *name);
 int						get_radius(t_env *e, t_element elem, int i);
@@ -81,12 +80,13 @@ int						recup_value_mat(t_mat *mat, t_element elem, int i);
 int						recup_value_text(t_mat *mat, t_element elem, int i);
 int						get_bump(t_mat *mat, t_element elem, int i);
 int						get_isnega(t_env *e, t_element elem, int i);
+int						get_sizequadric(t_env *e, t_element elem, int i);
 int						get_param(t_env *e, t_element elem, int i, char *name);
 int						recup_value_checker(t_mat *mat, t_element elem, int i);
 void					clean_value_mat(t_mat *mat, int j);
-int						get_radius2(t_env *e, t_element elem, int i);
 int						recup_checker_mat(t_mat *mat, t_element elem, int i,\
 		char *name);
+int						recup_tr(t_env *e, t_element elem, int i);
 
 t_vec					ft_getpos(char *pos);
 t_color					ft_getcolor(char *color);

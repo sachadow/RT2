@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 13:45:09 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/12 16:40:57 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/01/21 16:30:53 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ double	fresnel(t_vec i, t_vec n, double n1, double n2)
 	{
 		cost = sqrt(ft_max(0.f, 1 - sint * sint));
 		cosi = ft_abs(cosi);
-		return ((pow(((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai *
-			cost)), 2) + pow(((etai * cosi) - (etat * cost)) / ((etai * cosi) +
-			(etat * cost)), 2)) / 2);
+		return ((pow(((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai
+			* cost)), 2) + pow(((etai * cosi) - (etat * cost)) / ((etai * cosi)
+			+ (etat * cost)), 2)) / 2);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 13:23:27 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/28 15:47:36 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/01/23 17:29:53 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		open_textures_mat(t_env *e)
 	i = 0;
 	while (i < e->nbs[MAT])
 	{
-		if (e->mat[i].type == 1)
+		if (e->mat[i].type == TEXTURE)
 			open_texture(e, &(e->mat[i].tex), e->mat[i].path_text);
 		i++;
 	}

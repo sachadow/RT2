@@ -6,12 +6,18 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 19:07:06 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/06 20:22:25 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 18:20:52 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include <stdio.h>
+
+/*
+**	NEW_IMAGE function:
+**	Create a new image and get the data address for a further use for each of
+**	the 3 different images used by RT
+*/
 
 void	new_image(int num, int width, int height, t_env *e)
 {

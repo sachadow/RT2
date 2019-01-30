@@ -6,12 +6,17 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:50:52 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/14 17:42:32 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 19:54:19 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hud.h"
 #include "rt.h"
+
+/*
+**	Set globals used for filters, textures and uniform material for an easier
+**	reading of the code
+*/
 
 const int	g_filter1_xs = WIN_W / 5 / 4;
 const int	g_filter2_xs = WIN_W / 5 + WIN_W / 5 / 4;
@@ -35,6 +40,11 @@ const int	g_unif_xe = 4 * WIN_W / 5 + WIN_W / 5 / 6 + 133;
 const int	g_unif_ys = IMG_H + BOTTOM_SPC / 8;
 const int	g_unif_ye = IMG_H + BOTTOM_SPC / 8 + 2 * MARGE;
 
+/*
+**	TEXTURE_FRAME function:
+**	Draw frame for the texture of a picked item
+*/
+
 static void	texture_frame(t_rect *r, t_env *e)
 {
 	if (e->itf.nb_texture == 1)
@@ -48,6 +58,11 @@ static void	texture_frame(t_rect *r, t_env *e)
 	if (e->itf.mat.type == UNIFORM && e->itf.pick.button > -1)
 		frame(BOTTOM, r[10], C_GREEN, e);
 }
+
+/*
+**	SET_FRAMES function:
+**	Set table of frames to draw for every xpm image on the tab 1
+*/
 
 static void	set_frames(t_rect *r)
 {
@@ -69,6 +84,11 @@ static void	set_frames(t_rect *r)
 			(g_unif_ye - IMG_H) - (g_unif_ys - IMG_H));
 }
 
+/*
+**	UI1_FRAME function
+**	Draw the frame for selecting textures or filters
+*/
+
 static void	ui1_frame(t_rect *r, t_env *e)
 {
 	int i;
@@ -85,6 +105,11 @@ static void	ui1_frame(t_rect *r, t_env *e)
 	else
 		frame(BOTTOM, r[i], DARK_GREY, e);
 }
+
+/*
+**	UI1_BOTTOM_XPM function:
+**	Insert all the xpm image for the menuing in tab 1
+*/
 
 static void	ui1_bottom_xpm(t_env *e)
 {
@@ -109,6 +134,11 @@ static void	ui1_bottom_xpm(t_env *e)
 	pt = init_point(g_text2_xs, g_text2_ys - IMG_H);
 	insert_xpm(BOTTOM, pt, "textures/wood.xpm", e);
 }
+
+/*
+**	UI1_BOTTOM function:
+**	Centralize the functions calls for the bottom of the tab 1
+*/
 
 void		ui1_bottom(t_env *e)
 {

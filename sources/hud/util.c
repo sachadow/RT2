@@ -6,13 +6,18 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:21:01 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/12 20:12:30 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 20:13:21 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hud.h"
 #include "rt.h"
 #include <stdio.h>
+
+/*
+**	GET_COLOR function:
+**	Get the color for a pixel from an img, used with the insert_xpm function
+*/
 
 static int	get_color(int x, int y, t_img img)
 {
@@ -25,6 +30,11 @@ static int	get_color(int x, int y, t_img img)
 	}
 	return (0);
 }
+
+/*
+**	INSERT_XPM function:
+**	Insert and xpm file to the image, if one of the mlx function fail, exit
+*/
 
 void		insert_xpm(int nb, t_pix pt, char *name, t_env *e)
 {
@@ -53,6 +63,11 @@ void		insert_xpm(int nb, t_pix pt, char *name, t_env *e)
 	}
 }
 
+/*
+**	COLOR_POINT function:
+**	Color a pixel at coordinates pt with the color
+*/
+
 void		color_point(int nb, t_pix pt, int color, t_env *e)
 {
 	int width;
@@ -74,6 +89,11 @@ void		color_point(int nb, t_pix pt, int color, t_env *e)
 		*(int *)&e->pixel_img[nb][(int)pt.x * (e->bpp[nb] / 8)
 			+ (int)pt.y * e->s_line[nb]] = color;
 }
+
+/*
+**	COLOR_PICKER function:
+**	Catch the color for a pixel from coordinates pt
+*/
 
 int			color_picker(int nb, t_pix pt, t_env *e)
 {

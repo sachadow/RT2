@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 15:12:07 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/15 15:29:28 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/01/16 18:00:14 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,14 @@ t_color	texture_cylinder(t_img tex, t_item item, t_vec impact)
 		ft_printerror("Texture center not on the obj");
 	u = sub(impact, item.center);
 	v = sub(tex.center, item.center);
-	m.colvec2 = crossproduct(item.dir, ((item.dir.x == 0 && item.dir.y == 0
+	m.col2 = crossproduct(item.dir, ((item.dir.x == 0 && item.dir.y == 0
 					&& item.dir.z == 1) ? newvec(0, 1, 0) : newvec(0, 0, 1)));
-	m.colvec3 = crossproduct(item.dir, m.colvec2);
+	m.col3 = crossproduct(item.dir, m.col2);
 	p.x = (int)((dotproduct(u, item.dir) - dotproduct(v, item.dir))
 		* item.radius / tex.realw + tex.w / 2);
-	p.y = (int)((atan(dotproduct(u, m.colvec2) / dotproduct(u, m.colvec3))
-		- (magnitude(tex.center) ? atan(dotproduct(v, m.colvec2)
-		/ dotproduct(v, m.colvec3)) : 0)) / M_PI * 2 * tex.h * item.radius
+	p.y = (int)((atan(dotproduct(u, m.col2) / dotproduct(u, m.col3))
+		- (magnitude(tex.center) ? atan(dotproduct(v, m.col2)
+		/ dotproduct(v, m.col3)) : 0)) / M_PI * 2 * tex.h * item.radius
 			/ tex.realh + tex.h / 2);
 	p = rotate_pix(p, tex.w, tex.h, tex.angle);
 	get_img_color(tex, p, &c);
@@ -126,14 +126,14 @@ t_color	texture_cone(t_img tex, t_item item, t_vec impact)
 		ft_printerror("Texture center not on the obj");
 	u = sub(impact, item.center);
 	v = sub(tex.center, item.center);
-	m.colvec2 = crossproduct(item.dir, ((item.dir.x == 0 && item.dir.y == 0
+	m.col2 = crossproduct(item.dir, ((item.dir.x == 0 && item.dir.y == 0
 					&& item.dir.z == 1) ? newvec(0, 1, 0) : newvec(0, 0, 1)));
-	m.colvec3 = crossproduct(item.dir, m.colvec2);
+	m.col3 = crossproduct(item.dir, m.col2);
 	p.x = (int)((dotproduct(u, item.dir) - dotproduct(v, item.dir))
 		* 150 / tex.realw + tex.w / 2);
-	p.y = (int)((atan(dotproduct(u, m.colvec2) / dotproduct(u, m.colvec3))
-		- (magnitude(tex.center) ? atan(dotproduct(v, m.colvec2)
-		/ dotproduct(v, m.colvec3)) : 0)) / M_PI * 2 * tex.h * 150
+	p.y = (int)((atan(dotproduct(u, m.col2) / dotproduct(u, m.col3))
+		- (magnitude(tex.center) ? atan(dotproduct(v, m.col2)
+		/ dotproduct(v, m.col3)) : 0)) / M_PI * 2 * tex.h * 150
 			/ tex.realh + tex.h / 2);
 	p = rotate_pix(p, tex.w, tex.h, tex.angle);
 	get_img_color(tex, p, &c);

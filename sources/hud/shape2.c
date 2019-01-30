@@ -6,13 +6,18 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:21:21 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/14 22:16:52 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 19:21:02 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hud.h"
 #include "rt.h"
 #include <stdio.h>
+
+/*
+**	DRAW_TRI_LEFT function:
+**	Draw a triangle with its base is on the right
+*/
 
 void		draw_tri_left(int nb, t_rect base, int color, t_env *e)
 {
@@ -33,6 +38,11 @@ void		draw_tri_left(int nb, t_rect base, int color, t_env *e)
 		base.width -= 2;
 	}
 }
+
+/*
+**	DRAW_TRI_LEFT function:
+**	Draw a triangle with its base is on the left
+*/
 
 void		draw_tri_right(int nb, t_rect base, int color, t_env *e)
 {

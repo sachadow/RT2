@@ -6,12 +6,17 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 18:27:07 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/11 17:28:21 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 19:05:34 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "hud.h"
+
+/*
+**	FIND_TEXTURE function:
+**	Find the right texture number for a picked item
+*/
 
 static void	find_texture(t_env *e)
 {
@@ -19,23 +24,36 @@ static void	find_texture(t_env *e)
 	{
 		if (!ft_strcmp(e->itf.mat.path_text, "textures/redbrick.xpm"))
 			e->itf.nb_texture = 1;
-		if (!ft_strcmp(e->itf.mat.path_text, "textures/bluestone.xpm"))
+		else if (!ft_strcmp(e->itf.mat.path_text, "textures/bluestone.xpm"))
 			e->itf.nb_texture = 2;
-		if (!ft_strcmp(e->itf.mat.path_text, "textures/colorstone.xpm"))
+		else if (!ft_strcmp(e->itf.mat.path_text, "textures/colorstone.xpm"))
 			e->itf.nb_texture = 3;
-		if (!ft_strcmp(e->itf.mat.path_text, "textures/wood.xpm"))
+		else if (!ft_strcmp(e->itf.mat.path_text, "textures/wood.xpm"))
 			e->itf.nb_texture = 4;
 	}
 }
 
+/*
+**	WRITE_ITEM function
+**	Write the category of the picked item and its material number
+*/
+
 static void	write_item(char *s, t_env *e)
 {
-	mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, 50, BLACK, s);
-	free(s);
-	s = ft_itoa(e->itf.item.mat);
-	mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, 100, BLACK, s);
-	free(s);
+	if (s != NULL)
+	{
+		mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, 50, BLACK, s);
+		free(s);
+		s = ft_itoa(e->itf.item.mat);
+		mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, 100, BLACK, s);
+		free(s);
+	}
 }
+
+/*
+**	ITEM_SELECTOR function:
+**	Find the right type of the picked item
+*/
 
 static void	item_selector(t_env *e)
 {
@@ -43,26 +61,32 @@ static void	item_selector(t_env *e)
 
 	if (e->itf.item.item_type == SPHERE)
 		s = ft_strdup("Sphere");
-	if (e->itf.item.item_type == PLANE)
+	else if (e->itf.item.item_type == PLANE)
 		s = ft_strdup("Plane");
-	if (e->itf.item.item_type == I_CONE)
+	else if (e->itf.item.item_type == I_CONE)
 		s = ft_strdup("Inf. Cone");
-	if (e->itf.item.item_type == I_CYL)
+	else if (e->itf.item.item_type == I_CYL)
 		s = ft_strdup("Inf. Cylinder");
-	if (e->itf.item.item_type == DISK)
+	else if (e->itf.item.item_type == DISK)
 		s = ft_strdup("Disk");
-	if (e->itf.item.item_type == F_CYL)
+	else if (e->itf.item.item_type == F_CYL)
 		s = ft_strdup("Fin. Cylinder");
-	if (e->itf.item.item_type == F_CONE)
+	else if (e->itf.item.item_type == F_CONE)
 		s = ft_strdup("Fin. Cone");
-	if (e->itf.item.item_type == BOX)
+	else if (e->itf.item.item_type == BOX)
 		s = ft_strdup("Box");
-	if (e->itf.item.item_type == QUADRIC)
+	else if (e->itf.item.item_type == QUADRIC)
 		s = ft_strdup("Quadric");
-	if (e->itf.item.item_type == TORUS)
-		s = ft_strdup("Torus");
+	else
+		s = NULL;
 	write_item(s, e);
 }
+
+/*
+**	PICKED_ITEM function:
+**	Write some strings on tab 1 and call the others functions to write item type
+**	and material number
+*/
 
 void		picked_item(t_env *e)
 {
@@ -85,6 +109,12 @@ void		picked_item(t_env *e)
 	draw_line(rect, BLACK, e);
 }
 
+/*
+**	PICK_ITEM function:
+**	Find the right item pointed by mouse pointer by throwing a ray to this item
+**	and set values to work on its material
+*/
+
 int			pick_item(t_mouse mouse, t_env *e)
 {
 	t_ray	r;
@@ -96,7 +126,7 @@ int			pick_item(t_mouse mouse, t_env *e)
 		r.start = e->cam->pos;
 		r.dir = set_ray_dir(mouse.x, mouse.y, e);
 		nb = find_closest_item(r, e, &impact) % (e->nbs[ITEM] + 1);
-		if (nb != e->itf.pick.button)
+		if (nb != e->itf.pick.button && nb != -1)
 		{
 			e->itf.pick.button = nb;
 			e->itf.pick.x = mouse.x;
@@ -104,17 +134,12 @@ int			pick_item(t_mouse mouse, t_env *e)
 			e->itf.mat = e->mat[e->item[nb].mat];
 			e->itf.item = e->item[nb];
 			find_texture(e);
-			conv_all_param(e);
-//			printf("nb = %d, item_type %d, nb_mat %d, mat type %d, reflection %f, transparency %f, specvalue %f, specpower %f, n %f, bump %f, scale %f, color = r %f g %f b %f, pick button %d\n", nb, e->item[nb].item_type, e->itf.item.mat, e->mat[e->item[nb].mat].type, e->mat[e->item[nb].mat].reflection, e->mat[e->item[nb].mat].transparency, e->mat[e->item[nb].mat].specvalue, e->mat[e->item[nb].mat].specpower, e->mat[e->item[nb].mat].n, e->mat[e->item[nb].mat].bump, e->mat[e->item[nb].mat].scale, e->mat[e->item[nb].mat].diffuse.red, e->mat[e->item[nb].mat].diffuse.green, e->mat[e->item[nb].mat].diffuse.blue, e->itf.pick.button);
+			fill_param(e);
+			//			printf("nb = %d, item_type %d, nb_mat %d, mat type %d, reflection %f, transparency %f, specvalue %f, specpower %f, n %f, bump %f, scale %f, color = r %f g %f b %f, pick button %d\n", nb, e->item[nb].item_type, e->itf.item.mat, e->mat[e->item[nb].mat].type, e->mat[e->item[nb].mat].reflection, e->mat[e->item[nb].mat].transparency, e->mat[e->item[nb].mat].specvalue, e->mat[e->item[nb].mat].specpower, e->mat[e->item[nb].mat].n, e->mat[e->item[nb].mat].bump, e->mat[e->item[nb].mat].scale, e->mat[e->item[nb].mat].diffuse.red, e->mat[e->item[nb].mat].diffuse.green, e->mat[e->item[nb].mat].diffuse.blue, e->itf.pick.button);
 			printf("nb = %d, item_type %d, nb_mat %d, mat type %d, reflection %f, transparency %f, specvalue %f, specpower %f, n %f, bump %f, scale %f, color = r %f g %f b %f, pick.button %d\n", nb, e->itf.item.item_type, e->itf.item.mat, e->itf.mat.type, e->itf.mat.reflection, e->itf.mat.transparency, e->itf.mat.specvalue, e->itf.mat.specpower, e->itf.mat.n, e->itf.mat.bump, e->itf.mat.scale, e->itf.mat.diffuse.red, e->itf.mat.diffuse.green, e->itf.mat.diffuse.blue, e->itf.pick.button);
 		}
 		else
-		{
-			e->itf.pick.button = -1;
-			ft_memset(&e->itf.item, 0, sizeof(t_item));
-			ft_memset(&e->itf.mat, 0, sizeof(t_mat));
-			e->itf.nb_texture = 0;
-		}
+			reset_values(e);
 	}
 	return (0);
 }

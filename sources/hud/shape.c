@@ -6,13 +6,18 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:21:21 by qsebasti          #+#    #+#             */
-/*   Updated: 2018/12/14 22:16:52 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 19:21:22 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hud.h"
 #include "rt.h"
 #include <stdio.h>
+
+/*
+**	DRAW_TRI function:
+**	Draw a triangle with its base on the bottom 
+*/
 
 void		draw_tri(int nb, t_rect base, int color, t_env *e)
 {
@@ -34,6 +39,11 @@ void		draw_tri(int nb, t_rect base, int color, t_env *e)
 	}
 }
 
+/*
+**	DRAW_REV_TRI function:
+**	Draw a reverse triangle where the base is at the top
+*/
+
 void		draw_rev_tri(int nb, t_rect base, int color, t_env *e)
 {
 	int		i;
@@ -54,6 +64,11 @@ void		draw_rev_tri(int nb, t_rect base, int color, t_env *e)
 	}
 }
 
+/*
+**	DRAW_RECT function:
+**	Draw a rectangle
+*/
+
 void		draw_rect(int nb, t_rect rect, int color, t_env *e)
 {
 	t_pix	tmp;
@@ -72,6 +87,11 @@ void		draw_rect(int nb, t_rect rect, int color, t_env *e)
 		}
 	}
 }
+
+/*
+**	FRAME function:
+**	Draw a frame of size 2 around a rectangle
+*/
 
 void		frame(int nb, t_rect rect, int color, t_env *e)
 {
@@ -94,6 +114,12 @@ void		frame(int nb, t_rect rect, int color, t_env *e)
 	tmp.height = rect.height + 2 * 2;
 	draw_rect(nb, tmp, color, e);
 }
+
+/*
+**	DRAW_LINE function:
+**	Draw a line using the mlx_pixel_put function, need to be called after
+**	mlx_put_image_to_window
+*/
 
 void		draw_line(t_rect rect, int color, t_env *e)
 {

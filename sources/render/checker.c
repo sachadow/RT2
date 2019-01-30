@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 17:15:06 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/11 11:52:28 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/01/24 19:50:25 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,17 @@ void	waves_tex_build(t_img *tex, t_color c)
 			tex->pixel_img[p.y * 1024 + p.x * 4 + 2] = k * c.red;
 		}
 	}
+}
+
+int		mat_used(t_env *e, int i)
+{
+	int	k;
+
+	k = -1;
+	while (++k < e->nbs[ITEM])
+	{
+		if (e->item[k].mat == i)
+			return (1);
+	}
+	return (0);
 }

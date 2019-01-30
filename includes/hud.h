@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 17:17:02 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/11 21:05:55 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 18:16:57 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,16 @@
 # define R		2
 # define A		3
 
-# define REFLECTION		1
-# define TRANSPARENCY	2
-# define SPECVALUE		3
-# define SPECPOWER		4
-# define N				5
-# define BUMP			6
-# define SCALE			7
+# define REFLECTION		0
+# define TRANSPARENCY	1
+# define SPECVALUE		2
+# define SPECPOWER		3
+# define N				4
+# define BUMP			5
+# define SCALE			6
+
+# define PLUS			1
+# define MINUS			-1
 
 # define BLACK		0x000000
 # define LIGHT_GREY	0xd2d0d2
@@ -82,11 +85,8 @@ const int			g_waves_xs;
 
 const int			g_mat_ys;
 
-typedef struct		s_size
-{
-	int				width;
-	int				height;
-}					t_size;
+const int			g_param_x;
+const int			g_param_y;
 
 typedef struct		s_rect
 {
@@ -96,7 +96,6 @@ typedef struct		s_rect
 	int				height;
 }					t_rect;
 
-t_size				init_size(int width, int height);
 t_pix				init_point(int x, int y);
 t_rect				init_rect(int x, int y, int width, int height);
 void				color_point(int nb, t_pix pt, int color, t_env *e);
@@ -118,20 +117,21 @@ void				tab(t_env *e);
 
 void				ui1(t_env *e);
 void				ui1_bottom(t_env *e);
+
 int					ui_spectrum(int nb, t_pix pix, t_mouse mouse, t_env *e);
 void				cursor_spectrum(int nb, t_env *e);
 void				ui_shade(int nb, t_pix pix, t_mouse mouse, t_env *e);
 void				cursor_shade(int nb, t_env *e);
 void				shade_bar(int y, int color, t_env *e);
+void				spectrum_shade(int nb, int start, t_env *e);
 void				color_val(t_env *e);
 void				ui1_bottom_strokes(t_env *e);
+
 void				ui_zones(int nb, t_mouse mouse, t_env *e);
 void				param_zone(t_mouse mouse, t_env *e);
 
 void				ui2(t_env *e);
 void				ui2_bottom(t_env *e);
-int					ui2_spectrum(int button, int x, int y, t_env *e);
-void				ui2_shade(int button, int x, int y, t_env *e);
 
 void				ui3(t_env *e);
 void				ui3_bottom(t_env *e);
@@ -146,6 +146,15 @@ void				right_ruler(t_env *e);
 void				bottom_ruler(t_env *e);
 
 void				reset_ui(t_env *e);
+void				reset_values(t_env *e);
+
+void				fill_param(t_env *e);
+void				apply_texture(t_env *e);
+void				apply_mat(int type, t_env *e);
+
+void				blur(t_env *e);
+
+void				ui3_zone(t_mouse m, t_env *e);
 
 int					int_to_pos(int val, int min, int max);
 int					pos_to_int(int pos, int min, int max);

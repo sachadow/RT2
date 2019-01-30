@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_hud.c                                         :+:      :+:    :+:   */
+/*   fill_param.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/12 20:06:30 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 18:17:27 by qsebasti         ###   ########.fr       */
+/*   Created: 2019/01/28 17:53:36 by qsebasti          #+#    #+#             */
+/*   Updated: 2019/01/28 17:53:38 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,17 @@
 #include "hud.h"
 
 /*
-**	INIT_X functions:
-**	Set the values for a t_pix or a t_rect
+**	FILL_PARAM function:
+**	fill the working param tableto be modified by user.
 */
 
-t_pix			init_point(int x, int y)
+void		fill_param(t_env *e)
 {
-	t_pix pt;
-
-	pt.x = x;
-	pt.y = y;
-	return (pt);
-}
-
-t_rect			init_rect(int x, int y, int width, int height)
-{
-	t_rect rect;
-
-	rect.x = x;
-	rect.y = y;
-	rect.width = width;
-	rect.height = height;
-	return (rect);
+	e->itf.param[REFLECTION] = e->itf.mat.reflection * 100;
+	e->itf.param[TRANSPARENCY] = e->itf.mat.transparency * 100;
+	e->itf.param[SPECVALUE] = e->itf.mat.specvalue;
+	e->itf.param[SPECPOWER] = e->itf.mat.specpower;
+	e->itf.param[N] = e->itf.mat.n;
+	e->itf.param[BUMP] = e->itf.mat.bump * 100;
+	e->itf.param[SCALE] = e->itf.mat.scale;
 }

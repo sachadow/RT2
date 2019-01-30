@@ -6,13 +6,18 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:17:53 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/10 20:20:53 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 18:14:27 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "hud.h"
 #include <stdio.h>
+
+/*
+**	TOP_RIGHT function:
+**	Draw the 3 top right tabs
+*/
 
 static void		top_right(t_env *e)
 {
@@ -25,6 +30,11 @@ static void		top_right(t_env *e)
 	rect = init_rect(2 * ((RIGHT_SPC) / 3 + 1), 0, rect.width, rect.height);
 	draw_rect(RIGHT, rect, LIGHT_GREY, e);
 }
+
+/*
+**	UI1_WRITTING function:
+**	Write strings into tab 1
+*/
 
 static void		ui1_writting(t_env *e)
 {
@@ -51,6 +61,12 @@ static void		ui1_writting(t_env *e)
 	color_val(e);
 }
 
+/*
+**	UI_WRITTING function:
+**	Write the number of each tab in top corner right and call the right function
+**	to call for the right tab
+*/
+
 static void		ui_writting(t_env *e)
 {
 	int color;
@@ -62,8 +78,17 @@ static void		ui_writting(t_env *e)
 	if (e->itf.onglet == 1)
 		ui1_writting(e);
 	if (e->itf.onglet == 3)
+	{
+		picked_item(e);
 		ui3_writting(e);
+	}
 }
+
+/*
+**	TAB function:
+**	Call top_right function and the required function to display the right tab
+**	Also put image to window, put the strings above the image and destroy images
+*/
 
 void			tab(t_env *e)
 {

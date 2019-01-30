@@ -6,7 +6,7 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/23 19:01:27 by squiquem          #+#    #+#              #
-#    Updated: 2019/01/15 16:42:39 by sderet           ###   ########.fr        #
+#    Updated: 2019/01/28 20:43:32 by qsebasti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,15 @@ CPPFLAGS 		=	-I includes/
 
 SRC_FILES		=	main.c \
 					handle/keyhook.c \
+					handle/ui3_zone.c \
 					handle/mousehook.c \
 					handle/move.c \
 					handle/param_zone.c \
 					handle/ui_zone.c \
-					hud/conversion.c \
+					hud/apply.c \
+					hud/blur.c \
 					hud/cursor.c \
+					hud/fill_param.c \
 					hud/general_ui.c \
 					hud/hud.c \
 					hud/init_hud.c \
@@ -46,17 +49,19 @@ SRC_FILES		=	main.c \
 					hud/ui2_bottom.c \
 					hud/ui3.c \
 					hud/ui3_bottom.c \
+					hud/ui3_writting.c \
 					hud/util.c \
+					maths/matrix.c \
 					maths/rotate.c \
+					maths/rotation_matrix.c \
 					maths/vec.c \
 					maths/vec2.c \
-					maths/solve_quadric.c \
-					maths/solve_cubic.c \
 					parser/error.c \
 					parser/get_position.c \
 					parser/get_value_mat.c \
 					parser/get_value_obj.c \
 					parser/get_value_obj2.c \
+					parser/get_value_obj3.c \
 					parser/parser.c \
 					parser/parser_all.c \
 					parser/recup_camera.c \
@@ -70,7 +75,6 @@ SRC_FILES		=	main.c \
 					parser/recursive_element.c \
 					parser/recursive_elem2.c \
 					parser/set_zero_mat.c \
-					parser/get_value_obj3.c \
 					render/aliasing.c \
 					render/cartoon.c \
 					render/checker.c \
@@ -79,14 +83,19 @@ SRC_FILES		=	main.c \
 					render/filters.c \
 					render/find_closest.c \
 					render/find_normal.c \
+					render/find_normal_plus.c \
 					render/fresnel.c \
+					render/hit_box.c \
 					render/hit_disk.c \
 					render/hit_func.c \
 					render/hit_items.c \
-					render/hit_tore.c \
+					render/hit_items_plus.c \
 					render/hsv.c \
 					render/light.c \
 					render/marble.c \
+					render/negative_calc.c \
+					render/negative_calc2.c \
+					render/negative_calc3.c \
 					render/new.c \
 					render/noise.c \
 					render/pixel.c \
@@ -97,12 +106,6 @@ SRC_FILES		=	main.c \
 					render/textures_util.c \
 					render/textures.c \
 					render/threads.c \
-					render/negative_calc.c \
-					render/negative_calc2.c \
-					render/negative_calc3.c \
-					render/find_normal_plus.c \
-					render/hit_items_plus.c \
-					render/hit_box.c \
 
 SUB_FOLDERS		=	parser render hud handle maths
 
@@ -128,7 +131,7 @@ LIBMLX			=	minilibx/libmlx.a
 
 CC				=	gcc
 
-CFLAGS			=	-Wall -Wextra -Werror -g
+CFLAGS			=	-Wall -Wextra -Werror -g3 -MMD -O2 #-fsanitize=address
 
 opti			:
 	@make -j8 all

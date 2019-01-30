@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 17:07:15 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/11 18:41:24 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/28 17:55:14 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			quit(void)
 
 /*
 **	FILENAME_CONTROL function:
-**	Controls if the filename ends with ".rt"
+**	Controls if the filename ends with ".xml"
 */
 
 static void	filename_control(char *av)
@@ -54,22 +54,18 @@ static void	init(t_env *e)
 	e->hit[F_CONE] = &hitfcone;
 	e->hit[BOX] = &hitbox;
 	e->hit[QUADRIC] = &hitquadric;
-	e->hit[TORUS] = &hittore;
 	e->backgroundcolor = multiply_color(e->backgroundcolor, 0.00392156862);
 	e->lvl = 4;
 	e->antialiasing = 1;
 	create_axis(e);
-	ft_memset(e->key, 0, sizeof(int) * 300);
 	e->s_line[CENTER] = 0;
-	e->itf.pick.button = -1;
+	ft_memset(e->key, 0, sizeof(int) * 300);
+	ft_memset(e->itf.spec, 0, sizeof(e->itf.spec));
 	e->itf.onglet = 1;
-	ft_memset(e->itf.spec, 0, sizeof(e->itf.spec) * 3);
-	e->itf.spectrum[0].x = (RIGHT_SPC) / 2;
-	e->itf.spectrum[0].y = M_IMG_H + (RIGHT_SPC) / 2 - MARGE;
+	ft_memset(e->itf.spectrum, 0, sizeof(e->itf.spectrum));
 	e->loading = 0;
-	e->apply = 0;
 	e->cartoon = 0;
-	e->itf.nb_texture = 0;
+	reset_values(e);
 }
 
 /*

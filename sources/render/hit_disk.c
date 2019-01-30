@@ -6,7 +6,7 @@
 /*   By: sderet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 17:08:38 by sderet            #+#    #+#             */
-/*   Updated: 2018/10/22 14:44:32 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/01/21 17:02:33 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int		hitdisk(t_ray r, t_item d, double *t)
 	intersec = add(r.start, scale(t0, r.dir));
 	intersec = sub(intersec, d.center);
 	dist = dotproduct(intersec, intersec);
-	if ((double)sqrt(dist) >= (double)d.radius ||
-			(*t != -1 && t0 >= *t))
+	if ((double)sqrt(dist) >= (double)d.radius
+			|| (*t != -1 && t0 >= *t))
 		return (0);
 	*t = t0;
 	return (1);

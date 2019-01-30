@@ -6,12 +6,17 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 21:51:34 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/14 16:04:19 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 20:40:20 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hud.h"
 #include "rt.h"
+
+/*
+**	Set the static globals used for apply button and aliasing zone for an easier
+** reading of the code
+*/
 
 static const int	g_apply_xs = IMG_W + MARGE;
 static const int	g_apply_xe = WIN_W - MARGE;
@@ -24,6 +29,12 @@ static const int	g_alias1_xe = IMG_W + 2 * RIGHT_SPC / 3 + 1;
 static const int	g_alias2_xe = g_alias0_xs + 159;
 static const int	g_alias_ys = IMG_H + 5 * BOTTOM_SPC / 8 + 9;
 static const int	g_alias_ye = IMG_H + 5 * BOTTOM_SPC / 8 + 59;
+
+/*
+**	UI_MAT_TYPE function:
+**	Select the new material type if the user click on the proper material type
+**	zone on tab 2
+*/
 
 static void	ui_mat_type(t_mouse m, t_env *e)
 {
@@ -45,6 +56,12 @@ static void	ui_mat_type(t_mouse m, t_env *e)
 	if (e->itf.mat.type != TEXTURE)
 		e->itf.nb_texture = 0;
 }
+
+/*
+**	UI_TEXTURE function:
+**	Select the new texture or the uniform material type if the user click on
+**	the proper texture or uniform type zone
+*/
 
 static void	ui_texture(t_mouse m, t_env *e)
 {
@@ -70,6 +87,11 @@ static void	ui_texture(t_mouse m, t_env *e)
 		e->itf.mat.type = TEXTURE;
 }
 
+/*
+**	FILTERS function:
+**	Select the new filter or aliasing lvl if the user click on the proper zone
+*/
+
 static void	filters(t_mouse m, t_env *e)
 {
 	if (m.x >= g_filter2_xs && m.x < g_filter2_xs + 100
@@ -84,7 +106,7 @@ static void	filters(t_mouse m, t_env *e)
 	else if (m.x >= g_filter2_xs && m.x < g_filter2_xs + 100
 			&& m.y >= g_filter2_ys && m.y < g_filter2_ys + 60)
 		e->filter = (e->filter == REVERSE ? 0 : REVERSE);
-	else if (m.x >= g_filter3_xs && m.x < g_filter3_xs + 100 
+	else if (m.x >= g_filter3_xs && m.x < g_filter3_xs + 100
 			&& m.y >= g_filter2_ys && m.y < g_filter2_ys + 60)
 		e->cartoon = (e->cartoon == 1 ? 0 : 1);
 	else if (m.x >= g_alias0_xs && m.x < g_alias0_xe
@@ -98,6 +120,11 @@ static void	filters(t_mouse m, t_env *e)
 		e->antialiasing = 2;
 }
 
+/*
+**	UI_ZONES function:
+**	Call the different functions for the proper tab
+*/
+
 void		ui_zones(int nb, t_mouse mouse, t_env *e)
 {
 	if (nb == 1)
@@ -107,7 +134,7 @@ void		ui_zones(int nb, t_mouse mouse, t_env *e)
 		{
 			e->loading = 0;
 			e->apply = 1;
-			reload(e);
+			reset_ui(e);
 		}
 		filters(mouse, e);
 		ui_texture(mouse, e);
@@ -115,5 +142,11 @@ void		ui_zones(int nb, t_mouse mouse, t_env *e)
 	else if (nb == 2)
 		ui_mat_type(mouse, e);
 	else if (nb == 3)
+	{
+		if (mouse.x >= IMG_W + MARGE && mouse.x < IMG_W + CIRCLE + MARGE
+				&& mouse.y >= CIRCLE && mouse.y < CIRCLE + 4 * MARGE)
+			blur(e);
+		ui3_zone(mouse, e);
 		param_zone(mouse, e);
+	}
 }

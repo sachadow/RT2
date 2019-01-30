@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 17:29:16 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/11 16:18:27 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 20:19:11 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 #include "hud.h"
 #include <stdio.h>
 
+/*
+**	Set the static globals used to select the tabs
+*/
+
 static const int	g_tab1_xe = IMG_W + RIGHT_SPC / 3;
 static const int	g_tab_ye = 2 * MARGE;
 static const int	g_tab2_xs = g_tab1_xe + 1;
@@ -22,8 +26,8 @@ static const int	g_tab2_xe = IMG_W + 2 * (RIGHT_SPC / 3) + 1;
 static const int	g_tab3_xs = g_tab2_xe + 1;
 
 /*
-**	UI_CHECKER
-**	Check if the user click in 1 of the 3 tabulation zones
+**	UI_CHECKER function:
+**	Check if the user click in 1 of the 3 tab zones
 */
 
 static void	ui_checker(t_mouse m, t_env *e)
@@ -55,8 +59,9 @@ static void	ui_checker(t_mouse m, t_env *e)
 }
 
 /*
-**	MOUSEPRESS
-**	Handle the pressed button, mouse pointer position at this moment
+**	MOUSEPRESS function:
+**	Handle the pressed button, mouse pointer position at this moment, called by
+**	the mlx_hook function
 */
 
 int			mousepress(int button, int x, int y, t_env *e)
@@ -79,8 +84,9 @@ int			mousepress(int button, int x, int y, t_env *e)
 }
 
 /*
-**	MOURELEASE
-**	Replace de mouse button state at 0, useful for long click needed features
+**	MOURELEASE function:
+**	Replace de mouse button state at 0, useful for long click needed features,
+**	called by the mlx_hook function
 */
 
 int			mouserelease(int button, int x, int y, t_env *e)
@@ -100,8 +106,9 @@ int			mouserelease(int button, int x, int y, t_env *e)
 }
 
 /*
-**	MOUSEMOVE
-**	Save the mouse pointer position from the last movement
+**	MOUSEMOVE and UPDATE_MOUSE functions:
+**	Save the mouse pointer position from the last movement and update its
+**	position with the mouse motion, called by the mlx_hook function
 */
 
 static void	update_mouse(int nb, t_pix pt, t_pix coord, t_env *e)

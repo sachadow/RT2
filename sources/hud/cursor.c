@@ -6,13 +6,19 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 17:04:25 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/10 20:28:39 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/28 19:13:59 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "keyboard.h"
 #include "hud.h"
+
+/*
+**	SHADE_DISPLAY function:
+**	Draw the shade bar under the color spectrum circle + the 2 triangle cursors
+**	for any color spectrum circle
+*/
 
 static void	shade_display(int nb, t_rect r, t_colo color, t_env *e)
 {
@@ -28,6 +34,12 @@ static void	shade_display(int nb, t_rect r, t_colo color, t_env *e)
 	draw_rect(RIGHT, rect, e->itf.spec_shade[nb].val, e);
 	frame(RIGHT, rect, GREY, e);
 }
+
+/*
+**	CURSOR_SHADE function:
+**	Set the position and the color of the triangle cursors to draw by
+**	shade_dispay funtion
+*/
 
 void		cursor_shade(int nb, t_env *e)
 {
@@ -54,6 +66,11 @@ void		cursor_shade(int nb, t_env *e)
 		shade_display(nb, r, color, e);
 	}
 }
+
+/*
+**	CURSOR_SPECTRUM function:
+**	Draw the white cross cursor for each color spectrum circle
+*/
 
 void		cursor_spectrum(int nb, t_env *e)
 {

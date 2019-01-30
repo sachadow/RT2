@@ -6,7 +6,7 @@
 /*   By: sderet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 16:16:07 by sderet            #+#    #+#             */
-/*   Updated: 2019/01/15 16:24:58 by sderet           ###   ########.fr       */
+/*   Updated: 2019/01/21 17:02:14 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ t_vec	find_normal_plus(t_vec newstart, t_ray r, t_env *e, int id)
 	finite = dotproduct(e->item[id].dir, sub(newstart, e->item[id].center))
 			/ magnitude2(e->item[id].dir);
 	if (type == PLANE || type == DISK || (type == F_CYL
-				&& (finite <= 0.001 || finite >= e->item[id].height - 0.001)) ||
-				(type == F_CONE && (finite >= e->item[id].height - 0.001)))
+				&& (finite <= 0.001 || finite >= e->item[id].height - 0.001))
+			|| (type == F_CONE && (finite >= e->item[id].height - 0.001)))
 		n = (dotproduct(r.dir, e->item[id].dir) < 0 ? e->item[id].dir
 			: opposite(e->item[id].dir));
 	else if (type == BOX)

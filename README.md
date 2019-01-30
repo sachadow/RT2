@@ -2,7 +2,7 @@
 
 RT is a 42 project developped by squiquem, sederet, asarasy and qsebasti, which is designed to further students' understanding of the concepts behind raytracing.
 
-The program use scenes as `.rt` files built with the following elements.
+The program use scenes as `.xml` files built with the following elements.
 
 ## 1. Camera
 
@@ -96,5 +96,5 @@ Rotate the previous object on (x, y, z) axis by an angle
 
     git clone vogsphere@vogsphere.42.fr:intra/2018/activities/rt/squiquem ~/RT
     cd ~/RT
-    make && ./rt/scenes/scene1.rt
+    make && ./rt/scenes/scene1.xml
 
