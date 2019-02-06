@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 15:12:07 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/16 18:00:14 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/05 17:02:42 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ t_color	texture_plane(t_img tex, t_item item, t_vec impact)
 	t_pix	p;
 
 	if (magnitude(tex.center) && (fabs(dotproduct(item.dir, tex.center)
-					- item.d) > 0.01f))
-		ft_printerror("Texture center not on the obj");
+					+ item.d) > 0.01f))
+		tex.center = newvec(0, 0, 0);
 	d = sub(impact, tex.center);
 	u = (d.x == 0 && d.x == 0 && d.z == 1) ? newvec(0, 1, 0) : newvec(0, 0, 1);
 	if (u.x == item.dir.x && u.y == item.dir.y && u.z == item.dir.z)
@@ -70,7 +70,7 @@ t_color	texture_sphere(t_img tex, t_item item, t_work w)
 
 	if (magnitude(tex.center) && (fabs(magnitude(sub(item.center, tex.center))
 					- item.radius) > 0.01f))
-		ft_printerror("Texture center not on the obj");
+		tex.center = newvec(0, 0, 0);
 	if (magnitude(item.center))
 		k = normalize(sub(tex.center, item.center));
 	p.x = (int)(((magnitude(tex.center) ? atan2(k.z, k.x) : 0.5)
@@ -94,7 +94,7 @@ t_color	texture_cylinder(t_img tex, t_item item, t_vec impact)
 	if (magnitude(tex.center) && (fabs(magnitude(sub(sub(item.center,
 			tex.center), scale(dotproduct(sub(item.center, tex.center),
 			item.dir), item.dir))) - item.radius) > 0.01f))
-		ft_printerror("Texture center not on the obj");
+		tex.center = newvec(0, 0, 0);
 	u = sub(impact, item.center);
 	v = sub(tex.center, item.center);
 	m.col2 = crossproduct(item.dir, ((item.dir.x == 0 && item.dir.y == 0
@@ -123,7 +123,7 @@ t_color	texture_cone(t_img tex, t_item item, t_vec impact)
 			tex.center), scale(dotproduct(sub(item.center, tex.center),
 			item.dir), item.dir))) - magnitude(sub(impact, item.center))
 			* cos(item.angle * M_PI / 180)) > 0.01f))
-		ft_printerror("Texture center not on the obj");
+		tex.center = newvec(0, 0, 0);
 	u = sub(impact, item.center);
 	v = sub(tex.center, item.center);
 	m.col2 = crossproduct(item.dir, ((item.dir.x == 0 && item.dir.y == 0

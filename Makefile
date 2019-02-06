@@ -6,7 +6,7 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/23 19:01:27 by squiquem          #+#    #+#              #
-#    Updated: 2019/01/28 20:43:32 by qsebasti         ###   ########.fr        #
+#    Updated: 2019/01/29 17:00:10 by qsebasti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,7 +131,7 @@ LIBMLX			=	minilibx/libmlx.a
 
 CC				=	gcc
 
-CFLAGS			=	-Wall -Wextra -Werror -g3 -MMD -O2 #-fsanitize=address
+CFLAGS			=	-Wall -Wextra -Werror -g3 -MMD -O2 -fsanitize=address
 
 opti			:
 	@make -j8 all

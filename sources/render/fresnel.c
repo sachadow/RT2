@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 13:45:09 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/21 16:30:53 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/04 14:53:38 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,20 @@ t_ray	reflected_ray(t_vec inc, t_vec norm, t_vec newstart)
 	r.dir = normalize(sub(inc, tmp));
 	r.start = newstart;
 	return (r);
+}
+
+/*
+**	TRANSPARENT_RAY function:
+**	Calculates the new ray from transparency
+*/
+
+t_ray	transp_r(t_ray r, t_vec impact)
+{
+	t_ray	r2;
+
+	r2 = r;
+	r2.start = impact;
+	return (r2);
 }
 
 /*

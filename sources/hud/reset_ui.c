@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:57:38 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 18:37:14 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/05 21:11:36 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		reset_ui(t_env *e)
 {
 	if (e->itf.pick.button != -1)
 	{
-		if (e->itf.nb_texture && e->itf.mat.type != QUADRIC)
+		if (e->itf.nb_texture && e->itf.item.item_type != QUADRIC)
 			apply_texture(e);
 		apply_mat(e->itf.mat.type, e);
 	}

@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:19:26 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 19:54:11 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/31 17:48:37 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void		color_val(t_env *e)
 
 /*
 **	UI1 function:
-**	Centralize the functions calls for the tab 1 and put the color spectrum circle
+**	Centralize the functions calls for the tab 1 and put the color spectrum
+**	circle
 */
 
 void		ui1(t_env *e)

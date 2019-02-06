@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 16:19:16 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 20:23:38 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/01 20:20:17 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		keypress(int keycode, t_env *e)
 	{
 		if (keycode == KEY_ENTER)
 		{
-			e->loading = 0;
+			e->loading = (e->antialiasing == 0 ? 1 : 0);
 			reset_ui(e);
 		}
 		e->key[keycode] = 1;

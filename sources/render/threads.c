@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/28 15:50:27 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/31 15:34:49 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,51 +16,18 @@
 #include <errno.h>
 
 /*
- **	DRAW function:
- **	For Multithreading
- */
-
-/*static void	*draw(void *e)
-  {
-  t_sgmt			thread;
-  t_pix			p;
-  pthread_t		s;
-
-  thread.start = 0;
-  s = pthread_self();
-  while (s != ((t_env*)e)->thr[thread.start])
-  thread.start++;
-  thread.end = (thread.start + 1) * IMG_W / NB_THR;
-  thread.start = thread.start * IMG_W / NB_THR;
-  p.y = IMG_H;
-  while (--p.y > -1)
-  {
-  p.x = thread.start - 1;
-  while (++p.x < thread.end)
-  {
-  if (((t_env*)e)->antialiasing == 0)
-  aliasing(10, p, (t_env*)e);
-  else if (((t_env*)e)->antialiasing == 1)
-  aliasing(1, p, (t_env*)e);
-  else if (((t_env*)e)->antialiasing == 2)
-  supersampling(2, p, (t_env*)e);
-  }
-  }
-  pthread_exit(NULL);
-  }*/
+**	DRAW function:
+**	For Multithreading
+*/
 
 static void	*draw(void *arg)
 {
 	t_sgmt			thread;
 	t_pix			p;
-	//	pthread_t		s;
 	t_th			*th;
 
 	th = (t_th *)arg;
 	thread.start = 0;
-	//	s = pthread_self();
-	//	while (s != ((t_env*)e)->thr[thread.start])
-	//		thread.start++;
 	thread.end = (th->nb + 1) * IMG_W / NB_THR;
 	thread.start = th->nb * IMG_W / NB_THR;
 	p.y = IMG_H;
@@ -81,37 +48,9 @@ static void	*draw(void *arg)
 }
 
 /*
- **	RELOAD function:
- **	Sets image in the window
- */
-/*
-   int			reload(t_env *e)
-   {
-   int				i;
-   int				rc;
-
-   if (!e->loading)
-   load(e);
-   else if (e->loading == 1)
-   {
-   new_image(CENTER, IMG_W, IMG_H, e);
-   i = -1;
-   while (++i < NB_THR)
-   if ((rc = pthread_create(&e->thr[i], NULL, draw, e)))
-   ft_putendl_fd(strerror(errno), 2);
-   i = -1;
-   while (++i < NB_THR)
-   if (pthread_join(e->thr[i], NULL))
-   ft_putendl_fd(strerror(errno), 2);
-   if (e->cartoon == 1)
-   add_cartoon_effect(e);
-   mlx_put_image_to_window(e->mlx, e->win, e->img[CENTER], 0, 0);
-   mlx_destroy_image(e->mlx, e->img[CENTER]);
-   e->loading = 2;
-   }
-   hud(e);
-   return (0);
-   }*/
+**	CREATE_THREADS function:
+**	Creates threads in env
+*/
 
 static void	create_threads(t_env *e)
 {
@@ -133,6 +72,11 @@ static void	create_threads(t_env *e)
 		if (pthread_join(e->thr[i], NULL))
 			ft_putendl_fd(strerror(errno), 2);
 }
+
+/*
+**	RELOAD function:
+**	Sets image in the window
+*/
 
 int			reload(t_env *e)
 {

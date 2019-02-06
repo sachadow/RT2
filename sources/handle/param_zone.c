@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 20:29:27 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 20:36:15 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/01 20:27:42 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,23 @@ const int			g_param_y = BOTTOM_SPC / 8;
 static void	up_value(t_env *e)
 {
 	if (e->itf.mouse.button == REFLECTION
-			&& e->itf.param[REFLECTION] + 5 <= 100)
+			&& e->itf.param[REFLECTION] < 100)
 		e->itf.param[REFLECTION] += 5;
 	else if (e->itf.mouse.button == TRANSPARENCY
-			&& e->itf.param[TRANSPARENCY] + 5 <= 100)
+			&& e->itf.param[TRANSPARENCY] < 100)
 		e->itf.param[TRANSPARENCY] += 5;
 	else if (e->itf.mouse.button == SPECVALUE)
 		e->itf.param[SPECVALUE] += 1;
 	else if (e->itf.mouse.button == SPECPOWER)
 		e->itf.param[SPECPOWER] += 5;
-	else if (e->itf.mouse.button == N
-			&& e->itf.param[N] + 0.1 <= 5)
-		e->itf.param[N] += 0.1;
+	else if (e->itf.mouse.button == N && e->itf.param[N] < 20)
+	{
+		e->itf.param[N] += 1;
+		if (e->itf.param[N] < 10)
+			e->itf.param[N] = 10;
+	}
 	else if (e->itf.mouse.button == BUMP
-			&& e->itf.param[BUMP] + 5 <= 100)
+			&& e->itf.param[BUMP] < 100)
 		e->itf.param[BUMP] += 5;
 	else if (e->itf.mouse.button == SCALE
 			&& e->itf.param[SCALE] * 10 <= 10)
@@ -54,24 +57,24 @@ static void	up_value(t_env *e)
 static void	down_value(t_env *e)
 {
 	if (e->itf.mouse.button == REFLECTION
-			&& e->itf.param[e->itf.mouse.button] - 5 >= 0)
+			&& e->itf.param[e->itf.mouse.button] > 4)
 		e->itf.param[REFLECTION] -= 5;
 	else if (e->itf.mouse.button == TRANSPARENCY
-			&& e->itf.param[TRANSPARENCY] - 5 >= 0)
+			&& e->itf.param[TRANSPARENCY] > 4)
 		e->itf.param[TRANSPARENCY] -= 5;
 	else if (e->itf.mouse.button == SPECVALUE
-			&& e->itf.param[SPECVALUE] - 1 >= 0)
+			&& e->itf.param[SPECVALUE] > 0)
 		e->itf.param[SPECVALUE] -= 1;
 	else if (e->itf.mouse.button == SPECPOWER
-			&& e->itf.param[SPECPOWER] - 5 >= 1)
+			&& e->itf.param[SPECPOWER] > 5)
 		e->itf.param[SPECPOWER] -= 5;
-	else if (e->itf.mouse.button == N && e->itf.param[N] - 0.1 >= 0)
+	else if (e->itf.mouse.button == N && e->itf.param[N] > 9)
 	{
-		e->itf.param[N] -= 0.1;
-		if (e->itf.param[N] == 0)
-			e->itf.param[N] = 1;
+		e->itf.param[N] -= 1;
+		if (e->itf.param[N] < 10)
+			e->itf.param[N] = 0;
 	}
-	else if (e->itf.mouse.button == BUMP && e->itf.param[BUMP] - 5 >= 0)
+	else if (e->itf.mouse.button == BUMP && e->itf.param[BUMP] > 0)
 		e->itf.param[BUMP] -= 5;
 	else if (e->itf.mouse.button == SCALE && e->itf.param[SCALE] / 10 >= 0.001)
 		if ((e->itf.mat.type == PERTURB || e->itf.mat.type == MARBLE

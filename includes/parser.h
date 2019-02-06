@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 17:25:35 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/24 14:25:28 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/01/31 13:11:22 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int						recup_tr(t_env *e, t_element elem, int i);
 t_vec					ft_getpos(char *pos);
 t_color					ft_getcolor(char *color);
 double					ft_posatoi(char *nbr);
-t_mat					cut_struct(t_mat *mat, int i);
 
 void					open_textures_mat(t_env *e);
 

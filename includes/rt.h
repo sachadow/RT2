@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:09:49 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/24 19:51:41 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/06 17:35:54 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define M_IMG_H	300
 # define RIGHT_SPC	200
 # define BOTTOM_SPC	200
-# define NB_THR		8
+# define NB_THR		4
 # define FOV		2.0
 # define REFRINCL	4
 
@@ -355,7 +355,7 @@ void				negative_firstadvance(t_hititem *i, t_ray *r, t_env *e,
 void				negative_bigadvance(t_hititem *i, t_ray *r, t_env *e,
 					int *last_hit);
 int					is_empty(int *hit, int count, int *id, t_env *e);
-int					get_hits(int *hit, int *id, int last);
+int					get_hits(int *hit, int *id, int last, int count);
 void				hit_mod(int *id, int nb, int *hit, t_env *e);
 void				init_int_tab(int *tab, int size, int value);
 int					got_out(int count, int *nb_hit, int *id, t_env *e);
@@ -395,6 +395,7 @@ t_item				newbox(t_vec center, t_vec end, int mat);
 
 t_ray				refracted_ray(t_vec i, t_vec nm, double n, t_vec newstart);
 t_ray				reflected_ray(t_vec i, t_vec n, t_vec newstart);
+t_ray				transp_r(t_ray r, t_vec impact);
 double				fresnel(t_vec i, t_vec n, double n1, double n2);
 double				find_nrefr(t_work w, t_mat mat, int item_hit, t_env *e);
 
@@ -402,7 +403,7 @@ t_color				ft_resolve(t_env *e, t_work w, int lvl);
 t_work				newwork(t_work oldwork, t_ray newray, int r, t_env *e);
 int					itemtype(int curr, t_env *e);
 
-t_color				multiply_color(t_color c, double k);
+t_color				multp_color(t_color c, double k);
 t_color				add_2colors(t_color a, t_color b);
 t_color				add_3colors(t_color a, t_color b, t_color c);
 t_color				add_4colors(t_color a, t_color b, t_color c, t_color d);

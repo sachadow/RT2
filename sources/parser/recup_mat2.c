@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 16:34:46 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/10 15:18:53 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/01/31 13:10:08 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,11 @@ int			recup_checker_mat(t_mat *mat, t_element elem, int i, char *name)
 	{
 		mat[i].type = 2;
 		recup_value_text(mat, elem, i);
-		checker_tex_build(&mat[i].tex, mat[i].diffuse, \
-				mat[i].diffuse2);
 	}
 	else
 	{
 		mat[i].type = 5;
 		recup_value_text(mat, elem, i);
-		waves_tex_build(&mat[i].tex, mat[i].diffuse);
 	}
 	nb = get_bump(mat, elem, i);
 	if (elem.nbr_attr - nb != 10)

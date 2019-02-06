@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 17:13:48 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 20:07:25 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/01 20:40:34 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,15 @@ static char	*n_param(double n)
 {
 	char	*tmp;
 	char	*tmp2;
-	char	tmp3[2];
 
 	if (n == 0)
 		return (ft_strdup("0"));
 	else
 	{
-		if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5)
-			return (ft_itoa((int)n));
-		tmp = ft_strjoin(ft_itoa((int)n), ".");
-		tmp3[0] = (int)(n * 10) % 10 + '0';
-		tmp3[1] = '\0';
-		tmp2 = ft_strjoin(tmp, tmp3);
-		free(tmp);
+		if (n == 10 || n == 20)
+			return (ft_itoa((int)n / 10));
+		tmp = ft_strjoinfree(ft_itoa((int)n / 10), ".", 1);
+		tmp2 = ft_strjoinfree(tmp, ft_itoa((int)n - 10), 3);
 		return (tmp2);
 	}
 }

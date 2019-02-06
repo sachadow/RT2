@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/21 17:06:45 by sderet           ###   ########.fr       */
+/*   Updated: 2019/02/05 17:01:36 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_color			get_light_value(t_work w, t_vec impact, t_mat mat, t_env *e)
 				find_texture_color(impact, w, e));
 		color_blinnphong(&c[j], blinnphong(lray, &w.r, w.n_vec,
 				mat), e->light[j]);
-		c[j] = multiply_color(c[j], e->light[j].radius ?
+		c[j] = multp_color(c[j], e->light[j].radius ?
 				shadow_from_sphere(e->light[j], impact, w, e)
 				: shadow_from_point(lray, dist, e));
 	}

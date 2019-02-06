@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:19:26 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 19:08:48 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/31 17:48:10 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 **	COLOR_SMOOTH function:
 **	Return the color to draw between 2 colors from the percentage between both
 */
-
 
 static int	color_smooth(t_colo start, t_colo end, double k)
 {

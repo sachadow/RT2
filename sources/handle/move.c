@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 16:34:11 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 20:25:45 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/01 20:22:44 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static void	cam_update(t_env *e)
 	if (e->key[KEY_S])
 		e->cam->pos = sub(e->cam->pos, scale(20, e->cam->dir));
 	if (e->key[KEY_UP])
-		e->cam->pos = add(e->cam->pos, scale(50, j));
+		e->cam->pos = add(e->cam->pos, scale(20, j));
 	if (e->key[KEY_DOWN])
-		e->cam->pos = add(e->cam->pos, scale(-50, j));
+		e->cam->pos = add(e->cam->pos, scale(-20, j));
 	if (e->key[KEY_Q])
 		e->cam->dir = rotate_axis(e->cam->dir, e->j, -2);
 	if (e->key[KEY_E])
@@ -68,7 +68,7 @@ void		move_cam(t_env *e)
 			|| e->key[KEY_S] || e->key[KEY_D] || e->key[KEY_Q] || e->key[KEY_E])
 	{
 		cam_update(e);
-		e->loading = 0;
+		e->loading = (e->antialiasing == 0 ? 1 : 0);
 	}
 }
 

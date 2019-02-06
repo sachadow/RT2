@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 21:51:34 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 20:40:20 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/05 21:12:19 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,12 +132,13 @@ void		ui_zones(int nb, t_mouse mouse, t_env *e)
 		if (mouse.x >= g_apply_xs && mouse.x < g_apply_xe
 				&& mouse.y >= g_apply_ys && mouse.y < g_apply_ye)
 		{
-			e->loading = 0;
+			e->loading = (e->antialiasing == 0 ? 1 : 0);
 			e->apply = 1;
 			reset_ui(e);
 		}
 		filters(mouse, e);
-		ui_texture(mouse, e);
+		if (e->itf.item.item_type != QUADRIC)
+			ui_texture(mouse, e);
 	}
 	else if (nb == 2)
 		ui_mat_type(mouse, e);

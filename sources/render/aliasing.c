@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:14:18 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/21 16:55:36 by sderet           ###   ########.fr       */
+/*   Updated: 2019/02/05 16:53:04 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		supersampling(int k, t_pix p, t_env *e)
 			c = add_2colors(c, color_calc((double)p.x + (double)i / k,
 						(double)p.y + (double)j / k, e));
 	}
-	c = multiply_color(c, 1.0f / (k * k));
+	c = multp_color(c, 1.0f / (k * k));
 	draw_point(e, p.x, p.y, c);
 }
 

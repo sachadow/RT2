@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/23 18:02:51 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/05 16:53:23 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	Multiplies the RGB values by a double
 */
 
-t_color			multiply_color(t_color c, double k)
+t_color			multp_color(t_color c, double k)
 {
 	t_color	res;
 

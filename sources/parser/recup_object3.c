@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 16:45:30 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/24 14:20:22 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/01/31 15:36:41 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int		get_fcone(t_env *e, t_element elem, int i, int nbr_mat)
 	int j;
 
 	j = 0;
-	printf("1");
 	if (elem.nbr_attr < 6 || elem.nbr_attr > 8)
 		std_err(0);
 	e->item[i].item_type = 7;

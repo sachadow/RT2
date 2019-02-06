@@ -13,7 +13,7 @@
 	<objects>
 		<icyl dir="0,1,0" axispoint="230,-100,140" radius="100" mat="1" isneg="0"/>
 		<box start="-1000,-500,-1000" end="1000,-400,1000" mat="1" isneg="0"/>
-		<fcone dir="-1,1,-1" axispoint="600,-300,100" angle="22" height="100" mat="1" isneg="0"/>
+		<fcone dir="-1,5,-1" axispoint="600,-300,100" angle="22" height="100" mat="1" isneg="0"/>
 		<fcyl dir="0,1,0" axispoint="-700,-400,-700" radius="100" height="100" mat="2" isneg="1"/>
 		<sphere center="233,290,-100" radius="70" mat="1" isneg="1"/>
 		<sphere center="320,140,-100" radius="70" mat="1" isneg="1"/>
