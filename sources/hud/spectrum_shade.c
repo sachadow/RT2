@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 20:23:56 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 19:44:44 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/29 16:22:38 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ const int	g_shad_ye = M_IMG_H + CIRCLE + 2 * MARGE;
 
 /*
 **	SPECTRUM_SHADE function:
-**	Catch the color from the mouse pointer click in the circle and call the
+**	Get the color from the mouse pointer click in the circle and call the
 **	drawing function for spectrum cursor, shade bar and cursor shade bar
 */
 

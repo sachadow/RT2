@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/11 11:39:29 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/05 17:00:35 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_color		lens_flaring(t_ray r, t_env *e)
 		if (in_shadow(lray, e, magnitude(sub(e->light[j].pos,
 							e->cam->pos))) != -1)
 			continue ;
-		c = add_2colors(c, multiply_color(e->light[j].intensity,
+		c = add_2colors(c, multp_color(e->light[j].intensity,
 					pow(ft_max(dotproduct(r.dir, dist), 0.0f), 10) / 255.0f));
 	}
 	return (c);

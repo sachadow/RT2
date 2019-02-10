@@ -6,13 +6,12 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:21:01 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 20:13:21 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/29 16:22:59 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hud.h"
 #include "rt.h"
-#include <stdio.h>
 
 /*
 **	GET_COLOR function:
@@ -92,7 +91,7 @@ void		color_point(int nb, t_pix pt, int color, t_env *e)
 
 /*
 **	COLOR_PICKER function:
-**	Catch the color for a pixel from coordinates pt
+**	Get the color for a pixel from coordinates pt
 */
 
 int			color_picker(int nb, t_pix pt, t_env *e)

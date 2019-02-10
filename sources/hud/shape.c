@@ -6,17 +6,16 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:21:21 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 19:21:22 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/31 17:48:51 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hud.h"
 #include "rt.h"
-#include <stdio.h>
 
 /*
 **	DRAW_TRI function:
-**	Draw a triangle with its base on the bottom 
+**	Draw a triangle with its base on the bottom
 */
 
 void		draw_tri(int nb, t_rect base, int color, t_env *e)

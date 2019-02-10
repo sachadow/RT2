@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:27:08 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 19:54:01 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/31 17:49:32 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void		ui3(t_env *e)
 	draw_lvl_bar(e);
 	r = init_rect(27, M_IMG_H + 50, 146, 26);
 	draw_rect(RIGHT, r, LIGHT_GREY, e);
-	//	r = init_rect(MARGE, CIRCLE, BOTTOM_SPC - 2 * MARGE, 4 * MARGE);
-	//	draw_rect(RIGHT, r, WHITE, e);
 	if (e->itf.mat.type != TEXTURE)
 		ui3_bottom(e);
 	r = init_rect(pt.x, pt.y, CIRCLE, 4 * MARGE);

@@ -6,13 +6,12 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:21:21 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 19:21:02 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/29 16:21:40 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hud.h"
 #include "rt.h"
-#include <stdio.h>
 
 /*
 **	DRAW_TRI_LEFT function:

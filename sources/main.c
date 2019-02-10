@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 17:07:15 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/28 17:55:14 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/05 16:52:15 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	init(t_env *e)
 	e->hit[F_CONE] = &hitfcone;
 	e->hit[BOX] = &hitbox;
 	e->hit[QUADRIC] = &hitquadric;
-	e->backgroundcolor = multiply_color(e->backgroundcolor, 0.00392156862);
+	e->backgroundcolor = multp_color(e->backgroundcolor, 0.00392156862);
 	e->lvl = 4;
 	e->antialiasing = 1;
 	create_axis(e);
@@ -88,7 +88,6 @@ int			main(int ac, char **av)
 	init(e);
 	e->win = mlx_new_window(e->mlx, WIN_W, WIN_H, "RT");
 	mlx_centertop_window(e->win);
-//	mlx_expose_hook(e->win, debug, e);
 	mlx_loop_hook(e->mlx, reload, e);
 	mlx_hook(e->win, KPRESS, KPRESSMASK, keypress, e);
 	mlx_hook(e->win, KRELEASE, KRELEASEMASK, keyrelease, e);

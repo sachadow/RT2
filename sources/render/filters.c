@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:48:17 by squiquem          #+#    #+#             */
-/*   Updated: 2018/12/11 13:13:03 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/05 16:59:37 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	add_cartoon_effect(t_env *e)
 				c.green = limit_clr(c.green);
 				c.blue = limit_clr(c.blue);
 			}
-			c = multiply_color(c, 0.0039215686);
+			c = multp_color(c, 0.0039215686);
 			draw_point(e, q.x, q.y, c);
 		}
 	}

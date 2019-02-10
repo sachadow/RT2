@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:44:27 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 19:40:50 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/05 21:13:27 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	apply_change(t_env *e)
 	e->mat[e->itf.item.mat].transparency = e->itf.param[TRANSPARENCY] / 100;
 	e->mat[e->itf.item.mat].specvalue = e->itf.param[SPECVALUE];
 	e->mat[e->itf.item.mat].specpower = e->itf.param[SPECPOWER];
-	e->mat[e->itf.item.mat].n = e->itf.param[N];
+	e->mat[e->itf.item.mat].n = e->itf.param[N] / 10;
 	e->mat[e->itf.item.mat].bump = e->itf.param[BUMP] / 100;
 	e->mat[e->itf.item.mat].scale = e->itf.param[SCALE];
 }

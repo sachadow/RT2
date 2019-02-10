@@ -6,13 +6,12 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:17:53 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 18:14:27 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/01 18:40:39 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "hud.h"
-#include <stdio.h>
 
 /*
 **	TOP_RIGHT function:
@@ -58,7 +57,6 @@ static void		ui1_writting(t_env *e)
 	mlx_string_put(e->mlx, e->win, 4 * WIN_W / 5 + 2 * RIGHT_SPC / 3 + 14,
 			IMG_H + 4 * (BOTTOM_SPC) / 5 - 13, BLACK, "On");
 	picked_item(e);
-	color_val(e);
 }
 
 /*

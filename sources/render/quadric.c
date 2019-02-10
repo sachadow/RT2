@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:04:12 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/24 18:03:17 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/01/31 15:32:48 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int			hitquadric(t_ray r, t_item q, double *t)
 	t_matrix	m;
 
 	m = get_quadric_matrix(q);
-	//printf("A=%f B=%f C=%f D=%f E=%f\n", m.col1.x, m.col2.y, m.col3.z, m.col1.y, m.col1.z);
 	par = sub(r.start, q.center);
 	rq = newvec(r.dir.x * m.col1.x, r.dir.y * m.col2.y, r.dir.z * m.col3.z);
 	sb = newvec(par.x * m.col1.x, par.y * m.col2.y, par.z * m.col3.z);

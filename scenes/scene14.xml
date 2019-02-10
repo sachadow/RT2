@@ -12,7 +12,7 @@
 	</material>
 	<objects>
 		<icone dir="0,1,0" axispoint="500,-100,0" angle="15" mat="1" isneg="0"/>
-		<icyl dir="2,0,1" axispoint="500,-300,0" radius="100" mat="1" isneg="1"/>
+		<icyl dir="20,-1,10" axispoint="500,-300,0" radius="100" mat="1" isneg="1"/>
 		<plane normale="0,0,1" d="-1500" mat="1"/>
 		<sphere center="233,290,-100" radius="70" mat="1" isneg="1"/>
 		<sphere center="320,140,-100" radius="70" mat="1" isneg="1"/>

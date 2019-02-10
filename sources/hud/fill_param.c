@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:53:36 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 17:53:38 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/01 20:26:35 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		fill_param(t_env *e)
 	e->itf.param[TRANSPARENCY] = e->itf.mat.transparency * 100;
 	e->itf.param[SPECVALUE] = e->itf.mat.specvalue;
 	e->itf.param[SPECPOWER] = e->itf.mat.specpower;
-	e->itf.param[N] = e->itf.mat.n;
+	e->itf.param[N] = e->itf.mat.n * 10;
 	e->itf.param[BUMP] = e->itf.mat.bump * 100;
 	e->itf.param[SCALE] = e->itf.mat.scale;
 }

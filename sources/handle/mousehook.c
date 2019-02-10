@@ -6,14 +6,13 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 17:29:16 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 20:19:11 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/01 19:27:03 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "keyboard.h"
 #include "hud.h"
-#include <stdio.h>
 
 /*
 **	Set the static globals used to select the tabs
@@ -78,7 +77,6 @@ int			mousepress(int button, int x, int y, t_env *e)
 	else if (x >= g_tab3_xs && x <= WIN_W && y >= 0 && y <= g_tab_ye)
 		e->itf.onglet = 3;
 	ui_checker(mouse, e);
-	printf("%d %d\n", x, y);
 	hud(e);
 	return (0);
 }

@@ -6,12 +6,11 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 19:07:06 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 18:20:52 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/01/29 16:21:25 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-#include <stdio.h>
 
 /*
 **	NEW_IMAGE function:

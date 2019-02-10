@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 14:18:27 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/29 17:04:12 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/01/31 13:10:47 by asarasy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,26 @@ int			free_checker_waves(t_mat *mat, int j)
 	int i;
 
 	i = 0;
-	while(i < j)
+	while (i < j)
 	{
-		if(mat[i].type == 2 || mat[i].type == 5)
-			free(mat[i].tex.pixel_img);
+		if (mat[i].type == 1)
+			free(mat[i].path_text);
 		i++;
 	}
-	free(mat);
-	return(0);
+	return (0);
 }
 
-t_mat		cut_struct(t_mat *mat, int i)
+int			cut_struct(t_mat *mat, int i, t_env *e, int j)
 {
-	return (mat[i]);
+	e->mat[j] = mat[i];
+	if (mat[i].type == 2)
+		checker_tex_build(&e->mat[j].tex, e->mat[j].diffuse,\
+				e->mat[j].diffuse2);
+	if (mat[i].type == 5)
+		waves_tex_build(&e->mat[j].tex, e->mat[j].diffuse);
+	if (mat[i].type == 1)
+		e->mat[j].path_text = ft_strdup(mat[i].path_text);
+	return (0);
 }
 
 int			soloobject(t_env *e, t_element elem, int i, t_mat *mat)
@@ -55,7 +62,7 @@ int			soloobject(t_env *e, t_element elem, int i, t_mat *mat)
 		get_quadric(e, elem, i, e->nbs[1]);
 	else
 		std_err(0);
-	e->mat[i] = cut_struct(mat, e->item[i].mat);
+	cut_struct(mat, e->item[i].mat, e, i);
 	e->item[i].mat = i;
 	return (0);
 }
@@ -101,7 +108,8 @@ t_env		*recup_object(t_env *e, t_element elem, t_mat *mat)
 	}
 	if (j == 0)
 		std_err(0);
-	//free_checker_waves(mat, e->nbs[1]);
+	free_checker_waves(mat, e->nbs[1]);
+	free(mat);
 	e->nbs[1] = e->nbs[3];
 	return (e);
 }

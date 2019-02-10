@@ -6,7 +6,7 @@
 /*   By: sderet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:19:51 by sderet            #+#    #+#             */
-/*   Updated: 2019/01/21 17:02:57 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/06 17:28:54 by sderet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ int			is_empty(int *hit, int count, int *mod, t_env *e)
 	return (b);
 }
 
-int			get_hits(int *hit, int *mod, int last)
+int			get_hits(int *hit, int *mod, int last, int count)
 {
 	int a;
 
 	a = 0;
-	while (mod[a] != last)
+	while (mod[a] != last && a < count)
 		a++;
 	return (hit[a]);
 }
