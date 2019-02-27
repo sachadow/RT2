@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:14:18 by squiquem          #+#    #+#             */
-/*   Updated: 2019/02/05 16:53:04 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/20 15:27:20 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		supersampling(int k, t_pix p, t_env *e)
 						(double)p.y + (double)j / k, e));
 	}
 	c = multp_color(c, 1.0f / (k * k));
-	draw_point(e, p.x, p.y, c);
+	draw_point(&e->img[CENTER], p.x, p.y, c);
 }
 
 /*
@@ -59,7 +59,7 @@ void		aliasing(int k, t_pix p, t_env *e)
 		{
 			j = -1;
 			while (++j < k)
-				draw_point(e, p.x + i, p.y + j, c);
+				draw_point(&e->img[CENTER], p.x + i, p.y + j, c);
 		}
 	}
 	else

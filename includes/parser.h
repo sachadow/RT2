@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 17:25:35 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/31 13:11:22 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/02/25 18:17:52 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <fcntl.h>
 # include <float.h>
 # include "rt.h"
-# include <stdio.h>
 
 typedef struct			s_attribut
 {

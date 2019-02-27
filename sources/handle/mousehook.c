@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 17:29:16 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/02/01 19:27:03 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/20 15:25:01 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static void	ui_checker(t_mouse m, t_env *e)
 		ui_spectrum(1, pt, m, e);
 		pt.x = pt.y + MARGE;
 		ui_shade(1, pt, m, e);
-		pt = init_point(M_IMG_H + 35 + (RIGHT_SPC) / 2 - MARGE,
-				M_IMG_H + 35 + RIGHT_SPC - MARGE);
+		pt = init_point(M_IMG_H + 35 + (RIGHT_SPC) / 2 - MARGE
+				, M_IMG_H + 35 + RIGHT_SPC - MARGE);
 		ui_spectrum(2, pt, m, e);
 		pt.x = pt.y + MARGE;
 		ui_shade(2, pt, m, e);
@@ -121,6 +121,7 @@ static void	update_mouse(int nb, t_pix pt, t_pix coord, t_env *e)
 			e->itf.shade[nb].x = RIGHT_SPC - MARGE - 1;
 		else
 			e->itf.shade[nb].x = pt.x - IMG_W;
+		hud(e);
 	}
 	if (e->itf.spectrum[nb].button == L_CLICK)
 	{
@@ -128,6 +129,7 @@ static void	update_mouse(int nb, t_pix pt, t_pix coord, t_env *e)
 		mouse.x = pt.x;
 		mouse.y = pt.y;
 		ui_spectrum(nb, coord, mouse, e);
+		hud(e);
 	}
 }
 

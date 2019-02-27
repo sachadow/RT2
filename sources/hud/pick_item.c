@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 18:27:07 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 19:05:34 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/21 13:58:16 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 static void	find_texture(t_env *e)
 {
+	e->itf.nb_texture = 0;
 	if (e->itf.mat.type == 1)
 	{
 		if (!ft_strcmp(e->itf.mat.path_text, "textures/redbrick.xpm"))
@@ -97,10 +98,10 @@ void		picked_item(t_env *e)
 	draw_line(rect, BLACK, e);
 	if (e->itf.pick.button == -1)
 	{
-		mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, 50, BLACK,
-				"None");
-		mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, 100, BLACK,
-				"None");
+		mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, 50,
+				BLACK, "None");
+		mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, 100,
+				BLACK, "None");
 	}
 	else
 		item_selector(e);
@@ -125,7 +126,7 @@ int			pick_item(t_mouse mouse, t_env *e)
 	{
 		r.start = e->cam->pos;
 		r.dir = set_ray_dir(mouse.x, mouse.y, e);
-		nb = find_closest_item(r, e, &impact) % (e->nbs[ITEM] + 1);
+		nb = find_closest_item2(r, e, &impact) % (e->nbs[ITEM] + 1);
 		if (nb != e->itf.pick.button && nb != -1)
 		{
 			e->itf.pick.button = nb;
@@ -133,10 +134,9 @@ int			pick_item(t_mouse mouse, t_env *e)
 			e->itf.pick.y = mouse.y;
 			e->itf.mat = e->mat[e->item[nb].mat];
 			e->itf.item = e->item[nb];
+			e->itf.mouse.button = -1;
 			find_texture(e);
 			fill_param(e);
-			//			printf("nb = %d, item_type %d, nb_mat %d, mat type %d, reflection %f, transparency %f, specvalue %f, specpower %f, n %f, bump %f, scale %f, color = r %f g %f b %f, pick button %d\n", nb, e->item[nb].item_type, e->itf.item.mat, e->mat[e->item[nb].mat].type, e->mat[e->item[nb].mat].reflection, e->mat[e->item[nb].mat].transparency, e->mat[e->item[nb].mat].specvalue, e->mat[e->item[nb].mat].specpower, e->mat[e->item[nb].mat].n, e->mat[e->item[nb].mat].bump, e->mat[e->item[nb].mat].scale, e->mat[e->item[nb].mat].diffuse.red, e->mat[e->item[nb].mat].diffuse.green, e->mat[e->item[nb].mat].diffuse.blue, e->itf.pick.button);
-			printf("nb = %d, item_type %d, nb_mat %d, mat type %d, reflection %f, transparency %f, specvalue %f, specpower %f, n %f, bump %f, scale %f, color = r %f g %f b %f, pick.button %d\n", nb, e->itf.item.item_type, e->itf.item.mat, e->itf.mat.type, e->itf.mat.reflection, e->itf.mat.transparency, e->itf.mat.specvalue, e->itf.mat.specpower, e->itf.mat.n, e->itf.mat.bump, e->itf.mat.scale, e->itf.mat.diffuse.red, e->itf.mat.diffuse.green, e->itf.mat.diffuse.blue, e->itf.pick.button);
 		}
 		else
 			reset_values(e);

@@ -6,11 +6,11 @@
 #    By: squiquem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/23 19:01:27 by squiquem          #+#    #+#              #
-#    Updated: 2019/01/29 17:00:10 by qsebasti         ###   ########.fr        #
+#    Updated: 2019/02/25 18:38:27 by qsebasti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY			:	all clean fclean re opti
+.PHONY			:	all clean fclean re opti objects
 
 NAME			=	RT
 
@@ -18,7 +18,15 @@ SRC_DIR			=	sources
 
 OBJ_DIR			=	objects
 
+SC				=	screenshots
+
+INCPNG			=	-I ~/.brew/include/
+
 CPPFLAGS 		=	-I includes/
+
+INCLIB			=	-I libft/
+
+INCMLX			=	-I minilibx/
 
 SRC_FILES		=	main.c \
 					handle/keyhook.c \
@@ -39,6 +47,8 @@ SRC_FILES		=	main.c \
 					hud/pick_item.c \
 					hud/reset_ui.c \
 					hud/ruler.c \
+					hud/save_writting.c \
+					hud/screenshot.c \
 					hud/shade_bar.c \
 					hud/spectrum_shade.c \
 					hud/shape.c \
@@ -74,6 +84,11 @@ SRC_FILES		=	main.c \
 					parser/recup_object3.c \
 					parser/recursive_element.c \
 					parser/recursive_elem2.c \
+					parser/save.c \
+					parser/save_light.c \
+					parser/save_util.c \
+					parser/save_material.c \
+					parser/save_item.c \
 					parser/set_zero_mat.c \
 					render/aliasing.c \
 					render/cartoon.c \
@@ -82,6 +97,7 @@ SRC_FILES		=	main.c \
 					render/fct_to_add.c \
 					render/filters.c \
 					render/find_closest.c \
+					render/find_closest2.c \
 					render/find_normal.c \
 					render/find_normal_plus.c \
 					render/fresnel.c \
@@ -105,7 +121,7 @@ SRC_FILES		=	main.c \
 					render/tab.c \
 					render/textures_util.c \
 					render/textures.c \
-					render/threads.c \
+					render/threads.c
 
 SUB_FOLDERS		=	parser render hud handle maths
 
@@ -129,9 +145,11 @@ LIBFT			=	libft/libft.a
 
 LIBMLX			=	minilibx/libmlx.a
 
+LPNG			=	-L ~/.brew/lib/ -lpng
+
 CC				=	gcc
 
-CFLAGS			=	-Wall -Wextra -Werror -g3 -MMD -O2 -fsanitize=address
+CFLAGS			=	-Wall -Wextra -Werror -MMD -O2
 
 opti			:
 	@make -j8 all
@@ -140,6 +158,7 @@ all				:	objects
 	@make all -C libft/
 	@make all -C minilibx/
 	@make $(NAME)
+	@mkdir -p $(SC)
 
 objects			:	$(BUILD_DIR)
 
@@ -147,15 +166,16 @@ $(BUILD_DIR)	:
 	@mkdir -p $@
 
 $(NAME)			:	$(OBJ)
-	@$(CC) $(CFLAGS) $(LFT) $(MLX) $(OBJ) -o $@ 
+	@$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLIB) $(INCMLX) $(INCPNG) $(LFT) $(MLX) $(OBJ) $(LPNG) -o $@ 
 	@printf '\033[4m'
 	@printf "\033[32m[ ✔ ] $(NAME)\n\033[0m"
 	@touch .gitignore
 	@echo $(NAME) > .gitignore
+	@echo $(SC) >> .gitignore
 
-$(OBJ_DIR)/%.o	:	$(SRC_DIR)/%.c $(LIBFT) $(LIBMLX)
+$(OBJ_DIR)/%.o	:	$(SRC_DIR)/%.c $(LIBFT) $(LIBMLX) $(LIBPNG)
 	@mkdir $(OBJ_DIR) 2> /dev/null || true
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLIB) $(INCMLX) $(INCPNG) -o $@ -c $<
 	@printf '\033[0m[ ✔ ] %s\n\033[0m' "$<"
 
 clean			:

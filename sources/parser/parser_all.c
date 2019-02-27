@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parser_all.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/18 13:23:27 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/23 17:29:53 by qsebasti         ###   ########.fr       */
+/*   Created: 2019/02/08 18:51:09 by qsebasti          #+#    #+#             */
+/*   Updated: 2019/02/08 22:20:20 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_env		*parser_all(char *file, t_env *e)
 	elem = parser_xml(file, elem);
 	e = recup_env(e, elem);
 	e->cam->dir = normalize(e->cam->dir);
-	e->nbs[0] = 1;
+	e->nbs[CAM] = 1;
 	return (e);
 }
 

@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 16:09:02 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/28 16:17:56 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/18 19:36:30 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int				x_g(t_env *e, t_pix p, char type)
 		q.x = -2;
 		while (++q.x < 2)
 		{
-			c = get_pt_color(p.x + q.x, p.y + q.y, e);
+			c = get_pt_color(p.x + q.x, p.y + q.y, e->img[CENTER]);
 			res += tab[q.y + 1][q.x + 1]
 				* ((int)c.red + (int)c.green + (int)c.blue) / 3;
 		}

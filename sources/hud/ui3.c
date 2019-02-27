@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:27:08 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/31 17:49:32 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/26 15:51:47 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		ui3(t_env *e)
 	pt = init_point(MARGE, CIRCLE);
 	insert_xpm(RIGHT, pt, "resources/lil-ombre.xpm", e);
 	draw_lvl_bar(e);
-	r = init_rect(27, M_IMG_H + 50, 146, 26);
+	r = init_rect(25, M_IMG_H + 50, 150, 2 * MARGE);
 	draw_rect(RIGHT, r, LIGHT_GREY, e);
 	if (e->itf.mat.type != TEXTURE)
 		ui3_bottom(e);
@@ -53,4 +53,14 @@ void		ui3(t_env *e)
 		frame(RIGHT, r, C_GREEN, e);
 	else if (e->light[0].radius == 0)
 		frame(RIGHT, r, DARK_GREY, e);
+	r = init_rect(25, M_IMG_H + 100, 150, 2 * MARGE);
+	draw_rect(RIGHT, r, LIGHT_GREY, e);
+	r = init_rect(25, M_IMG_H + 150, 150, 2 * MARGE);
+	draw_rect(RIGHT, r, LIGHT_GREY, e);
+	pt = init_point(RIGHT_SPC / 2 - 25, M_IMG_H + 200);
+	insert_xpm(RIGHT, pt, "resources/lil-screenshoticon.xpm", e);
+	r = init_rect(RIGHT_SPC / 2 - 25, M_IMG_H + 200, 2, 50);
+	draw_rect(RIGHT, r, DARK_GREY, e);
+	r = init_rect(RIGHT_SPC / 2 + 23, M_IMG_H + 200, 2, 50);
+	draw_rect(RIGHT, r, DARK_GREY, e);
 }

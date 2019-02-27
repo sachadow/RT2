@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 20:29:27 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/02/01 20:27:42 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/20 16:47:44 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	up_value(t_env *e)
 			&& e->itf.param[BUMP] < 100)
 		e->itf.param[BUMP] += 5;
 	else if (e->itf.mouse.button == SCALE
-			&& e->itf.param[SCALE] * 10 <= 10)
+			&& e->itf.param[SCALE] < 10)
 		if ((e->itf.mat.type == PERTURB || e->itf.mat.type == MARBLE
 					|| e->itf.mat.type == WOOD) && e->itf.mouse.button == SCALE)
 			e->itf.param[SCALE] *= 10;
@@ -76,7 +76,7 @@ static void	down_value(t_env *e)
 	}
 	else if (e->itf.mouse.button == BUMP && e->itf.param[BUMP] > 0)
 		e->itf.param[BUMP] -= 5;
-	else if (e->itf.mouse.button == SCALE && e->itf.param[SCALE] / 10 >= 0.001)
+	else if (e->itf.mouse.button == SCALE && e->itf.param[SCALE] > 0.001)
 		if ((e->itf.mat.type == PERTURB || e->itf.mat.type == MARBLE
 					|| e->itf.mat.type == WOOD) && e->itf.mouse.button == SCALE)
 			e->itf.param[SCALE] /= 10;
@@ -85,12 +85,12 @@ static void	down_value(t_env *e)
 void		up_and_down(t_mouse m, t_env *e)
 {
 	if (m.x >= g_param_x + WIN_W / 5 / 3 && m.x < g_param_x + WIN_W / 5 / 3 + 50
-			&& m.y >= IMG_H + BOTTOM_SPC / 2 / 3 && m.y < IMG_H
-			+ BOTTOM_SPC / 2 / 3 + 50)
+			&& m.y >= IMG_H + BOTTOM_SPC / 2 / 3
+			&& m.y < IMG_H + BOTTOM_SPC / 2 / 3 + 50)
 		up_value(e);
 	if (m.x >= g_param_x + WIN_W / 5 / 3 && m.x < g_param_x + WIN_W / 5 / 3 + 50
-			&& m.y >= IMG_H + BOTTOM_SPC / 2 && m.y < IMG_H
-			+ BOTTOM_SPC / 2 + 50)
+			&& m.y >= IMG_H + BOTTOM_SPC / 2
+			&& m.y < IMG_H + BOTTOM_SPC / 2 + 50)
 		down_value(e);
 }
 
@@ -107,7 +107,9 @@ static void	param_zone2(t_mouse m, t_env *e)
 		e->itf.mouse.button = (e->itf.mouse.button == BUMP ? -1 : BUMP);
 	else if (m.x >= 10 && m.x < g_param_x && m.y >= IMG_H + 7 * g_param_y
 			- 20 && m.y < IMG_H + 7 * g_param_y + 3)
-		e->itf.mouse.button = (e->itf.mouse.button == SCALE ? -1 : SCALE);
+		if (e->itf.mat.type == PERTURB || e->itf.mat.type == MARBLE
+				|| e->itf.mat.type == WOOD)
+			e->itf.mouse.button = (e->itf.mouse.button == SCALE ? -1 : SCALE);
 }
 
 void		param_zone(t_mouse m, t_env *e)

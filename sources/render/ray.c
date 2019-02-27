@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2019/02/05 17:01:36 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/22 19:18:11 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ t_color			get_light_value(t_work w, t_vec impact, t_mat mat, t_env *e)
 		lray.dir = normalize(dist);
 		color_lambert(&c[j], lambert(lray, w.n_vec), e->light[j],
 				find_texture_color(impact, w, e));
-		color_blinnphong(&c[j], blinnphong(lray, &w.r, w.n_vec,
-				mat), e->light[j]);
-		c[j] = multp_color(c[j], e->light[j].radius ?
-				shadow_from_sphere(e->light[j], impact, w, e)
+		color_blinnphong(&c[j], blinnphong(lray, &w.r, w.n_vec, mat),
+				e->light[j]);
+		c[j] = multp_color(c[j], e->light[j].radius
+				? shadow_from_sphere(e->light[j], impact, w, e)
 				: shadow_from_point(lray, dist, e));
 	}
 	return (add_2colors(lens_flaring(w.r, e), color_tab_sum(c, e)));
@@ -107,8 +107,9 @@ t_vec			set_ray_dir(double x, double y, t_env *e)
 	t_vec	l;
 
 	k = e->cam->dir;
-	l = (k.x == 0.0f && k.y == 1.0f && k.z == 0.0f) ?
-		newvec(0.0, 0.0, 1.0) : newvec(0.0, 1.0, 0.0);
+	l = (e->initcam.dir.x == 0.0f && e->initcam.dir.y == 1.0f
+			&& e->initcam.dir.z == 0.0f) ? newvec(0.0, 0.0, 1.0)
+		: newvec(0.0, 1.0, 0.0);
 	i = crossproduct(k, l);
 	j = crossproduct(i, k);
 	l.x = (IMG_W - x * 2.0) / IMG_W * i.x

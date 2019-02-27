@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/31 15:34:49 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/22 12:45:41 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,29 @@
 #include "hud.h"
 #include <string.h>
 #include <errno.h>
+
+void		debug(t_env *e)
+{
+	t_pix			p;
+
+	new_image(&e->img[CENTER], IMG_W, IMG_H, e);
+	p.y = IMG_H;
+	while (--p.y > -1)
+	{
+		p.x = -1;
+		while (++p.x < IMG_W)
+		{
+			e->debug = (p.x == 470 && p.y == 300) ? 1 : 0;
+			if (e->antialiasing == 0)
+				aliasing(10, p, e);
+			else if (e->antialiasing == 1)
+				aliasing(1, p, e);
+			else if (e->antialiasing == 2)
+				supersampling(2, p, e);
+			draw_debug(e, p.x, p.y);
+		}
+	}
+}
 
 /*
 **	DRAW function:
@@ -52,13 +75,12 @@ static void	*draw(void *arg)
 **	Creates threads in env
 */
 
-static void	create_threads(t_env *e)
+void		create_threads(t_env *e)
 {
 	int				i;
 	int				rc;
 	t_th			th[NB_THR];
 
-	new_image(CENTER, IMG_W, IMG_H, e);
 	i = -1;
 	while (++i < NB_THR)
 	{
@@ -87,41 +109,9 @@ int			reload(t_env *e)
 		create_threads(e);
 		if (e->cartoon == 1)
 			add_cartoon_effect(e);
-		mlx_put_image_to_window(e->mlx, e->win, e->img[CENTER], 0, 0);
-		mlx_destroy_image(e->mlx, e->img[CENTER]);
+		mlx_put_image_to_window(e->mlx, e->win, e->img[CENTER].img, 0, 0);
 		e->loading = 2;
 	}
 	key_hook(e);
-	hud(e);
-	return (0);
-}
-
-int			debug(t_env *e)
-{
-	t_pix			p;
-
-	key_hook(e);
-	if (!(e->img[CENTER] = mlx_new_image(e->mlx, IMG_W, IMG_H))
-			|| !(e->pixel_img[CENTER] =
-				(unsigned char*)mlx_get_data_addr(e->img[CENTER], &e->bpp[CENTER],
-					&e->s_line[CENTER], &e->ed[CENTER])))
-		ft_printerror("Error mlx");
-	p.y = IMG_H;
-	while (--p.y > -1)
-	{
-		p.x = -1;
-		while (++p.x < IMG_W)
-		{
-			e->debug = (p.x == 487 && p.y == 237) ? 1 : 0;
-			if (((t_env*)e)->antialiasing == 0)
-				aliasing(10, p, (t_env*)e);
-			else if (((t_env*)e)->antialiasing == 1)
-				aliasing(1, p, (t_env*)e);
-			else if (((t_env*)e)->antialiasing == 2)
-				supersampling(2, p, (t_env*)e);
-		}
-	}
-	mlx_put_image_to_window(e->mlx, e->win, e->img[CENTER], 0, 0);
-	mlx_destroy_image(e->mlx, e->img[CENTER]);
 	return (0);
 }

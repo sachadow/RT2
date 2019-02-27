@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 13:37:07 by squiquem          #+#    #+#             */
-/*   Updated: 2018/11/23 14:18:30 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/20 15:48:51 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,16 @@ double		noise(double x, double y, double z)
 	permutation = get_permutation();
 	perlin(p, permutation);
 	init_perlin(&aux, &xyz, p);
-	return (ft_lerp(aux.fz, ft_lerp(aux.fy,
-			ft_lerp(aux.fx, grad(p[aux.aa], xyz.x, xyz.y, xyz.z),
-			grad(p[aux.ba], xyz.x - 1, xyz.y, xyz.z)),
-			ft_lerp(aux.fx, grad(p[aux.ab], xyz.x, xyz.y - 1, xyz.z),
-			grad(p[aux.bb], xyz.x - 1, xyz.y - 1, xyz.z))),
-			ft_lerp(aux.fy, ft_lerp(aux.fx,
-			grad(p[aux.aa + 1], xyz.x, xyz.y, xyz.z - 1),
-			grad(p[aux.ba + 1], xyz.x - 1, xyz.y, xyz.z - 1)),
-			ft_lerp(aux.fx,
-			grad(p[aux.ab + 1], xyz.x, xyz.y - 1, xyz.z - 1),
-			grad(p[aux.bb + 1],
-			xyz.x - 1, xyz.y - 1, xyz.z - 1)))));
+	return (ft_lerp(aux.fz, ft_lerp(aux.fy, ft_lerp(aux.fx,
+						grad(p[aux.aa], xyz.x, xyz.y, xyz.z),
+						grad(p[aux.ba], xyz.x - 1, xyz.y, xyz.z)),
+					ft_lerp(aux.fx, grad(p[aux.ab], xyz.x, xyz.y - 1, xyz.z),
+						grad(p[aux.bb], xyz.x - 1, xyz.y - 1, xyz.z))),
+				ft_lerp(aux.fy, ft_lerp(aux.fx,
+						grad(p[aux.aa + 1], xyz.x, xyz.y, xyz.z - 1),
+						grad(p[aux.ba + 1], xyz.x - 1, xyz.y, xyz.z - 1)),
+					ft_lerp(aux.fx,
+						grad(p[aux.ab + 1], xyz.x, xyz.y - 1, xyz.z - 1),
+						grad(p[aux.bb + 1], xyz.x - 1, xyz.y - 1,
+							xyz.z - 1)))));
 }

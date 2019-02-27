@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 15:55:20 by squiquem          #+#    #+#             */
-/*   Updated: 2019/02/05 17:01:11 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/20 15:38:35 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ t_color	color_marble(t_color c1, t_color c2, t_vec impact, double s)
 	noisecoef = 0;
 	impact = scale(s, impact);
 	while (++lvl < 10)
-		noisecoef += (1.0f / lvl) * fabs(noise(lvl * impact.x,
-					lvl * impact.y, lvl * impact.z));
+		noisecoef += (1.0f / lvl) * fabs(noise(lvl * impact.x, lvl * impact.y,
+					lvl * impact.z));
 	noisecoef = 0.5f * sin((impact.x + impact.y) * s + noisecoef) + 0.5f;
 	noisecoef = ft_clamp(0, 1, noisecoef);
 	return (add_2colors(multp_color(c1, noisecoef),
@@ -38,8 +38,8 @@ t_color	color_turbulence(t_color c1, t_color c2, t_vec impact, double s)
 	noisecoef = 0;
 	impact = scale(s, impact);
 	while (++lvl < 10)
-		noisecoef += (1.0f / lvl) * fabs(noise(lvl * impact.x,
-					lvl * impact.y, lvl * impact.z));
+		noisecoef += (1.0f / lvl) * fabs(noise(lvl * impact.x, lvl * impact.y,
+					lvl * impact.z));
 	noisecoef = ft_clamp(0, 1, noisecoef);
 	return (add_2colors(multp_color(c1, noisecoef),
 				multp_color(c2, 1.0f - noisecoef)));

@@ -6,32 +6,34 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2019/02/06 17:28:32 by sderet           ###   ########.fr       */
+/*   Updated: 2019/02/22 19:47:53 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-/*
-**	FIND_CLOSEST_ITEM function:
-**	Finds the closest item hit by the ray
-*/
-
-int			find_closest_item(t_ray r, t_env *e, t_vec *newstart)
+int			check_nega_edges(t_ray r, t_env *e, t_vec *impact, int curr)
 {
-	double	t;
-	int		curr;
 	t_curr	ncurr;
+	double	t;
+	t_ray	r2;
 
-	curr = get_closest_item(r, e);
-	if (curr < 0)
-		return (curr);
 	t = -1;
+	r2 = r;
 	e->hit[e->item[curr].item_type](r, e->item[curr], &t);
-	if (curr > -1 && e->item[curr].isnega == 0)
-		*newstart = add(scale(t, r.dir), r.start);
-	else if (e->item[curr].isnega == 1)
-		curr = find_post_nega(r, e, newstart, &ncurr);
+	r.start = add(scale(t, r.dir), r.start);
+	t = -1;
+	if (e->hit[e->item[curr].item_type](r, e->item[curr], &t))
+		curr = find_post_nega(r2, e, impact, &ncurr);
+	else
+	{
+		curr = get_closest_item(r, e);
+		if (curr < 0)
+			return (curr);
+		t = -1;
+		e->hit[e->item[curr].item_type](r, e->item[curr], &t);
+		*impact = add(scale(t, r.dir), r.start);
+	}
 	return (curr);
 }
 
@@ -55,7 +57,7 @@ int			find_post_nega(t_ray r, t_env *e, t_vec *newstart, t_curr *t)
 			t->curr = last_hit;
 	}
 	if (is_empty(i.hit_items, i.item_count, i.items_mod, e) == 0)
-		return (free_nega(find_closest_item(r, e, newstart), i.hit_items,
+		return (free_nega(find_closest_item2(r, e, newstart), i.hit_items,
 					i.items_mod));
 		*newstart = r.start;
 	if (e->item[last_hit].isnega == 1)
@@ -73,7 +75,7 @@ t_vec		find_newstart(t_env *e, t_ray r)
 	t_vec	newstart;
 	int		curr;
 
-	curr = find_closest_item(r, e, &newstart);
+	curr = find_closest_item1(r, e, &newstart);
 	return (newstart);
 }
 
@@ -90,9 +92,7 @@ t_mat		find_material(int mod, t_env *e)
 	m.reflection = 0;
 	m.specvalue = 0;
 	m.specpower = 0;
-	if (e->item[mod].mat > e->nbs[MAT])
-		return (m);
-	else
+	if (mod < e->nbs[ITEM] && e->item[mod].mat < e->nbs[MAT])
 		m = e->mat[e->item[mod].mat];
 	return (m);
 }

@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 17:17:02 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 18:16:57 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/20 16:04:14 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ const int			g_mat_ys;
 const int			g_param_x;
 const int			g_param_y;
 
+const int			g_screen_x;
+
 typedef struct		s_rect
 {
 	int				x;
@@ -98,8 +100,8 @@ typedef struct		s_rect
 
 t_pix				init_point(int x, int y);
 t_rect				init_rect(int x, int y, int width, int height);
-void				color_point(int nb, t_pix pt, int color, t_env *e);
-int					color_picker(int nb, t_pix pt, t_env *e);
+void				color_point(t_img *img, t_pix pt, int color);
+int					color_picker(t_img img, t_pix pt);
 void				draw_rect(int nb, t_rect rect, int color,
 					t_env *e);
 void				draw_tri(int nb, t_rect base, int color,
@@ -137,6 +139,7 @@ void				ui3(t_env *e);
 void				ui3_bottom(t_env *e);
 void				ui3_param(t_env *e);
 void				ui3_writting(t_env *e);
+void				save_writting(t_env *e);
 
 void				insert_xpm(int num, t_pix pt, char *name, t_env *e);
 void				load(t_env *e);
@@ -155,8 +158,4 @@ void				apply_mat(int type, t_env *e);
 void				blur(t_env *e);
 
 void				ui3_zone(t_mouse m, t_env *e);
-
-int					int_to_pos(int val, int min, int max);
-int					pos_to_int(int pos, int min, int max);
-void				conv_all_param(t_env *e);
 #endif

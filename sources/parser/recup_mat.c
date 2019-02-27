@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 13:14:56 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/29 17:04:01 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/08 22:21:13 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_mat		*get_mat(t_element elem, t_env *e)
 	if (!(mat = (t_mat*)malloc(sizeof(t_mat) * elem.nbr_element)))
 		std_err(0);
 	clean_value_mat(mat, elem.nbr_element);
-	e->nbs[1] = elem.nbr_element;
+	e->nbs[MAT] = elem.nbr_element;
 	while (i < elem.nbr_element)
 	{
 		if (ft_strcmp(elem.elem[i].object, "uniform") == 0)

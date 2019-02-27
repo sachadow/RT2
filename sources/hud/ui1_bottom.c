@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:50:52 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 19:54:19 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/26 14:22:36 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void	ui1_frame(t_rect *r, t_env *e)
 {
 	int i;
 
-	i = -1;
+	i = 0;
 	while (++i < 5)
 	{
 		frame(BOTTOM, r[i], DARK_GREY, e);
@@ -145,8 +145,8 @@ void		ui1_bottom(t_env *e)
 	t_rect	rect[11];
 
 	ui1_bottom_xpm(e);
-	rect[0] = init_rect(4 * (WIN_W / 5) + (WIN_W / 5) / 6 - 7, (BOTTOM_SPC) / 8,
-			140, 30);
+	rect[0] = init_rect(4 * (WIN_W / 5) + (WIN_W / 5) / 6 - 7,
+			(BOTTOM_SPC) / 8, 140, 30);
 	draw_rect(BOTTOM, rect[0], LIGHT_GREY, e);
 	rect[0] = init_rect(4 * (WIN_W / 5) + (WIN_W / 7) / 4 - 14,
 			5 * (BOTTOM_SPC) / 8 + 9, 159, 50);

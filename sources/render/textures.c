@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 15:12:07 by squiquem          #+#    #+#             */
-/*   Updated: 2019/02/05 17:02:42 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/19 19:14:34 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ t_color	texture_plane(t_img tex, t_item item, t_vec impact)
 	p.y = (int)(dotproduct(d, crossproduct(item.dir, u)) * tex.h / tex.realh
 			+ tex.h / 2);
 	p = rotate_pix(p, tex.w, tex.h, tex.angle);
-	get_img_color(tex, p, &c);
-	return (c);
+	return (get_img_color(tex, p, &c));
 }
 
 t_color	texture_sphere(t_img tex, t_item item, t_work w)
@@ -74,13 +73,12 @@ t_color	texture_sphere(t_img tex, t_item item, t_work w)
 	if (magnitude(item.center))
 		k = normalize(sub(tex.center, item.center));
 	p.x = (int)(((magnitude(tex.center) ? atan2(k.z, k.x) : 0.5)
-		- atan2(w.n_vec.z, w.n_vec.x)) / (2 * M_PI) * tex.w * 1.5 * item.radius
-		/ tex.realw + tex.w / 2);
+				- atan2(w.n_vec.z, w.n_vec.x)) / (2 * M_PI) * tex.w * 1.5
+			* item.radius / tex.realw + tex.w / 2);
 	p.y = (int)((asin(w.n_vec.y) - (magnitude(tex.center) ? asin(k.y) : 0))
 			/ M_PI * tex.h * 1.5 * item.radius / tex.realh + tex.h / 2);
 	p = rotate_pix(p, tex.w, tex.h, tex.angle);
-	get_img_color(tex, p, &c);
-	return (c);
+	return (get_img_color(tex, p, &c));
 }
 
 t_color	texture_cylinder(t_img tex, t_item item, t_vec impact)
@@ -91,9 +89,10 @@ t_color	texture_cylinder(t_img tex, t_item item, t_vec impact)
 	t_vec		v;
 	t_vec		u;
 
-	if (magnitude(tex.center) && (fabs(magnitude(sub(sub(item.center,
-			tex.center), scale(dotproduct(sub(item.center, tex.center),
-			item.dir), item.dir))) - item.radius) > 0.01f))
+	if (magnitude(tex.center) && (fabs(magnitude(sub(sub(item.center
+								, tex.center), scale(dotproduct(sub(item.center
+											, tex.center), item.dir)
+									, item.dir))) - item.radius) > 0.01f))
 		tex.center = newvec(0, 0, 0);
 	u = sub(impact, item.center);
 	v = sub(tex.center, item.center);
@@ -101,17 +100,16 @@ t_color	texture_cylinder(t_img tex, t_item item, t_vec impact)
 					&& item.dir.z == 1) ? newvec(0, 1, 0) : newvec(0, 0, 1)));
 	m.col3 = crossproduct(item.dir, m.col2);
 	p.x = (int)((dotproduct(u, item.dir) - dotproduct(v, item.dir))
-		* item.radius / tex.realw + tex.w / 2);
+			* item.radius / tex.realw + tex.w / 2);
 	p.y = (int)((atan(dotproduct(u, m.col2) / dotproduct(u, m.col3))
-		- (magnitude(tex.center) ? atan(dotproduct(v, m.col2)
-		/ dotproduct(v, m.col3)) : 0)) / M_PI * 2 * tex.h * item.radius
-			/ tex.realh + tex.h / 2);
+				- (magnitude(tex.center) ? atan(dotproduct(v, m.col2)
+						/ dotproduct(v, m.col3)) : 0)) / M_PI * 2 * tex.h
+			* item.radius / tex.realh + tex.h / 2);
 	p = rotate_pix(p, tex.w, tex.h, tex.angle);
-	get_img_color(tex, p, &c);
-	return (c);
+	return (get_img_color(tex, p, &c));
 }
 
-t_color	texture_cone(t_img tex, t_item item, t_vec impact)
+t_color	texture_cone(t_img t, t_item i, t_vec impact)
 {
 	t_color		c;
 	t_pix		p;
@@ -119,23 +117,23 @@ t_color	texture_cone(t_img tex, t_item item, t_vec impact)
 	t_vec		v;
 	t_vec		u;
 
-	if (magnitude(tex.center) && (fabs(magnitude(sub(sub(item.center,
-			tex.center), scale(dotproduct(sub(item.center, tex.center),
-			item.dir), item.dir))) - magnitude(sub(impact, item.center))
-			* cos(item.angle * M_PI / 180)) > 0.01f))
-		tex.center = newvec(0, 0, 0);
-	u = sub(impact, item.center);
-	v = sub(tex.center, item.center);
-	m.col2 = crossproduct(item.dir, ((item.dir.x == 0 && item.dir.y == 0
-					&& item.dir.z == 1) ? newvec(0, 1, 0) : newvec(0, 0, 1)));
-	m.col3 = crossproduct(item.dir, m.col2);
-	p.x = (int)((dotproduct(u, item.dir) - dotproduct(v, item.dir))
-		* 150 / tex.realw + tex.w / 2);
+	if (magnitude(t.center)
+			&& (fabs(magnitude(sub(sub(i.center, t.center),
+							scale(dotproduct(sub(i.center, t.center), i.dir),
+								i.dir))) - magnitude(sub(impact, i.center))
+					* cos(i.angle * M_PI / 180)) > 0.01f))
+		t.center = newvec(0, 0, 0);
+	u = sub(impact, i.center);
+	v = sub(t.center, i.center);
+	m.col2 = crossproduct(i.dir, ((i.dir.x == 0 && i.dir.y == 0
+					&& i.dir.z == 1) ? newvec(0, 1, 0) : newvec(0, 0, 1)));
+	m.col3 = crossproduct(i.dir, m.col2);
+	p.x = (int)((dotproduct(u, i.dir) - dotproduct(v, i.dir))
+			* 150 / t.realw + t.w / 2);
 	p.y = (int)((atan(dotproduct(u, m.col2) / dotproduct(u, m.col3))
-		- (magnitude(tex.center) ? atan(dotproduct(v, m.col2)
-		/ dotproduct(v, m.col3)) : 0)) / M_PI * 2 * tex.h * 150
-			/ tex.realh + tex.h / 2);
-	p = rotate_pix(p, tex.w, tex.h, tex.angle);
-	get_img_color(tex, p, &c);
-	return (c);
+				- (magnitude(t.center) ? atan(dotproduct(v, m.col2)
+						/ dotproduct(v, m.col3))
+					: 0)) / M_PI * 2 * t.h * 150 / t.realh + t.h / 2);
+	p = rotate_pix(p, t.w, t.h, t.angle);
+	return (get_img_color(t, p, &c));
 }

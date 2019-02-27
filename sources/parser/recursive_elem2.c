@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 14:23:15 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/09 11:06:00 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:54:07 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_element		find_balise_name2(char *xml, t_element element, int count)
 	ft_strncpy(element.end_object + 2, element.object, count);
 	element.end_object[count + 2] = '>';
 	element.end_object[count + 3] = 0;
-	if (xml[element.position] != '>' && xml[element.position] != ' ' \
+	if (xml[element.position] != '>' && xml[element.position] != ' '
 			&& xml[element.position] != '/')
 		std_err(0);
 	return (element);
@@ -52,8 +52,8 @@ t_element		find_attr_elem2(char *xml, t_element e, int *i)
 		i[2]++;
 		i[0]++;
 	}
-	if (!(e.attribut[i[1]].content = (char*)malloc(sizeof(char) *\
-					i[2] + 1)))
+	if (!(e.attribut[i[1]].content = (char*)malloc(sizeof(char)
+					* i[2] + 1)))
 		std_err(0);
 	ft_strncpy(e.attribut[i[1]].content, xml + i[0] - i[2], i[2]);
 	e.attribut[i[1]].content[i[2]] = 0;
@@ -78,7 +78,7 @@ t_element		find_nbr_elem2(char *xml, t_element element, int count)
 	{
 		if (xml[element.position] == '<')
 		{
-			if (ft_strncmp(xml + element.position + 2, name, count) == 0 \
+			if (ft_strncmp(xml + element.position + 2, name, count) == 0
 					&& xml[element.position + 1] == '/')
 			{
 				element.nbr_element++;

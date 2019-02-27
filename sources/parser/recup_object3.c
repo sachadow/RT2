@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 16:45:30 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/31 15:36:41 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/08 16:26:28 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int		get_quadric(t_env *e, t_element elem, int i, int nbr_mat)
 	e->item[i].translation = ft_getpos("0,0,0");
 	if (elem.nbr_attr > 5)
 	{
+		j += get_translation(e, elem, i);
 		j += recup_tr(e, elem, i);
 		if (j + 5 != elem.nbr_attr)
 			std_err(0);

@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:19:26 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/31 17:48:10 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/20 15:58:43 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static void	shade_rect(int tab[2], t_rect rect, t_env *e)
 		{
 			tmp.x = rect.x + j;
 			tmp.y = rect.y + i;
-			color_point(RIGHT, tmp,
-					color_smooth(start, end, j / (double)(rect.width)), e);
+			color_point(&e->img[RIGHT], tmp,
+					color_smooth(start, end, j / (double)(rect.width)));
 		}
 	}
 }

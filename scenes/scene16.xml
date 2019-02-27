@@ -7,11 +7,11 @@
 	</light>
 	<camera pos="1000,500,0" dir="-1,0,0"/>
 	<material>
-		<uniform diffusion="255,255,0" reflexion="0" t="0" specvalue="100" specpower="50" n="0" bump="10"/>
-		<uniform diffusion="0,255,255" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
-		<uniform diffusion="255,0,255" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
-		<texture pathtext="textures/redbrick.xpm" angle="0" width="100" height="100" reflexion="0" t="0" specvalue="100" specpower="50" n="0"/>
-		<perturb diffusion="255,0,255" diffusionbis="0,255,0" reflexion="0" t="0" specvalue="100" specpower="50" n="0" scale="1"/>
+		<uniform diffusion="255,255,0" r="0" t="0" specvalue="100" specpower="50" n="0" bump="10"/>
+		<uniform diffusion="0,255,255" r="0" t="0" specvalue="100" specpower="50" n="0"/>
+		<uniform diffusion="255,0,255" r="0" t="0" specvalue="100" specpower="50" n="0"/>
+		<texture pathtext="textures/redbrick.xpm" angle="0" width="100" height="100" r="0" t="0" specvalue="100" specpower="50" n="0"/>
+		<perturb diffusion="255,0,255" diffusionbis="0,255,0" r="0" t="0" specvalue="100" specpower="50" n="0" scale="1"/>
 	</material>
 	<objects>
 		<fcyl dir="2,0,1" axispoint="500,600,0" radius="100" mat="1" height="100" isneg="0"/>

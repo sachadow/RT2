@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 21:51:34 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/02/05 21:12:19 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/26 15:16:32 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 static const int	g_apply_xs = IMG_W + MARGE;
 static const int	g_apply_xe = WIN_W - MARGE;
 static const int	g_apply_ys = 2 * M_IMG_H / 3;
-static const int	g_apply_ye = 2 * M_IMG_H / 3 + 100;
+static const int	g_apply_ye = 2 * M_IMG_H / 3 + 60;
 
 static const int	g_alias0_xs = IMG_W + WIN_W / 7 / 4 - 14;
 static const int	g_alias0_xe = IMG_W + RIGHT_SPC / 3;
@@ -39,7 +39,8 @@ static const int	g_alias_ye = IMG_H + 5 * BOTTOM_SPC / 8 + 59;
 static void	ui_mat_type(t_mouse m, t_env *e)
 {
 	if (m.x >= g_checker_xs && m.x < g_checker_xs + WIN_W / 8
-			&& m.y >= g_mat_ys && m.y < g_mat_ys + 100)
+			&& m.y >= g_mat_ys && m.y < g_mat_ys + 100
+			&& e->itf.item.item_type != QUADRIC && e->itf.item.item_type != BOX)
 		e->itf.mat.type = CHECKER;
 	else if (m.x >= g_marble_xs && m.x < g_marble_xs + WIN_W / 8
 			&& m.y >= g_mat_ys && m.y < g_mat_ys + 100)
@@ -51,7 +52,8 @@ static void	ui_mat_type(t_mouse m, t_env *e)
 			&& m.y >= g_mat_ys && m.y < g_mat_ys + 100)
 		e->itf.mat.type = WOOD;
 	else if (m.x >= g_waves_xs && m.x < g_waves_xs + WIN_W / 8
-			&& m.y >= g_mat_ys && m.y < g_mat_ys + 100)
+			&& m.y >= g_mat_ys && m.y < g_mat_ys + 100
+			&& e->itf.item.item_type != QUADRIC && e->itf.item.item_type != BOX)
 		e->itf.mat.type = WAVES;
 	if (e->itf.mat.type != TEXTURE)
 		e->itf.nb_texture = 0;
@@ -60,7 +62,7 @@ static void	ui_mat_type(t_mouse m, t_env *e)
 /*
 **	UI_TEXTURE function:
 **	Select the new texture or the uniform material type if the user click on
-**	the proper texture or uniform type zone
+**	the proper texture or uniform type zone on tab 1
 */
 
 static void	ui_texture(t_mouse m, t_env *e)
@@ -90,6 +92,7 @@ static void	ui_texture(t_mouse m, t_env *e)
 /*
 **	FILTERS function:
 **	Select the new filter or aliasing lvl if the user click on the proper zone
+**	on tab 1
 */
 
 static void	filters(t_mouse m, t_env *e)
@@ -133,11 +136,10 @@ void		ui_zones(int nb, t_mouse mouse, t_env *e)
 				&& mouse.y >= g_apply_ys && mouse.y < g_apply_ye)
 		{
 			e->loading = (e->antialiasing == 0 ? 1 : 0);
-			e->apply = 1;
 			reset_ui(e);
 		}
 		filters(mouse, e);
-		if (e->itf.item.item_type != QUADRIC)
+		if (e->itf.item.item_type != QUADRIC && e->itf.item.item_type != BOX)
 			ui_texture(mouse, e);
 	}
 	else if (nb == 2)

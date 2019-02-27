@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 16:19:16 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/02/01 20:20:17 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/26 15:38:46 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int		keypress(int keycode, t_env *e)
 	{
 		if (keycode == KEY_ENTER)
 		{
+			if (e->itf.nb_texture)
+				return (0);
 			e->loading = (e->antialiasing == 0 ? 1 : 0);
 			reset_ui(e);
 		}
@@ -59,6 +61,8 @@ int		keyrelease(int keycode, t_env *e)
 
 void	key_hook(t_env *e)
 {
+	if (e->key[KEY_BCKSPC])
+		screenshot(e);
 	move_cam(e);
 	show_mouse(e);
 }

@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 20:23:56 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/29 16:22:38 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/18 19:25:54 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void		spectrum_shade(int nb, int start, t_env *e)
 	if (e->itf.spectrum[nb].x)
 	{
 		pt = init_point(e->itf.spectrum[nb].x, e->itf.spectrum[nb].y);
-		e->itf.spec[nb].val = color_picker(RIGHT, pt, e);
+		e->itf.spec[nb].val = color_picker(e->img[RIGHT], pt);
 		if (e->itf.spec[nb].val != WHITE)
 			e->itf.spec_shade[nb].val = e->itf.spec[nb].val;
 		cursor_spectrum(nb, e);
 		pt = init_point(e->itf.spectrum[nb].x, e->itf.spectrum[nb].y);
-		e->itf.spec_shade[nb].val = color_picker(RIGHT, pt, e);
+		e->itf.spec_shade[nb].val = color_picker(e->img[RIGHT], pt);
 		shade_bar(start + RIGHT_SPC - MARGE, e->itf.spec[nb].val, e);
 		cursor_shade(nb, e);
 	}

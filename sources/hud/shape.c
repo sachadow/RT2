@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 18:21:21 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/31 17:48:51 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/18 19:24:05 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		draw_tri(int nb, t_rect base, int color, t_env *e)
 		{
 			tmp.x = base.x + j - base.width / 2;
 			tmp.y = base.y - i;
-			color_point(nb, tmp, color, e);
+			color_point(&e->img[nb], tmp, color);
 		}
 		base.width -= 2;
 	}
@@ -57,7 +57,7 @@ void		draw_rev_tri(int nb, t_rect base, int color, t_env *e)
 		{
 			tmp.x = base.x + j - base.width / 2;
 			tmp.y = base.y + i;
-			color_point(nb, tmp, color, e);
+			color_point(&e->img[nb], tmp, color);
 		}
 		base.width -= 2;
 	}
@@ -82,7 +82,7 @@ void		draw_rect(int nb, t_rect rect, int color, t_env *e)
 		{
 			tmp.x = rect.x + j;
 			tmp.y = rect.y + i;
-			color_point(nb, tmp, color, e);
+			color_point(&e->img[nb], tmp, color);
 		}
 	}
 }

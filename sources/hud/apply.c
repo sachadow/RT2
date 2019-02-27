@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:44:27 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/02/05 21:13:27 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/20 15:53:12 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ static void	double_diffuse_type(t_env *e)
 	else
 		fill_type(e);
 	apply_change(e);
-	e->mat[e->itf.item.mat].scale = (e->mat[e->itf.item.mat].scale == 0 ?
-			0.01 : e->mat[e->itf.item.mat].scale);
+	e->mat[e->itf.item.mat].scale = (e->mat[e->itf.item.mat].scale == 0 ? 0.01
+			: e->mat[e->itf.item.mat].scale);
 }
 
 void		apply_mat(int type, t_env *e)

@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/23 14:30:35 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/08 16:14:35 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/02/08 22:20:51 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int		get_light(t_element elem, t_env *e)
 		std_err(0);
 	if (!(e->light = (t_light*)malloc(sizeof(t_light) * elem.nbr_element - 1)))
 		std_err(0);
-	e->nbs[2] = elem.nbr_element - 1;
+	e->nbs[LIGHT] = elem.nbr_element - 1;
 	while (i < elem.nbr_element)
 	{
 		if (ft_strcmp(elem.elem[i].object, "sublight") == 0)

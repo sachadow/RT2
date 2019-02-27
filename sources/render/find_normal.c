@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/15 16:27:24 by sderet           ###   ########.fr       */
+/*   Updated: 2019/02/26 11:21:54 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ t_vec		find_normal_vec(t_ray r, int id, t_env *e)
 		n = opposite(n);
 	if (!magnitude2(n))
 		return (newvec(0, 0, 0));
+	n = (dotproduct(r.dir, n) < 0 ? n : opposite(n));
 	return (bumpmapping(normalize(n), newstart, find_material(id, e)));
 }

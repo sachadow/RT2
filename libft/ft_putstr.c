@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 15:52:00 by squiquem          #+#    #+#             */
-/*   Updated: 2017/11/16 23:35:24 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/08 15:44:08 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,5 @@ void	ft_putstr(char const *str)
 {
 	if (!str)
 		return ;
-	while (*str)
-	{
-		ft_putchar(*str);
-		str++;
-	}
+	write(1, str, ft_strlen(str));
 }

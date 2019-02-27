@@ -6,13 +6,13 @@
 /*   By: sderet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 16:37:23 by sderet            #+#    #+#             */
-/*   Updated: 2019/01/15 16:43:40 by sderet           ###   ########.fr       */
+/*   Updated: 2019/02/22 12:45:54 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void	smoll_box(t_item bo, t_vec *min, t_vec *max, t_ray r)
+static void	small_box(t_item bo, t_vec *min, t_vec *max, t_ray r)
 {
 	double tmp;
 
@@ -34,7 +34,7 @@ static void	smoll_box(t_item bo, t_vec *min, t_vec *max, t_ray r)
 	}
 }
 
-static void	smoll_box2(t_item bo, t_vec *min, t_vec *max, t_ray r)
+static void	small_box2(t_item bo, t_vec *min, t_vec *max, t_ray r)
 {
 	double tmp;
 
@@ -55,18 +55,13 @@ int			hitbox(t_ray r, t_item bo, double *t)
 	t_vec	min;
 	t_vec	max;
 
-	smoll_box(bo, &min, &max, r);
+	small_box(bo, &min, &max, r);
 	if (min.x > max.y || min.y > max.x)
 		return (0);
-	smoll_box2(bo, &min, &max, r);
+	small_box2(bo, &min, &max, r);
 	if (min.x > max.z || min.z > max.x)
 		return (0);
 	min.x = (min.z > min.x ? min.z : min.x);
 	max.x = (max.z < max.x ? max.z : max.x);
-	if ((min.x < 0 && max.x < 0) || (*t != -1 && *t < max.x && *t < min.x))
-		return (0);
-	else if (min.x < 0)
-		return ((*t = max.x) > 0 ? 1 : 0);
-	else
-		return ((*t = min.x) > 0 ? 1 : 0);
+	return (calc_discr(1.0, -min.x - max.x, min.x * max.x, t));
 }

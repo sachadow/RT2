@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 16:34:11 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/02/01 20:22:44 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/22 19:04:02 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static void	cam_update(t_env *e)
 	t_vec	j;
 	t_vec	k;
 
-	k = (e->cam->dir.x == 0.0f && e->cam->dir.y == 1.0f
-			&& e->cam->dir.z == 0.0f) ? newvec(0, 0, 1) : newvec(0, 1, 0);
+	k = (e->initcam.dir.x == 0.0f && e->initcam.dir.y == 1.0f
+			&& e->initcam.dir.z == 0.0f) ? newvec(0, 0, 1) : newvec(0, 1, 0);
 	i = crossproduct(e->cam->dir, k);
 	j = crossproduct(i, e->cam->dir);
 	if (e->key[KEY_LEFT] || e->key[KEY_A])
@@ -75,9 +75,11 @@ void		move_cam(t_env *e)
 void		create_axis(t_env *e)
 {
 	t_vec	k;
+	t_vec	l;
 
-	k = (e->cam->dir.x == 0.0f && e->cam->dir.y == 1.0f
-			&& e->cam->dir.z == 0.0f) ? newvec(0, 0, 1) : newvec(0, 1, 0);
-	e->i = crossproduct(e->cam->dir, k);
-	e->j = crossproduct(e->i, e->cam->dir);
+	k = e->initcam.dir;
+	l = (k.x == 0.0f && k.y == 1.0f && k.z == 0.0f) ? newvec(0, 0, 1)
+		: newvec(0, 1, 0);
+	e->i = crossproduct(k, l);
+	e->j = crossproduct(e->i, k);
 }

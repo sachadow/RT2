@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 17:07:15 by squiquem          #+#    #+#             */
-/*   Updated: 2019/02/05 16:52:15 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/22 19:27:55 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ static void	init(t_env *e)
 	e->backgroundcolor = multp_color(e->backgroundcolor, 0.00392156862);
 	e->lvl = 4;
 	e->antialiasing = 1;
+	e->initcam = *e->cam;
 	create_axis(e);
-	e->s_line[CENTER] = 0;
+	e->img[CENTER].s_line = 0;
 	ft_memset(e->key, 0, sizeof(int) * 300);
 	ft_memset(e->itf.spec, 0, sizeof(e->itf.spec));
 	e->itf.onglet = 1;
@@ -74,27 +75,28 @@ static void	init(t_env *e)
 
 int			main(int ac, char **av)
 {
-	t_env	*e;
+	t_env	e;
 
 	if (ac != 2)
 		ft_printerror("Only 1 argument");
 	filename_control(av[1]);
-	if (!(e = (t_env*)malloc(sizeof(t_env))))
-		ft_printerror("Error malloc");
-	parser_all(av[1], e);
-	if (!(e->mlx = mlx_init()))
+	parser_all(av[1], &e);
+	e.save.name = av[1];
+	if (!(e.mlx = mlx_init()))
 		ft_printerror("Error mlx init");
-	open_textures_mat(e);
-	init(e);
-	e->win = mlx_new_window(e->mlx, WIN_W, WIN_H, "RT");
-	mlx_centertop_window(e->win);
-	mlx_loop_hook(e->mlx, reload, e);
-	mlx_hook(e->win, KPRESS, KPRESSMASK, keypress, e);
-	mlx_hook(e->win, KRELEASE, KRELEASEMASK, keyrelease, e);
-	mlx_hook(e->win, MOTION_NOTIFY, PTR_MOTION_MASK, mousemove, e);
-	mlx_hook(e->win, BPRESS, BPRESSMASK, &mousepress, e);
-	mlx_hook(e->win, BRELEASE, BRELEASEMASK, &mouserelease, e);
-	mlx_hook(e->win, DESTROY, SNOTIFYMASK, quit, e);
-	mlx_loop(e->mlx);
+	open_textures_mat(&e);
+	init(&e);
+	e.win = mlx_new_window(e.mlx, WIN_W, WIN_H, av[1]);
+	mlx_centertop_window(e.win);
+	new_image(&e.img[CENTER], IMG_W, IMG_H, &e);
+	hud(&e);
+	mlx_loop_hook(e.mlx, reload, &e);
+	mlx_hook(e.win, KPRESS, KPRESSMASK, keypress, &e);
+	mlx_hook(e.win, KRELEASE, KRELEASEMASK, keyrelease, &e);
+	mlx_hook(e.win, MOTION_NOTIFY, PTR_MOTION_MASK, mousemove, &e);
+	mlx_hook(e.win, BPRESS, BPRESSMASK, &mousepress, &e);
+	mlx_hook(e.win, BRELEASE, BRELEASEMASK, &mouserelease, &e);
+	mlx_hook(e.win, DESTROY, SNOTIFYMASK, quit, &e);
+	mlx_loop(e.mlx);
 	return (1);
 }

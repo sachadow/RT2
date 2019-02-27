@@ -6,11 +6,37 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:34:11 by squiquem          #+#    #+#             */
-/*   Updated: 2019/02/05 16:59:15 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/22 11:32:37 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+static t_color	is_not_mat_n(t_resolve res, t_env *e)
+{
+	return (add_3colors(get_light_value(res.w, res.hit, res.mat, e),
+				multp_color(ft_resolve(e, newwork(res.w,
+							reflected_ray(res.w.r.dir, res.w.n_vec,
+								res.hit), 0, e), res.lvl + 1),
+					res.mat.reflection), multp_color(ft_resolve(e,
+							newwork(res.w, transp_r(res.w.r, res.hit),
+								0, e), res.lvl + 1),
+						res.mat.transparency)));
+}
+
+static t_color	is_mat_n(t_resolve res, t_env *e)
+{
+	return (add_3colors(get_light_value(res.w, res.hit, res.mat, e),
+				multp_color(ft_resolve(e, newwork(res.w,
+							refracted_ray(res.w.r.dir, res.w.n_vec,
+								res.w.n / res.nrefr, res.hit), 1, e),
+						res.lvl + 1), 1 - fresnel(res.w.r.dir, res.w.n_vec,
+							res.w.n, res.nrefr)),
+				multp_color(ft_resolve(e, newwork(res.w,
+							reflected_ray(res.w.r.dir, res.w.n_vec, res.hit),
+							0, e), res.lvl + 1),
+					fresnel(res.w.r.dir, res.w.n_vec, res.w.n, res.nrefr))));
+}
 
 /*
 **	FT_RESOLVE function:
@@ -19,31 +45,24 @@
 
 t_color			ft_resolve(t_env *e, t_work w, int lvl)
 {
-	t_mat		mat;
-	t_vec		hit;
-	double		nrefr;
+	t_resolve	res;
 
-	w.item_hit = find_closest_item(w.r, e, &hit);
-	if (w.item_hit == EMPTY || lvl > e->lvl)
-		return (add_2colors(lens_flaring(w.r, e), e->backgroundcolor));
-	mat = find_material(w.item_hit % (e->nbs[ITEM] + 1), e);
-	nrefr = find_nrefr(w, mat, w.item_hit % (e->nbs[ITEM] + 1), e);
-	w.n_vec = find_normal_vec(w.r, w.item_hit, e);
-	w.item_hit %= (e->nbs[ITEM] + 1);
-	if (mat.n)
-		return (add_3colors(get_light_value(w, hit, mat, e),
-			multp_color(ft_resolve(e, newwork(w, refracted_ray(w.r.dir,
-			w.n_vec, w.n / nrefr, hit), 1, e), lvl + 1), 1 - fresnel(w.r.dir,
-			w.n_vec, w.n, nrefr)), multp_color(ft_resolve(e, newwork(w,
-			reflected_ray(w.r.dir, w.n_vec, hit), 0, e), lvl + 1),
-			fresnel(w.r.dir, w.n_vec, w.n, nrefr))));
-	else if (!mat.n && (mat.reflection || mat.transparency))
-		return (add_3colors(get_light_value(w, hit, mat, e),
-			multp_color(ft_resolve(e, newwork(w, reflected_ray(w.r.dir, w.n_vec,
-			hit), 0, e), lvl + 1), mat.reflection), multp_color(ft_resolve(e,
-			newwork(w, transp_r(w.r, hit), 0, e), lvl + 1), mat.transparency)));
+	res.w = w;
+	res.lvl = lvl;
+	res.w.item_hit = find_closest_item1(res.w.r, e, &res.hit);
+	if (res.w.item_hit == EMPTY || lvl > e->lvl)
+		return (add_2colors(lens_flaring(res.w.r, e), e->backgroundcolor));
+	res.mat = find_material(res.w.item_hit % (e->nbs[ITEM] + 1), e);
+	res.nrefr = find_nrefr(res.w, res.mat, res.w.item_hit % (e->nbs[ITEM] + 1),
+			e);
+	res.w.n_vec = find_normal_vec(res.w.r, res.w.item_hit, e);
+	res.w.item_hit %= (e->nbs[ITEM] + 1);
+	if (res.mat.n)
+		return (is_mat_n(res, e));
+	else if (!res.mat.n && (res.mat.reflection || res.mat.transparency))
+		return (is_not_mat_n(res, e));
 	else
-		return (get_light_value(w, hit, mat, e));
+		return (get_light_value(res.w, res.hit, res.mat, e));
 }
 
 /*
@@ -61,16 +80,16 @@ t_work			newwork(t_work oldwork, t_ray newray, int refr, t_env *e)
 
 	w = oldwork;
 	w.r = newray;
-	itemstart = find_closest_item(oldwork.r, e, &newstart);
+	itemstart = find_closest_item1(oldwork.r, e, &newstart);
 	mat = find_material(itemstart, e);
-	itemend = find_closest_item(newray, e, &newstart);
+	itemend = find_closest_item1(newray, e, &newstart);
 	w.n_vec = find_normal_vec(newray, itemend, e);
 	itemend %= (e->nbs[ITEM] + 1);
 	itemstart %= (e->nbs[ITEM] + 1);
 	if (refr)
 	{
 		if (itemtype(itemstart, e) != 2 && itemtype(itemstart, e) != 5
-			&& position_in_tab(w.id, itemstart, REFRINCL) != -1)
+				&& position_in_tab(w.id, itemstart, REFRINCL) != -1)
 			refr_enter_or_exit(&w, itemstart, 0, e);
 		else
 			refr_enter_or_exit(&w, itemstart, 1, e);

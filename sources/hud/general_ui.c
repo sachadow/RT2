@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:17:53 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/02/01 18:40:39 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/26 15:12:46 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,13 @@ void			tab(t_env *e)
 	top_right(e);
 	if (e->itf.onglet == 1)
 		ui1(e);
-	if (e->itf.onglet == 2)
+	else if (e->itf.onglet == 2)
 		ui2(e);
-	if (e->itf.onglet == 3)
+	else if (e->itf.onglet == 3)
 		ui3(e);
-	if (e->apply)
-		reset_ui(e);
-	mlx_put_image_to_window(e->mlx, e->win, e->img[RIGHT], IMG_W, 0);
-	mlx_put_image_to_window(e->mlx, e->win, e->img[BOTTOM], 0, IMG_H);
+	mlx_put_image_to_window(e->mlx, e->win, e->img[RIGHT].img, IMG_W, 0);
+	mlx_put_image_to_window(e->mlx, e->win, e->img[BOTTOM].img, 0, IMG_H);
 	ui_writting(e);
-	mlx_destroy_image(e->mlx, e->img[RIGHT]);
-	mlx_destroy_image(e->mlx, e->img[BOTTOM]);
+	mlx_destroy_image(e->mlx, e->img[RIGHT].img);
+	mlx_destroy_image(e->mlx, e->img[BOTTOM].img);
 }

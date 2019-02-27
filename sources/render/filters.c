@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:48:17 by squiquem          #+#    #+#             */
-/*   Updated: 2019/02/05 16:59:37 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/18 19:37:17 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	add_cartoon_effect(t_env *e)
 		q.x = -1;
 		while (++q.x < IMG_W)
 		{
-			c = get_pt_color(q.x, q.y, e);
+			c = get_pt_color(q.x, q.y, e->img[CENTER]);
 			sum = 255 - sqrt(x_g(e, q, 'X') * x_g(e, q, 'X') + x_g(e, q, 'Y')
 					* x_g(e, q, 'Y'));
 			sum = ft_clamp(0, 255, sum);
@@ -77,7 +77,7 @@ void	add_cartoon_effect(t_env *e)
 				c.blue = limit_clr(c.blue);
 			}
 			c = multp_color(c, 0.0039215686);
-			draw_point(e, q.x, q.y, c);
+			draw_point(&e->img[CENTER], q.x, q.y, c);
 		}
 	}
 }

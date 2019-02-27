@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 17:13:48 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/02/01 20:40:34 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/20 16:59:56 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,15 @@ static char	*n_param(double n)
 
 static char	*scale_param(double scale)
 {
-	if (scale == 10)
-		return (ft_itoa(1));
-	else if (scale == 1)
+	if ((int)scale < 10 && (int)scale > 0)
 		return (ft_itoa(0));
-	else if (scale == 0.1)
+	else if (scale > 9)
+		return (ft_itoa(1));
+	else if ((int)((scale - (int)scale) * 10) > 0
+			&& (scale - (int)scale) * 10 < 10)
 		return (ft_itoa(-1));
-	else if (scale == 0.01)
+	else if ((int)((scale - (int)scale) * 100) > 0
+			&& (scale - (int)scale) * 100 < 10)
 		return (ft_itoa(-2));
 	else
 		return (ft_itoa(-3));
@@ -124,12 +126,11 @@ void		ui3_writting(t_env *e)
 			mlx_string_put(e->mlx, e->win, 30, IMG_H + 5 + i * 25, BLACK, s[i]);
 		write_param_val(e);
 	}
-	mlx_string_put(e->mlx, e->win, IMG_W + 15, M_IMG_H - 30, BLACK,
-			"Reflection number");
+	mlx_string_put(e->mlx, e->win, IMG_W + 15, M_IMG_H - 30,
+			BLACK, "Reflection number");
 	s[0] = ft_itoa(e->lvl);
 	mlx_string_put(e->mlx, e->win, IMG_W + RIGHT_SPC / 2 - 5, M_IMG_H + 10,
 			BLACK, s[0]);
 	free(s[0]);
-	mlx_string_put(e->mlx, e->win, IMG_W + 30, M_IMG_H + 50, BLACK,
-			"Reset spectrum");
+	save_writting(e);
 }

@@ -6,19 +6,19 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:09:49 by squiquem          #+#    #+#             */
-/*   Updated: 2019/02/06 17:35:54 by sderet           ###   ########.fr       */
+/*   Updated: 2019/02/26 15:35:32 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_H
 # define RT_H
 
-# include "../libft/libft.h"
-# include "../minilibx/mlx.h"
+# include "libft.h"
+# include "mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <pthread.h>
-# include <stdio.h>
+# include <time.h>
 
 # define WIN_H		800
 # define WIN_W		1000
@@ -219,6 +219,15 @@ typedef struct		s_work
 	int				id[REFRINCL];
 }					t_work;
 
+typedef struct		s_resolve
+{
+	t_mat			mat;
+	t_vec			hit;
+	t_work			w;
+	double			nrefr;
+	int				lvl;
+}					t_resolve;
+
 typedef struct		s_interface
 {
 	int				onglet;
@@ -233,6 +242,14 @@ typedef struct		s_interface
 	int				nb_texture;
 	double			param[7];
 }					t_interface;
+
+typedef struct		s_save
+{
+	int				fd;
+	char			*name;
+	char			*scene;
+	time_t			start;
+}					t_save;
 
 typedef struct		s_hititem
 {
@@ -261,11 +278,7 @@ typedef struct		s_env
 {
 	void			*mlx;
 	void			*win;
-	void			*img[3];
-	unsigned char	*pixel_img[3];
-	int				bpp[3];
-	int				s_line[3];
-	int				ed[3];
+	t_img			img[3];
 	int				nbs[4];
 	int				key[300];
 	int				(*hit[11])(t_ray, t_item, double *);
@@ -276,6 +289,7 @@ typedef struct		s_env
 	int				lvl;
 	int				antialiasing;
 	t_cam			*cam;
+	t_cam			initcam;
 	t_vec			i;
 	t_vec			j;
 	t_item			*item;
@@ -286,8 +300,8 @@ typedef struct		s_env
 	int				loading;
 	int				filter;
 	int				cartoon;
-	int				apply;
 	t_interface		itf;
+	t_save			save;
 }					t_env;
 
 typedef struct		s_th
@@ -297,7 +311,6 @@ typedef struct		s_th
 }					t_th;
 
 int					reload(t_env *e);
-int					debug(t_env *e);
 
 int					quit(void);
 
@@ -343,10 +356,13 @@ double				blinnphong(t_ray lightray, t_ray *r, t_vec n,
 					t_mat currm);
 t_color				lens_flaring(t_ray r, t_env *e);
 
-int					find_closest_item(t_ray r, t_env *e, t_vec *newstart);
+int					find_closest_item1(t_ray r, t_env *e, t_vec *newstart);
+int					find_closest_item2(t_ray r, t_env *e, t_vec *newstart);
 int					get_closest_item(t_ray r, t_env *e);
 int					find_post_nega(t_ray r, t_env *e, t_vec *newstart,
 					t_curr *t);
+int					check_nega_edges(t_ray r, t_env *e, t_vec *impact,
+					int curr);
 void				negative_advance(t_env *e, int last_hit, t_ray *r);
 void				init_all_nega(t_hititem *i);
 int					free_nega(int ret, int *hit_items, int *items_mod);
@@ -427,7 +443,7 @@ int					remove_from_tab(int *tab, int id, int size);
 double				find_max_ior(int *tab, int size, t_env *e);
 
 void				open_texture(t_env *e, t_img *tex, char *name);
-void				get_img_color(t_img tex, t_pix p, t_color *c);
+t_color				get_img_color(t_img tex, t_pix p, t_color *c);
 t_pix				rotate_pix(t_pix p, int w, int h, double angle);
 t_pix				adjust_pix(t_pix p, int w, int h);
 
@@ -468,8 +484,9 @@ t_color				hsv_to_color(t_hsv hsv);
 size_t				limit_clr(size_t color);
 int					x_g(t_env *e, t_pix p, char type);
 
-void				draw_point(t_env *e, int x, int y, t_color c);
-t_color				get_pt_color(int x, int y, t_env *e);
+void				draw_point(t_img *img, int x, int y, t_color c);
+t_color				get_pt_color(int x, int y, t_img img);
+void				draw_debug(t_env *e, int x, int y);
 
 t_color				add_sepia_filter(t_color c);
 t_color				add_greyscale_filter(t_color c);
@@ -482,7 +499,21 @@ t_vec				find_quadric_normal(t_vec impact, t_item q);
 
 int					cubic_polynom(double *c, double *s);
 int					quartic_polynom(double *c, double *s);
+
 void				hud(t_env *e);
-void				new_image(int num, int width, int height, t_env *e);
+void				new_image(t_img *img, int width, int height, t_env *e);
+
+void				save(int state, t_env *e);
+void				save_pos(int fd, const char *type, t_vec pos);
+void				save_name_val(int fd, const char *name, double val);
+void				save_val(int fd, double val);
+void				save_light(int fd, t_env *e);
+void				save_color(int fd, const char *type, t_color color);
+void				save_camera(int fd, t_cam cam);
+void				save_material(int fd, int nbmat, t_mat *m);
+void				save_item(int fd, int nbitem, t_item *item);
+
+void				screenshot(t_env *e);
+void				save_load(t_env *e);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:19:26 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/31 17:48:37 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/20 15:59:27 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ void		color_val(t_env *e)
 	mlx_string_put(e->mlx, e->win, IMG_W + 30, IMG_H - 45, WHITE, s);
 	free(s);
 	s = ft_itoa((int)(e->itf.spec_shade[0].argb[G]));
-	mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, IMG_H - 45, WHITE,
-			"G:");
+	mlx_string_put(e->mlx, e->win, IMG_W + (RIGHT_SPC) / 3, IMG_H - 45,
+			WHITE, "G:");
 	mlx_string_put(e->mlx, e->win, IMG_W + 30 + (RIGHT_SPC) / 3, IMG_H - 45,
 			WHITE, s);
 	free(s);
 	s = ft_itoa((int)(e->itf.spec_shade[0].argb[B]));
 	mlx_string_put(e->mlx, e->win, IMG_W + 2 * (RIGHT_SPC) / 3, IMG_H - 45,
 			WHITE, "B:");
-	mlx_string_put(e->mlx, e->win, IMG_W + 30 + 2 * (RIGHT_SPC) / 3,
-			IMG_H - 45, WHITE, s);
+	mlx_string_put(e->mlx, e->win, IMG_W + 30 + 2 * (RIGHT_SPC) / 3, IMG_H - 45,
+			WHITE, s);
 	free(s);
 }
 

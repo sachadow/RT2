@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 11:17:57 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/24 16:34:20 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/08 16:28:51 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,6 @@ int		recup_tr(t_env *e, t_element elem, int i)
 
 	j = 0;
 	f = 0;
-	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "translation"))
-		j++;
-	if (j != elem.nbr_attr)
-	{
-		e->item[i].translation = ft_getpos(elem.attribut[j].content);
-		f++;
-	}
-	j = 0;
 	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "rotation"))
 		j++;
 	if (j != elem.nbr_attr)

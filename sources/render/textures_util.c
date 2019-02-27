@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 15:12:07 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/15 15:12:02 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/20 15:52:03 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	open_texture(t_env *e, t_img *tex, char *name)
 		ft_printerror("Error mlx");
 }
 
-void	get_img_color(t_img tex, t_pix p, t_color *c)
+t_color	get_img_color(t_img tex, t_pix p, t_color *c)
 {
 	if (p.x >= 0 && p.x < tex.w && p.y >= 0 && p.y < tex.h)
 	{
@@ -29,6 +29,7 @@ void	get_img_color(t_img tex, t_pix p, t_color *c)
 		c->green = tex.pixel_img[p.y * tex.s_line + p.x * (tex.bpp / 8) + 1];
 		c->red = tex.pixel_img[p.y * tex.s_line + p.x * (tex.bpp / 8) + 2];
 	}
+	return (*c);
 }
 
 t_pix	rotate_pix(t_pix p, int w, int h, double angle)

@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 17:04:25 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/01/28 19:13:59 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/20 15:53:35 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		cursor_shade(int nb, t_env *e)
 			&& e->itf.shade[nb].x < g_shad_xe - IMG_W)
 	{
 		pt = init_point(e->itf.shade[nb].x, e->itf.shade[nb].y);
-		e->itf.spec_shade[nb].val = color_picker(RIGHT, pt, e);
+		e->itf.spec_shade[nb].val = color_picker(e->img[RIGHT], pt);
 		if (e->itf.shade[nb].x < (RIGHT_SPC) / 2)
 			color.val = WHITE;
 		else
@@ -90,11 +90,11 @@ void		cursor_spectrum(int nb, t_env *e)
 				pt.x = e->itf.spectrum[nb].x + i;
 				pt.y = e->itf.spectrum[nb].y + j;
 				if (i < -2 || i > 2)
-					color_point(RIGHT, pt, WHITE, e);
+					color_point(&e->img[RIGHT], pt, WHITE);
 				pt.x = e->itf.spectrum[nb].x + j;
 				pt.y = e->itf.spectrum[nb].y + i;
 				if (i < -2 || i > 2)
-					color_point(RIGHT, pt, WHITE, e);
+					color_point(&e->img[RIGHT], pt, WHITE);
 			}
 		}
 	}

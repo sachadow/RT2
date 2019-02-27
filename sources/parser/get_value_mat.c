@@ -6,13 +6,12 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/15 12:08:12 by asarasy           #+#    #+#             */
-/*   Updated: 2019/01/10 15:21:23 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/02/26 09:35:03 by squiquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "rt.h"
-#include <stdio.h>
 
 int		recup_value_checker(t_mat *mat, t_element elem, int i)
 {
@@ -25,10 +24,12 @@ int		recup_value_checker(t_mat *mat, t_element elem, int i)
 		std_err(0);
 	mat[i].diffuse = ft_getcolor(elem.attribut[j].content);
 	j = 0;
-	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name,\
+	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name,
 				"diffusionbis"))
 		j++;
 	if (j == elem.nbr_attr && ft_strcmp(elem.object, "waves"))
+		std_err(0);
+	else if (ft_strcmp(elem.object, "waves") == 0 && j != elem.nbr_attr)
 		std_err(0);
 	else if (ft_strcmp(elem.object, "waves"))
 		mat[i].diffuse2 = ft_getcolor(elem.attribut[j].content);
@@ -59,6 +60,8 @@ int		recup_value_text(t_mat *mat, t_element elem, int i)
 	if (j == elem.nbr_attr)
 		std_err(0);
 	mat[i].tex.realh = ft_posatoi(elem.attribut[j].content);
+	if (mat[i].tex.realh <= 0 || mat[i].tex.realw <= 0)
+		std_err(0);
 	return (0);
 }
 
@@ -120,7 +123,7 @@ int		recup_value_mat(t_mat *mat, t_element elem, int i)
 		std_err(0);
 	mat[i].transparency = ft_posatoi(elem.attribut[j].content) / 100;
 	j = 0;
-	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "reflexion"))
+	while (j < elem.nbr_attr && ft_strcmp(elem.attribut[j].name, "r"))
 		j++;
 	if (j == elem.nbr_attr)
 		std_err(0);

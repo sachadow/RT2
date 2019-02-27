@@ -9,9 +9,9 @@
 	</light>
 
 	<material>
-		<uniform diffusion="100,100,0" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
-		<uniform diffusion="0,100,100" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
-		<uniform diffusion="100,0,100" reflexion="0" t="0" specvalue="100" specpower="100" n="0"/>
+		<uniform diffusion="100,100,0" r="0" t="0" specvalue="100" specpower="100" n="0"/>
+		<uniform diffusion="0,100,100" r="0" t="0" specvalue="100" specpower="100" n="0"/>
+		<uniform diffusion="100,0,100" r="0" t="0" specvalue="100" specpower="100" n="0"/>
 	</material>
 
 	<objects>

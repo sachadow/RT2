@@ -6,7 +6,7 @@
 /*   By: sderet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:19:51 by sderet            #+#    #+#             */
-/*   Updated: 2019/02/06 17:28:54 by sderet           ###   ########.fr       */
+/*   Updated: 2019/02/20 15:39:32 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void		hit_mod(int *mod, int nb, int *hit, t_env *e)
 {
 	int a;
 
-	if (e->item[nb].item_type == DISK
-			|| e->item[nb].item_type == PLANE)
+	if (e->item[nb].item_type == DISK || e->item[nb].item_type == PLANE)
 		return ;
 	a = 0;
 	while (mod[a] != -1 && mod[a] != nb)

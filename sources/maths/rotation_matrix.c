@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 12:42:21 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/24 15:00:49 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/20 15:06:09 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ t_matrix	matrix_rot(t_vec angle)
 	t_matrix	m;
 
 	m = matrix_mult(matrix_rotx(angle.x), matrix_mult(matrix_roty(angle.y),
-					matrix_rotz(angle.z)));
+				matrix_rotz(angle.z)));
 	return (m);
 }

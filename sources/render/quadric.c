@@ -6,7 +6,7 @@
 /*   By: squiquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:04:12 by squiquem          #+#    #+#             */
-/*   Updated: 2019/01/31 15:32:48 by squiquem         ###   ########.fr       */
+/*   Updated: 2019/02/19 17:50:58 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int			hitquadric(t_ray r, t_item q, double *t)
 	rq = newvec(r.dir.x * m.col1.x, r.dir.y * m.col2.y, r.dir.z * m.col3.z);
 	sb = newvec(par.x * m.col1.x, par.y * m.col2.y, par.z * m.col3.z);
 	res.x = dotproduct(r.dir, rq) + 2 * (m.col2.x * r.dir.x * r.dir.y + m.col3.x
-		* r.dir.x * r.dir.z + m.col3.y * r.dir.y * r.dir.z);
-	res.y = 2 * (dotproduct(rq, par) + m.col2.x * (r.dir.x * par.y
-			+ r.dir.y * par.x) + m.col3.x * (r.dir.x * par.z + r.dir.z * par.x)
+			* r.dir.x * r.dir.z + m.col3.y * r.dir.y * r.dir.z);
+	res.y = 2 * (dotproduct(rq, par) + m.col2.x * (r.dir.x * par.y + r.dir.y
+				* par.x) + m.col3.x * (r.dir.x * par.z + r.dir.z * par.x)
 			+ m.col3.y * (r.dir.y * par.z + r.dir.z * par.y));
 	res.z = dotproduct(sb, par) + 2 * (m.col2.x * par.x * par.y + m.col3.x
 			* par.x * par.z + m.col3.y * par.y * par.z) - q.sizequadric;

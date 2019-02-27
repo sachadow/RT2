@@ -6,7 +6,7 @@
 /*   By: asarasy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 15:35:37 by asarasy           #+#    #+#             */
-/*   Updated: 2018/11/09 11:05:50 by asarasy          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:55:06 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_element		find_nbr_attr(char *xml, t_element element)
 			if (xml[element.position] == '=' && xml[element.position + 1] == 34)
 				error++;
 			element.position += 2;
-			while (xml[element.position] != '"' && xml[element.position] != '>'\
+			while (xml[element.position] != '"' && xml[element.position] != '>'
 					&& xml[element.position])
 				element.position++;
 			if (xml[element.position] != '"' || error == 0)
@@ -73,7 +73,7 @@ t_element		find_attr_elem(char *xml, t_element element)
 	element = find_nbr_attr(xml, element);
 	if (element.nbr_attr > 0)
 	{
-		if (!(element.attribut = (t_attribut*)malloc(sizeof(t_attribut)\
+		if (!(element.attribut = (t_attribut*)malloc(sizeof(t_attribut)
 					* element.nbr_attr)))
 			std_err(0);
 	}
@@ -92,14 +92,14 @@ t_element		find_nbr_elem(char *xml, t_element element)
 {
 	int		count;
 
-	while (ft_strcmp(xml + element.position, ft_strstr(xml, \
-					element.end_object)) != 0 && xml[element.position])
+	while (ft_strcmp(xml + element.position, ft_strstr(xml
+					, element.end_object)) != 0 && xml[element.position])
 	{
 		if (xml[element.position] == '<')
 		{
 			element.position++;
 			count = 0;
-			while (xml[element.position] != '>' && xml[element.position] != ' '\
+			while (xml[element.position] != '>' && xml[element.position] != ' '
 					&& xml[element.position])
 			{
 				count++;
@@ -109,8 +109,8 @@ t_element		find_nbr_elem(char *xml, t_element element)
 		}
 		element.position++;
 	}
-	if (!(element.elem = (t_element*)malloc(sizeof(t_element) * \
-					element.nbr_element)))
+	if (!(element.elem = (t_element*)malloc(sizeof(t_element)
+					* element.nbr_element)))
 		std_err(0);
 	while (xml[element.position] != '>' && xml[element.position])
 		element.position++;

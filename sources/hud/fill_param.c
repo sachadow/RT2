@@ -6,7 +6,7 @@
 /*   By: qsebasti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:53:36 by qsebasti          #+#    #+#             */
-/*   Updated: 2019/02/01 20:26:35 by qsebasti         ###   ########.fr       */
+/*   Updated: 2019/02/11 17:45:33 by qsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /*
 **	FILL_PARAM function:
-**	fill the working param tableto be modified by user.
+**	fill the working param table to be modified by user.
 */
 
 void		fill_param(t_env *e)
